@@ -1,9 +1,11 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const { exec } = require('child_process');
 const app = express();
 
 app.use(cors());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Search YouTube and return top results
 app.get('/search', (req, res) => {
@@ -37,6 +39,11 @@ app.get('/audio', (req, res) => {
     const audioUrl = stdout.trim().split('\n')[0];
     res.json({ url: audioUrl });
   });
+});
+
+// Serve frontend for any other route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
