@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DJ Learn</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -47,7 +48,7 @@ body{background:#0e0e0e;color:#ddd;font-family:'Courier New',monospace;overflow-
 .vol-row{display:flex;align-items:center;gap:6px}
 .vol-row label{font-size:9px;color:#444;width:20px}
 .vol-row input{flex:1}
-audio.deck-audio{width:100%;height:28px;margin-top:2px;filter:invert(0.85) hue-rotate(180deg)}
+audio.deck-audio{width:100%;height:28px;margin-top:2px}
 .loading-bar{height:3px;background:#1a1a1a;border-radius:2px;overflow:hidden;display:none}
 .loading-bar.active{display:block}
 .loading-inner{height:100%;width:0%;background:#e8b84b;border-radius:2px;transition:width 0.3s}
@@ -80,7 +81,7 @@ audio.deck-audio{width:100%;height:28px;margin-top:2px;filter:invert(0.85) hue-r
 <div class="app">
   <div class="header">
     <h1>DJ Learn</h1>
-    <p>YouTube Edition — backend: yyyas3.onrender.com</p>
+    <p>YouTube Edition</p>
   </div>
 
   <!-- DECK A -->
@@ -111,9 +112,9 @@ audio.deck-audio{width:100%;height:28px;margin-top:2px;filter:invert(0.85) hue-r
     </div>
     <div class="transport">
       <button class="btn cue-btn" onclick="cue('A')">CUE</button>
-      <button class="btn play-btn" id="playBtnA" onclick="togglePlay('A')">▶</button>
-      <button class="btn" onclick="nudge('A',-2)">◀◀</button>
-      <button class="btn" onclick="nudge('A',2)">▶▶</button>
+      <button class="btn play-btn" id="playBtnA" onclick="togglePlay('A')">&#9654;</button>
+      <button class="btn" onclick="nudge('A',-2)">&#9668;&#9668;</button>
+      <button class="btn" onclick="nudge('A',2)">&#9658;&#9658;</button>
     </div>
     <div class="loop-row">
       <button class="btn loop-btn" onclick="setLoop('A',1)">1</button>
@@ -126,7 +127,7 @@ audio.deck-audio{width:100%;height:28px;margin-top:2px;filter:invert(0.85) hue-r
       <label>VOL</label>
       <input type="range" id="volA" min="0" max="1" step="0.01" value="0.8" oninput="setVol('A')">
     </div>
-    <audio id="audioA" class="deck-audio" crossorigin="anonymous"></audio>
+    <audio id="audioA" class="deck-audio" controls crossorigin="anonymous"></audio>
   </div>
 
   <!-- MIXER -->
@@ -136,15 +137,15 @@ audio.deck-audio{width:100%;height:28px;margin-top:2px;filter:invert(0.85) hue-r
     <div style="font-size:9px;color:#2a2a2a;text-align:center;margin-top:-4px">BPM MATCH</div>
     <div class="eq-block">
       <div class="mx-label" style="margin-bottom:4px">EQ A</div>
-      <div class="eq-row"><span>HI</span><input type="range" id="eqAhi" min="0" max="2" step="0.05" value="1" oninput="applyEQ('A')"></div>
-      <div class="eq-row"><span>MD</span><input type="range" id="eqAmid" min="0" max="2" step="0.05" value="1" oninput="applyEQ('A')"></div>
-      <div class="eq-row"><span>LO</span><input type="range" id="eqAlo" min="0" max="2" step="0.05" value="1" oninput="applyEQ('A')"></div>
+      <div class="eq-row"><span>HI</span><input type="range" id="eqAhi" min="0" max="2" step="0.05" value="1"></div>
+      <div class="eq-row"><span>MD</span><input type="range" id="eqAmid" min="0" max="2" step="0.05" value="1"></div>
+      <div class="eq-row"><span>LO</span><input type="range" id="eqAlo" min="0" max="2" step="0.05" value="1"></div>
     </div>
     <div class="eq-block">
       <div class="mx-label" style="margin-bottom:4px">EQ B</div>
-      <div class="eq-row"><span>HI</span><input type="range" id="eqBhi" min="0" max="2" step="0.05" value="1" oninput="applyEQ('B')"></div>
-      <div class="eq-row"><span>MD</span><input type="range" id="eqBmid" min="0" max="2" step="0.05" value="1" oninput="applyEQ('B')"></div>
-      <div class="eq-row"><span>LO</span><input type="range" id="eqBlo" min="0" max="2" step="0.05" value="1" oninput="applyEQ('B')"></div>
+      <div class="eq-row"><span>HI</span><input type="range" id="eqBhi" min="0" max="2" step="0.05" value="1"></div>
+      <div class="eq-row"><span>MD</span><input type="range" id="eqBmid" min="0" max="2" step="0.05" value="1"></div>
+      <div class="eq-row"><span>LO</span><input type="range" id="eqBlo" min="0" max="2" step="0.05" value="1"></div>
     </div>
     <div class="faders">
       <div class="fdr">
@@ -190,9 +191,9 @@ audio.deck-audio{width:100%;height:28px;margin-top:2px;filter:invert(0.85) hue-r
     </div>
     <div class="transport">
       <button class="btn cue-btn" onclick="cue('B')">CUE</button>
-      <button class="btn play-btn" id="playBtnB" onclick="togglePlay('B')">▶</button>
-      <button class="btn" onclick="nudge('B',-2)">◀◀</button>
-      <button class="btn" onclick="nudge('B',2)">▶▶</button>
+      <button class="btn play-btn" id="playBtnB" onclick="togglePlay('B')">&#9654;</button>
+      <button class="btn" onclick="nudge('B',-2)">&#9668;&#9668;</button>
+      <button class="btn" onclick="nudge('B',2)">&#9658;&#9658;</button>
     </div>
     <div class="loop-row">
       <button class="btn loop-btn" onclick="setLoop('B',1)">1</button>
@@ -205,13 +206,13 @@ audio.deck-audio{width:100%;height:28px;margin-top:2px;filter:invert(0.85) hue-r
       <label>VOL</label>
       <input type="range" id="volB" min="0" max="1" step="0.01" value="0.8" oninput="setVol('B')">
     </div>
-    <audio id="audioB" class="deck-audio" crossorigin="anonymous"></audio>
+    <audio id="audioB" class="deck-audio" controls crossorigin="anonymous"></audio>
   </div>
 
   <!-- COACH -->
   <div class="suggestions">
     <div class="sug-label">COACH</div>
-    <div class="sug-text" id="coachText">Search for a track on Deck A to get started. Try searching an artist name or song title.</div>
+    <div class="sug-text" id="coachText">Search for a track on Deck A to get started.</div>
   </div>
 
   <div class="status-bar">
@@ -221,298 +222,259 @@ audio.deck-audio{width:100%;height:28px;margin-top:2px;filter:invert(0.85) hue-r
 </div>
 
 <script>
-const BACKEND = 'https://yyyas3.onrender.com';
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-const nodes = {};
-
+const BACKEND = window.location.origin;
 const state = {
-  A: { playing:false, bpm:null, pitch:0, vol:0.8, cuePoint:0, loop:null, duration:0, waveData:null },
-  B: { playing:false, bpm:null, pitch:0, vol:0.8, cuePoint:0, loop:null, duration:0, waveData:null }
+  A:{ playing:false, bpm:null, pitch:0, vol:0.8, cuePoint:0, loop:null, duration:0, waveData:null },
+  B:{ playing:false, bpm:null, pitch:0, vol:0.8, cuePoint:0, loop:null, duration:0, waveData:null }
 };
 
-function initAudio(deck) {
-  const audio = document.getElementById('audio'+deck);
-  if (nodes[deck]) return;
-  const src = audioCtx.createMediaElementSource(audio);
-  const gain = audioCtx.createGain();
-  gain.gain.value = state[deck].vol;
-  src.connect(gain);
-  gain.connect(audioCtx.destination);
-  nodes[deck] = { src, gain };
-}
-
-function fmt(s) {
-  if (!s || isNaN(s)) return '0:00';
-  const m = Math.floor(s/60), sec = Math.floor(s%60);
+function fmt(s){
+  if(!s||isNaN(s))return'0:00';
+  const m=Math.floor(s/60),sec=Math.floor(s%60);
   return m+':'+String(sec).padStart(2,'0');
 }
 
-async function doSearch(deck) {
-  const q = document.getElementById('search'+deck).value.trim();
-  if (!q) return;
-  const box = document.getElementById('results'+deck);
-  box.innerHTML = '<div class="r-item" style="color:#555">Searching...</div>';
+async function doSearch(deck){
+  const q=document.getElementById('search'+deck).value.trim();
+  if(!q)return;
+  const box=document.getElementById('results'+deck);
+  box.innerHTML='<div class="r-item" style="color:#555">Searching...</div>';
   box.classList.add('open');
-  try {
-    const r = await fetch(`${BACKEND}/search?q=${encodeURIComponent(q)}`);
-    const results = await r.json();
-    if (!results.length) { box.innerHTML = '<div class="r-item" style="color:#555">No results found</div>'; return; }
-    box.innerHTML = results.map(t =>
+  try{
+    const r=await fetch(`${BACKEND}/search?q=${encodeURIComponent(q)}`);
+    const results=await r.json();
+    if(!results.length){box.innerHTML='<div class="r-item" style="color:#555">No results</div>';return;}
+    box.innerHTML=results.map(t=>
       `<div class="r-item" onclick="loadTrack('${deck}','${escJ(t.id)}','${escJ(t.title)}','${escJ(t.uploader||'')}',${t.duration||0})">${escH(t.title)}${t.uploader?' — '+escH(t.uploader):''}</div>`
     ).join('');
-  } catch(e) {
-    box.innerHTML = `<div class="r-item" style="color:#c44">Backend error — is Render awake? Try again in 30s.</div>`;
+  }catch(e){
+    box.innerHTML='<div class="r-item" style="color:#c44">Backend error — wait 30s and try again</div>';
   }
 }
 
-function escJ(s){ return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"') }
-function escH(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;') }
+function escJ(s){return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"')}
+function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}
 
-async function loadTrack(deck, id, title, uploader, dur) {
+async function loadTrack(deck,id,title,uploader,dur){
   document.getElementById('results'+deck).classList.remove('open');
-  document.getElementById('nameA'[0]==='n' ? 'name'+deck : 'name'+deck).textContent = title;
-  document.getElementById('name'+deck).textContent = title;
-  document.getElementById('sub'+deck).textContent = uploader || 'Loading audio...';
-  showLoader(deck, true);
-
-  try {
-    const r = await fetch(`${BACKEND}/audio?id=${id}`);
-    const data = await r.json();
-    if (!data.url) throw new Error('No URL');
-
-    const audio = document.getElementById('audio'+deck);
-    audio.src = data.url;
-    audio.playbackRate = 1 + (state[deck].pitch / 100);
-    audio.volume = state[deck].vol;
-
-    audio.onloadedmetadata = () => {
-      state[deck].duration = audio.duration || dur;
-      document.getElementById('dur'+deck).textContent = fmt(state[deck].duration);
-      estimateBPM(deck, state[deck].duration);
+  document.getElementById('name'+deck).textContent=title;
+  document.getElementById('sub'+deck).textContent=uploader||'Loading...';
+  showLoader(deck,true);
+  try{
+    const r=await fetch(`${BACKEND}/audio?id=${id}`);
+    const data=await r.json();
+    if(!data.url)throw new Error('No URL');
+    const audio=document.getElementById('audio'+deck);
+    audio.src=data.url;
+    audio.playbackRate=1+(state[deck].pitch/100);
+    audio.volume=state[deck].vol;
+    audio.onloadedmetadata=()=>{
+      state[deck].duration=audio.duration||dur;
+      document.getElementById('dur'+deck).textContent=fmt(state[deck].duration);
+      estimateBPM(deck);
       generateWaveform(deck);
-      document.getElementById('status'+deck).textContent = `DECK ${deck}: loaded`;
-      showLoader(deck, false);
+      document.getElementById('status'+deck).textContent=`DECK ${deck}: loaded`;
+      showLoader(deck,false);
       updateCoach();
     };
-    audio.onerror = () => { document.getElementById('sub'+deck).textContent = 'Load error — try another track'; showLoader(deck, false); };
-
-    audio.ontimeupdate = () => {
-      const pos = audio.currentTime;
-      const dur2 = audio.duration || 1;
-      document.getElementById('time'+deck).textContent = fmt(pos);
-      drawWaveform(deck, pos/dur2);
-      if (state[deck].loop && state[deck].bpm) {
-        const loopDur = (60/state[deck].bpm)*4*state[deck].loop;
-        if (pos >= state[deck].cuePoint + loopDur) audio.currentTime = state[deck].cuePoint;
+    audio.onerror=()=>{document.getElementById('sub'+deck).textContent='Load error — try another';showLoader(deck,false);};
+    audio.ontimeupdate=()=>{
+      const pos=audio.currentTime,dur2=audio.duration||1;
+      document.getElementById('time'+deck).textContent=fmt(pos);
+      drawWaveform(deck,pos/dur2);
+      if(state[deck].loop&&state[deck].bpm){
+        const loopDur=(60/state[deck].bpm)*4*state[deck].loop;
+        if(pos>=state[deck].cuePoint+loopDur)audio.currentTime=state[deck].cuePoint;
       }
-      coachCounter++;
-      if (coachCounter % 8 === 0) updateCoach();
+      updateCoach();
     };
-
-    audio.onended = () => {
-      state[deck].playing = false;
-      document.getElementById('playBtn'+deck).textContent = '▶';
-      document.getElementById('status'+deck).textContent = `DECK ${deck}: ended`;
+    audio.onended=()=>{
+      state[deck].playing=false;
+      document.getElementById('playBtn'+deck).innerHTML='&#9654;';
+      document.getElementById('status'+deck).textContent=`DECK ${deck}: ended`;
     };
-
-    initAudio(deck);
-    if (audioCtx.state === 'suspended') audioCtx.resume();
-
-  } catch(e) {
-    document.getElementById('sub'+deck).textContent = 'Failed to load — try another track';
-    showLoader(deck, false);
+  }catch(e){
+    document.getElementById('sub'+deck).textContent='Failed — try another track';
+    showLoader(deck,false);
   }
 }
 
-function showLoader(deck, on) {
-  const bar = document.getElementById('loadBar'+deck);
-  const inner = document.getElementById('loadInner'+deck);
-  bar.classList.toggle('active', on);
-  if (on) {
-    let w = 0;
-    const iv = setInterval(() => { w = Math.min(w+3, 85); inner.style.width = w+'%'; if (!on) { inner.style.width='100%'; clearInterval(iv); } }, 200);
-  } else { inner.style.width = '100%'; setTimeout(() => { bar.classList.remove('active'); inner.style.width='0%'; }, 300); }
+let loaderIntervals={};
+function showLoader(deck,on){
+  const bar=document.getElementById('loadBar'+deck);
+  const inner=document.getElementById('loadInner'+deck);
+  if(on){
+    bar.classList.add('active');
+    let w=0;
+    clearInterval(loaderIntervals[deck]);
+    loaderIntervals[deck]=setInterval(()=>{w=Math.min(w+2,88);inner.style.width=w+'%';},200);
+  }else{
+    clearInterval(loaderIntervals[deck]);
+    inner.style.width='100%';
+    setTimeout(()=>{bar.classList.remove('active');inner.style.width='0%';},400);
+  }
 }
 
-function estimateBPM(deck, dur) {
-  const pool = [120,122,124,126,128,130,132,134,140,145,150,174,96,98,100,102,105,110,115];
-  const bpm = pool[Math.floor(Math.random()*pool.length)] + (Math.random()*2-1);
-  state[deck].bpm = Math.round(bpm*10)/10;
-  document.getElementById('bpm'+deck).textContent = state[deck].bpm.toFixed(1);
+function estimateBPM(deck){
+  const pool=[120,122,124,126,128,130,132,134,140,145,150,174,96,98,100,102,105,110,115];
+  const bpm=pool[Math.floor(Math.random()*pool.length)]+(Math.random()*2-1);
+  state[deck].bpm=Math.round(bpm*10)/10;
+  document.getElementById('bpm'+deck).textContent=state[deck].bpm.toFixed(1);
   updateSyncIndicator();
 }
 
-function generateWaveform(deck) {
-  const canvas = document.getElementById('wave'+deck);
-  canvas.width = canvas.offsetWidth || 300;
-  canvas.height = 52;
-  const bars = 90;
-  state[deck].waveData = Array.from({length:bars}, (_,i) => {
-    const base = 0.3 + Math.random()*0.6;
-    const bump = Math.sin(i/bars*Math.PI)*0.2;
-    return Math.min(1, base+bump);
+function generateWaveform(deck){
+  const canvas=document.getElementById('wave'+deck);
+  canvas.width=canvas.offsetWidth||300;
+  canvas.height=52;
+  const bars=90;
+  state[deck].waveData=Array.from({length:bars},(_,i)=>{
+    return Math.min(1,0.3+Math.random()*0.6+Math.sin(i/bars*Math.PI)*0.2);
   });
-  drawWaveform(deck, 0);
+  drawWaveform(deck,0);
 }
 
-function drawWaveform(deck, progress) {
-  const canvas = document.getElementById('wave'+deck);
-  const ctx = canvas.getContext('2d');
-  const w = canvas.width, h = canvas.height;
+function drawWaveform(deck,progress){
+  const canvas=document.getElementById('wave'+deck);
+  const ctx=canvas.getContext('2d');
+  const w=canvas.width,h=canvas.height;
   ctx.clearRect(0,0,w,h);
-  const data = state[deck].waveData;
-  if (!data) return;
-  const bars = data.length;
-  const bw = w/bars;
-  const center = Math.floor(progress*bars);
-  for (let i=0; i<bars; i++) {
-    const bh = data[i]*h*0.85;
-    const x = i*bw;
-    ctx.fillStyle = i<center ? '#2a5a8a' : (i===center ? '#ddd' : '#1e3040');
-    ctx.fillRect(x+1, (h-bh)/2, bw-2, bh);
+  const data=state[deck].waveData;
+  if(!data)return;
+  const bars=data.length,bw=w/bars,center=Math.floor(progress*bars);
+  for(let i=0;i<bars;i++){
+    const bh=data[i]*h*0.85,x=i*bw;
+    ctx.fillStyle=i<center?'#2a5a8a':(i===center?'#ddd':'#1e3040');
+    ctx.fillRect(x+1,(h-bh)/2,bw-2,bh);
   }
-  if (state[deck].bpm) {
-    const bps = state[deck].bpm/60;
-    const dur = state[deck].duration||1;
-    const beats = Math.floor(bps*dur);
-    ctx.strokeStyle='rgba(255,255,255,0.06)';
-    ctx.lineWidth=1;
-    for (let b=0; b<beats; b++) {
+  if(state[deck].bpm){
+    const bps=state[deck].bpm/60,dur=state[deck].duration||1;
+    const beats=Math.floor(bps*dur);
+    ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=1;
+    for(let b=0;b<beats;b++){
       const bx=(b/beats)*w;
-      ctx.beginPath(); ctx.moveTo(bx,0); ctx.lineTo(bx,h); ctx.stroke();
+      ctx.beginPath();ctx.moveTo(bx,0);ctx.lineTo(bx,h);ctx.stroke();
     }
   }
 }
 
-function togglePlay(deck) {
-  const audio = document.getElementById('audio'+deck);
-  if (!audio.src) { updateCoach('notrack'); return; }
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  if (state[deck].playing) {
-    audio.pause();
-    state[deck].playing = false;
-    document.getElementById('playBtn'+deck).textContent = '▶';
-    document.getElementById('status'+deck).textContent = `DECK ${deck}: paused`;
-  } else {
-    audio.play().catch(()=>{});
-    state[deck].playing = true;
-    document.getElementById('playBtn'+deck).textContent = '⏸';
-    document.getElementById('status'+deck).textContent = `DECK ${deck}: playing`;
+function togglePlay(deck){
+  const audio=document.getElementById('audio'+deck);
+  if(!audio.src){updateCoach('notrack');return;}
+  if(state[deck].playing){
+    audio.pause();state[deck].playing=false;
+    document.getElementById('playBtn'+deck).innerHTML='&#9654;';
+    document.getElementById('status'+deck).textContent=`DECK ${deck}: paused`;
+  }else{
+    audio.play().catch(()=>{});state[deck].playing=true;
+    document.getElementById('playBtn'+deck).innerHTML='&#9646;&#9646;';
+    document.getElementById('status'+deck).textContent=`DECK ${deck}: playing`;
   }
   updateCoach();
 }
 
-function cue(deck) {
-  const audio = document.getElementById('audio'+deck);
-  state[deck].cuePoint = audio.currentTime || 0;
-  audio.pause();
-  state[deck].playing = false;
-  document.getElementById('playBtn'+deck).textContent = '▶';
+function cue(deck){
+  const audio=document.getElementById('audio'+deck);
+  state[deck].cuePoint=audio.currentTime||0;
+  audio.pause();state[deck].playing=false;
+  document.getElementById('playBtn'+deck).innerHTML='&#9654;';
 }
 
-function nudge(deck, sec) {
-  const audio = document.getElementById('audio'+deck);
-  if (audio.src) audio.currentTime = Math.max(0, Math.min(audio.duration||0, audio.currentTime+sec));
+function nudge(deck,sec){
+  const audio=document.getElementById('audio'+deck);
+  if(audio.src)audio.currentTime=Math.max(0,Math.min(audio.duration||0,audio.currentTime+sec));
 }
 
-function scrub(deck, e) {
-  const audio = document.getElementById('audio'+deck);
-  if (!audio.src || !audio.duration) return;
-  const rect = e.currentTarget.getBoundingClientRect();
-  const pct = (e.clientX - rect.left) / rect.width;
-  audio.currentTime = pct * audio.duration;
+function scrub(deck,e){
+  const audio=document.getElementById('audio'+deck);
+  if(!audio.src||!audio.duration)return;
+  const rect=e.currentTarget.getBoundingClientRect();
+  audio.currentTime=((e.clientX-rect.left)/rect.width)*audio.duration;
 }
 
-function setLoop(deck, bars) {
-  state[deck].loop = bars;
-  state[deck].cuePoint = document.getElementById('audio'+deck).currentTime || 0;
+function setLoop(deck,bars){
+  state[deck].loop=bars;
+  state[deck].cuePoint=document.getElementById('audio'+deck).currentTime||0;
   document.getElementById('loopOff'+deck).classList.add('on');
   updateCoach();
 }
 
-function clearLoop(deck) {
-  state[deck].loop = null;
+function clearLoop(deck){
+  state[deck].loop=null;
   document.getElementById('loopOff'+deck).classList.remove('on');
 }
 
-function updatePitch(deck) {
-  const val = parseFloat(document.getElementById('pitch'+deck).value);
-  state[deck].pitch = val;
-  document.getElementById('pitchVal'+deck).textContent = (val>=0?'+':'')+val.toFixed(1)+'%';
-  const audio = document.getElementById('audio'+deck);
-  audio.playbackRate = 1 + (val/100);
+function updatePitch(deck){
+  const val=parseFloat(document.getElementById('pitch'+deck).value);
+  state[deck].pitch=val;
+  document.getElementById('pitchVal'+deck).textContent=(val>=0?'+':'')+val.toFixed(1)+'%';
+  document.getElementById('audio'+deck).playbackRate=1+(val/100);
   updateSyncIndicator();
 }
 
-function setVol(deck) {
-  const val = parseFloat(document.getElementById('vol'+deck).value);
-  state[deck].vol = val;
-  document.getElementById('audio'+deck).volume = val;
-  if (nodes[deck]) nodes[deck].gain.gain.value = val;
+function setVol(deck){
+  const val=parseFloat(document.getElementById('vol'+deck).value);
+  state[deck].vol=val;
+  document.getElementById('audio'+deck).volume=val;
 }
 
-function setFaderVol(deck) {
-  const val = parseFloat(document.getElementById('fader'+deck).value);
-  document.getElementById('audio'+deck).volume = val * state[deck].vol;
+function setFaderVol(deck){
+  const val=parseFloat(document.getElementById('fader'+deck).value);
+  document.getElementById('audio'+deck).volume=val*state[deck].vol;
 }
 
-function updateXfader() {
-  const x = parseFloat(document.getElementById('xfader').value);
-  document.getElementById('faderA').value = (1-x).toFixed(2);
-  document.getElementById('faderB').value = x.toFixed(2);
-  setFaderVol('A'); setFaderVol('B');
+function updateXfader(){
+  const x=parseFloat(document.getElementById('xfader').value);
+  document.getElementById('faderA').value=(1-x).toFixed(2);
+  document.getElementById('faderB').value=x.toFixed(2);
+  setFaderVol('A');setFaderVol('B');
 }
 
-function applyEQ(deck) {}
-
-function getEffBPM(deck) {
-  const s = state[deck];
-  if (!s.bpm) return null;
-  return s.bpm * (1 + s.pitch/100);
+function getEffBPM(deck){
+  const s=state[deck];
+  if(!s.bpm)return null;
+  return s.bpm*(1+s.pitch/100);
 }
 
-function updateSyncIndicator() {
-  const bA = getEffBPM('A'), bB = getEffBPM('B');
-  const pill = document.getElementById('syncPill');
-  if (!bA || !bB) { pill.className='sync-pill'; pill.textContent='SYNC'; return; }
-  const diff = Math.abs(bA-bB);
-  if (diff < 0.3) { pill.className='sync-pill locked'; pill.textContent='LOCKED'; }
-  else if (diff < 3) { pill.className='sync-pill close'; pill.textContent=diff.toFixed(1)+' OFF'; }
-  else { pill.className='sync-pill'; pill.textContent=diff.toFixed(1)+' BPM'; }
+function updateSyncIndicator(){
+  const bA=getEffBPM('A'),bB=getEffBPM('B');
+  const pill=document.getElementById('syncPill');
+  if(!bA||!bB){pill.className='sync-pill';pill.textContent='SYNC';return;}
+  const diff=Math.abs(bA-bB);
+  if(diff<0.3){pill.className='sync-pill locked';pill.textContent='LOCKED';}
+  else if(diff<3){pill.className='sync-pill close';pill.textContent=diff.toFixed(1)+' OFF';}
+  else{pill.className='sync-pill';pill.textContent=diff.toFixed(1)+' BPM';}
 }
 
-let coachCounter = 0;
-function updateCoach(hint) {
-  const el = document.getElementById('coachText');
-  const aA = document.getElementById('audioA'), aB = document.getElementById('audioB');
-  const hasA = !!aA.src, hasB = !!aB.src;
-  const bA = getEffBPM('A'), bB = getEffBPM('B');
-  const xf = parseFloat(document.getElementById('xfader').value);
-
-  if (hint==='notrack') { el.innerHTML = '<span class="tip">Load a track first</span> — use the search bar above.'; return; }
-  if (!hasA && !hasB) { el.innerHTML = 'Search for any song on <span class="tip">Deck A</span> to get started.'; return; }
-  if (hasA && !hasB) { el.innerHTML = 'Track loaded on A. Now load something on <span class="tip">Deck B</span> to mix into.'; return; }
-
-  if (state.A.playing && state.B.playing) {
-    const diff = bA && bB ? Math.abs(bA-bB) : 99;
-    if (diff > 8) { el.innerHTML = `<span class="warn">BPMs are ${diff.toFixed(1)} apart</span> — drag the pitch fader on deck ${bA>bB?'A':'B'} toward center to slow it down.`; return; }
-    if (diff > 2) { el.innerHTML = `<span class="tip">Getting closer</span> — ${diff.toFixed(1)} BPM gap. Nudge pitch on deck ${bA>bB?'A':'B'} a little more.`; return; }
-    if (diff <= 0.3) { el.innerHTML = `<span class="good">BPMs locked!</span> Now slowly move the crossfader to the right to blend Deck B in. Drop the lows on B first for a cleaner mix.`; return; }
-    el.innerHTML = `<span class="good">Almost synced</span> — ${diff.toFixed(1)} BPM off. Use ◀◀ ▶▶ to nudge the beat into phase, then crossfade in.`;
-  } else if (state.A.playing && !state.B.playing) {
-    el.innerHTML = `Deck A is playing. <span class="tip">Hit CUE on Deck B</span> to set your start point, then press play when the beat drops.`;
-  } else if (!state.A.playing && state.B.playing) {
-    el.innerHTML = `Deck B is playing. Load a new track on A and bring the crossfader back left when you're ready.`;
-  } else {
-    el.innerHTML = `Both decks loaded. Press <span class="tip">▶ on Deck A</span> to start your set.`;
+function updateCoach(hint){
+  const el=document.getElementById('coachText');
+  const aA=document.getElementById('audioA'),aB=document.getElementById('audioB');
+  const hasA=!!aA.src,hasB=!!aB.src;
+  const bA=getEffBPM('A'),bB=getEffBPM('B');
+  const xf=parseFloat(document.getElementById('xfader').value);
+  if(hint==='notrack'){el.innerHTML='<span class="tip">Load a track first</span> — use the search bar above.';return;}
+  if(!hasA&&!hasB){el.innerHTML='Search for any song on <span class="tip">Deck A</span> to get started.';return;}
+  if(hasA&&!hasB){el.innerHTML='Track loaded on A. Now load something on <span class="tip">Deck B</span> to mix into.';return;}
+  if(state.A.playing&&state.B.playing){
+    const diff=bA&&bB?Math.abs(bA-bB):99;
+    if(diff>8){el.innerHTML=`<span class="warn">BPMs are ${diff.toFixed(1)} apart</span> — drag the pitch fader on deck ${bA>bB?'A':'B'} toward center.`;return;}
+    if(diff>2){el.innerHTML=`<span class="tip">Getting closer</span> — ${diff.toFixed(1)} BPM gap. Keep nudging pitch on deck ${bA>bB?'A':'B'}.`;return;}
+    if(diff<=0.3){el.innerHTML='<span class="good">BPMs locked!</span> Move the crossfader slowly to blend Deck B in. Try dropping the lows on B first.';return;}
+    el.innerHTML=`<span class="good">Almost synced</span> — ${diff.toFixed(1)} BPM off. Use nudge buttons to get the beats in phase, then crossfade.`;
+  }else if(state.A.playing&&!state.B.playing){
+    el.innerHTML='Deck A is playing. <span class="tip">Hit CUE on Deck B</span> to mark your start point, then press play when the beat drops.';
+  }else if(!state.A.playing&&state.B.playing){
+    el.innerHTML='Deck B is playing. Load a new track on A and bring the crossfader back left when ready.';
+  }else{
+    el.innerHTML='Both decks loaded. Press <span class="tip">play on Deck A</span> to start your set.';
   }
 }
 
-document.getElementById('searchA').addEventListener('keydown', e => { if(e.key==='Enter') doSearch('A'); });
-document.getElementById('searchB').addEventListener('keydown', e => { if(e.key==='Enter') doSearch('B'); });
-document.addEventListener('click', e => {
-  if (!e.target.closest('#resultsA') && !e.target.closest('#searchA') && !e.target.closest('button')) document.getElementById('resultsA').classList.remove('open');
-  if (!e.target.closest('#resultsB') && !e.target.closest('#searchB') && !e.target.closest('button')) document.getElementById('resultsB').classList.remove('open');
+document.getElementById('searchA').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch('A');});
+document.getElementById('searchB').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch('B');});
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#resultsA')&&!e.target.closest('#searchA')&&!e.target.closest('button'))document.getElementById('resultsA').classList.remove('open');
+  if(!e.target.closest('#resultsB')&&!e.target.closest('#searchB')&&!e.target.closest('button'))document.getElementById('resultsB').classList.remove('open');
 });
 </script>
 </body>
