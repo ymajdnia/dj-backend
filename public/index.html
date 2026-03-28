@@ -84,8 +84,6 @@ audio.deck-audio{width:100%;height:28px;margin-top:2px;border-radius:8px}
 .coach-text .good{color:#6ee7b7;font-weight:500}
 .coach-text .warn{color:#fdba74;font-weight:500}
 .status-bar{grid-column:1/-1;display:flex;justify-content:space-between;font-size:9px;color:#7777aa;padding:0 6px;font-family:'DM Mono',monospace}
-
-/* ONBOARDING OVERLAY */
 .ob-overlay{position:fixed;inset:0;background:rgba(10,10,20,0.82);z-index:100;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
 .ob-overlay.hidden{display:none}
 .ob-card{background:#22223a;border:1.5px solid #3e3e60;border-radius:24px;padding:28px 30px;max-width:420px;width:90%;position:relative;box-shadow:0 0 60px rgba(167,139,250,0.15)}
@@ -104,15 +102,14 @@ audio.deck-audio{width:100%;height:28px;margin-top:2px;border-radius:8px}
 .ob-btn-main:hover{opacity:0.88}
 .ob-btn-skip{background:none;border:1.5px solid #3e3e60;border-radius:12px;padding:10px 18px;color:#7777aa;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s}
 .ob-btn-skip:hover{color:#c0c0e0;border-color:#6666aa}
-.ob-highlight{box-shadow:0 0 0 3px #a78bfa, 0 0 24px rgba(167,139,250,0.4) !important;border-color:#a78bfa !important;transition:box-shadow 0.4s,border-color 0.4s}
-.ob-highlight-green{box-shadow:0 0 0 3px #34d399, 0 0 24px rgba(52,211,153,0.35) !important;border-color:#34d399 !important;transition:box-shadow 0.4s,border-color 0.4s}
+.ob-highlight{box-shadow:0 0 0 3px #a78bfa,0 0 24px rgba(167,139,250,0.4)!important;border-color:#a78bfa!important}
+.ob-highlight-green{box-shadow:0 0 0 3px #34d399,0 0 24px rgba(52,211,153,0.35)!important;border-color:#34d399!important}
 </style>
 </head>
 <body>
 
-<!-- ONBOARDING OVERLAY -->
 <div class="ob-overlay" id="obOverlay">
-  <div class="ob-card" id="obCard">
+  <div class="ob-card">
     <span class="ob-emoji" id="obEmoji">🎧</span>
     <div class="ob-step-label" id="obStepLabel">STEP 1 OF 5</div>
     <div class="ob-title" id="obTitle">welcome to YYYAS3</div>
@@ -131,7 +128,6 @@ audio.deck-audio{width:100%;height:28px;margin-top:2px;border-radius:8px}
     <p>the cutie girl's dj guide</p>
   </div>
 
-  <!-- DECK A -->
   <div class="deck" id="deckA">
     <div class="deck-title a">DECK A</div>
     <div class="search-row">
@@ -144,7 +140,7 @@ audio.deck-audio{width:100%;height:28px;margin-top:2px;border-radius:8px}
       <div class="track-name" id="nameA">no track loaded</div>
       <div class="track-sub" id="subA">search above to load a track</div>
     </div>
-    <div class="waveform-area" id="waveAreaA" onclick="scrub('A',event)">
+    <div class="waveform-area" onclick="scrub('A',event)">
       <canvas id="waveA"></canvas>
       <div class="playhead-line"></div>
     </div>
@@ -174,10 +170,9 @@ audio.deck-audio{width:100%;height:28px;margin-top:2px;border-radius:8px}
       <label>VOL</label>
       <input type="range" id="volA" min="0" max="1" step="0.01" value="0.8" oninput="setVol('A')">
     </div>
-    <audio id="audioA" class="deck-audio" controls crossorigin="anonymous"></audio>
+    <audio id="audioA" class="deck-audio" controls></audio>
   </div>
 
-  <!-- MIXER -->
   <div class="mixer" id="mixerEl">
     <div class="mx-label">mixer</div>
     <div class="sync-pill" id="syncPill">SYNC</div>
@@ -208,7 +203,6 @@ audio.deck-audio{width:100%;height:28px;margin-top:2px;border-radius:8px}
     </div>
   </div>
 
-  <!-- DECK B -->
   <div class="deck" id="deckB">
     <div class="deck-title b">DECK B</div>
     <div class="search-row">
@@ -221,7 +215,7 @@ audio.deck-audio{width:100%;height:28px;margin-top:2px;border-radius:8px}
       <div class="track-name" id="nameB">no track loaded</div>
       <div class="track-sub" id="subB">search above to load a track</div>
     </div>
-    <div class="waveform-area" id="waveAreaB" onclick="scrub('B',event)">
+    <div class="waveform-area" onclick="scrub('B',event)">
       <canvas id="waveB"></canvas>
       <div class="playhead-line"></div>
     </div>
@@ -251,10 +245,9 @@ audio.deck-audio{width:100%;height:28px;margin-top:2px;border-radius:8px}
       <label>VOL</label>
       <input type="range" id="volB" min="0" max="1" step="0.01" value="0.8" oninput="setVol('B')" style="accent-color:#34d399">
     </div>
-    <audio id="audioB" class="deck-audio" controls crossorigin="anonymous"></audio>
+    <audio id="audioB" class="deck-audio" controls></audio>
   </div>
 
-  <!-- COACH -->
   <div class="coach">
     <div class="coach-icon" id="coachIcon">🎧</div>
     <div class="coach-inner">
@@ -276,68 +269,28 @@ const state={
   B:{playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,duration:0,waveData:null}
 };
 
-/* ── ONBOARDING ── */
 const steps=[
-  {
-    emoji:'🎧',
-    title:'welcome to YYYAS3',
-    body:'your personal dj playground — built for <strong>cutie girls learning to mix</strong>. in the next 5 steps you\'ll learn everything you need to play your first set. ready?',
-    highlight:null,
-    btn:'let\'s go ✦'
-  },
-  {
-    emoji:'🎵',
-    title:'meet the decks',
-    body:'you have <strong>two decks</strong> — deck A (purple, left) and deck B (green, right). each one plays a track. use the <em>search bar</em> to find any song on youtube, then click a result to load it. the <em>waveform</em> below shows the song visually — you can click it to jump anywhere.',
-    highlight:'deckA',
-    btn:'got it →'
-  },
-  {
-    emoji:'🥁',
-    title:'BPM + the pitch fader',
-    body:'<strong>BPM</strong> (beats per minute) is the speed of a track — shown in pink on each deck. to mix smoothly, both tracks need matching BPMs. use the <em>pitch fader</em> to speed up or slow down a track slightly. when the mixer says <em>LOCKED</em>, you\'re in sync!',
-    highlight:'bpmRowA',
-    btn:'makes sense →'
-  },
-  {
-    emoji:'🎚️',
-    title:'the mixer in the middle',
-    body:'the <strong>mixer</strong> is your control centre. the <em>EQ knobs</em> (hi, mid, lo) cut or boost frequencies — try pulling the lows off deck B before mixing it in for a cleaner transition. the <em>channel faders</em> control each deck\'s volume. the <em>crossfader</em> at the bottom blends between decks.',
-    highlight:'mixerEl',
-    btn:'i see it →'
-  },
-  {
-    emoji:'🔥',
-    title:'your first mix',
-    body:'here\'s your mission: <strong>1.</strong> search a song on deck A and press play. <strong>2.</strong> search something on deck B. <strong>3.</strong> match the BPMs with the pitch fader. <strong>4.</strong> slowly move the crossfader from left to right to blend it in. that\'s a real mix. you\'ve got this!',
-    highlight:null,
-    btn:'start mixing ✦'
-  }
+  {emoji:'🎧',title:'welcome to YYYAS3',body:'your personal dj playground — built for <strong>cutie girls learning to mix</strong>. in the next 5 steps you\'ll learn everything you need to play your first set. ready?',highlight:null,btn:'let\'s go ✦'},
+  {emoji:'🎵',title:'meet the decks',body:'you have <strong>two decks</strong> — deck A (purple, left) and deck B (green, right). each one plays a track. use the <em>search bar</em> to find any song on youtube, then click a result to load it. the <em>waveform</em> shows the song visually — click it to jump anywhere.',highlight:'deckA',btn:'got it →'},
+  {emoji:'🥁',title:'BPM + the pitch fader',body:'<strong>BPM</strong> is the speed of a track — shown in pink on each deck. to mix smoothly, both tracks need matching BPMs. use the <em>pitch fader</em> to speed up or slow down a track. when the mixer says <em>LOCKED</em>, you\'re in sync!',highlight:'bpmRowA',btn:'makes sense →'},
+  {emoji:'🎚️',title:'the mixer in the middle',body:'the <strong>mixer</strong> is your control centre. <em>EQ knobs</em> cut or boost frequencies — try pulling the lows off deck B before mixing in for a cleaner sound. <em>channel faders</em> control volume. the <em>crossfader</em> at the bottom blends between decks.',highlight:'mixerEl',btn:'i see it →'},
+  {emoji:'🔥',title:'your first mix',body:'your mission: <strong>1.</strong> search a song on deck A and press play. <strong>2.</strong> search something on deck B. <strong>3.</strong> match the BPMs with the pitch fader. <strong>4.</strong> slowly move the crossfader to blend. that\'s a real mix. you\'ve got this!',highlight:null,btn:'start mixing ✦'}
 ];
 
-let currentStep=0;
-let highlightedEl=null;
+let currentStep=0,highlightedEl=null;
 
 function buildDots(){
-  const prog=document.getElementById('obProgress');
-  prog.innerHTML=steps.map((_,i)=>`<div class="ob-dot" id="dot${i}"></div>`).join('');
+  document.getElementById('obProgress').innerHTML=steps.map((_,i)=>`<div class="ob-dot" id="dot${i}"></div>`).join('');
 }
-
 function updateDots(){
   steps.forEach((_,i)=>{
     const d=document.getElementById('dot'+i);
-    if(!d)return;
-    d.className='ob-dot'+(i<currentStep?' done':i===currentStep?' active':'');
+    if(d)d.className='ob-dot'+(i<currentStep?' done':i===currentStep?' active':'');
   });
 }
-
 function clearHighlight(){
-  if(highlightedEl){
-    highlightedEl.classList.remove('ob-highlight','ob-highlight-green');
-    highlightedEl=null;
-  }
+  if(highlightedEl){highlightedEl.classList.remove('ob-highlight','ob-highlight-green');highlightedEl=null;}
 }
-
 function applyHighlight(id){
   clearHighlight();
   if(!id)return;
@@ -347,7 +300,6 @@ function applyHighlight(id){
   el.classList.add(id==='mixerEl'?'ob-highlight-green':'ob-highlight');
   el.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
-
 function showStep(i){
   const s=steps[i];
   document.getElementById('obEmoji').textContent=s.emoji;
@@ -358,25 +310,17 @@ function showStep(i){
   updateDots();
   applyHighlight(s.highlight);
 }
-
 function nextStep(){
-  if(currentStep<steps.length-1){
-    currentStep++;
-    showStep(currentStep);
-  }else{
-    skipOnboarding();
-  }
+  if(currentStep<steps.length-1){currentStep++;showStep(currentStep);}
+  else skipOnboarding();
 }
-
 function skipOnboarding(){
   document.getElementById('obOverlay').classList.add('hidden');
   clearHighlight();
 }
-
 buildDots();
 showStep(0);
 
-/* ── DJ APP ── */
 function fmt(s){
   if(!s||isNaN(s))return'0:00';
   return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');
@@ -395,6 +339,7 @@ async function doSearch(deck){
     box.innerHTML=results.map(t=>
       `<div class="r-item" onclick="loadTrack('${deck}','${escJ(t.id)}','${escJ(t.title)}','${escJ(t.uploader||'')}',${t.duration||0})">${escH(t.title)}${t.uploader?' — '+escH(t.uploader):''}</div>`
     ).join('');
+    results.forEach(t=>fetch(`${BACKEND}/prefetch?id=${t.id}`).catch(()=>{}));
   }catch(e){
     box.innerHTML='<div class="r-item" style="color:#fdba74">backend waking up — wait 30s and try again ☕</div>';
   }
@@ -410,11 +355,8 @@ async function loadTrack(deck,id,title,uploader,dur){
   showLoader(deck,true);
   setCoach('✨','<span class="tip">loading track...</span> hang tight while we fetch the audio.');
   try{
-    const r=await fetch(`${BACKEND}/audio?id=${id}`);
-    const data=await r.json();
-    if(!data.url)throw new Error('no url');
     const audio=document.getElementById('audio'+deck);
-    audio.src=data.url;
+    audio.src=`${BACKEND}/stream?id=${id}`;
     audio.playbackRate=1+(state[deck].pitch/100);
     audio.volume=state[deck].vol;
     audio.onloadedmetadata=()=>{
@@ -426,7 +368,11 @@ async function loadTrack(deck,id,title,uploader,dur){
       showLoader(deck,false);
       updateCoach();
     };
-    audio.onerror=()=>{document.getElementById('sub'+deck).textContent='load error — try another track';showLoader(deck,false);};
+    audio.onerror=()=>{
+      document.getElementById('sub'+deck).textContent='load error — try another track';
+      showLoader(deck,false);
+      setCoach('👀','<span class="warn">couldn\'t load that one.</span> try a different track.');
+    };
     audio.ontimeupdate=()=>{
       const pos=audio.currentTime,dur2=audio.duration||1;
       document.getElementById('time'+deck).textContent=fmt(pos);
@@ -446,7 +392,6 @@ async function loadTrack(deck,id,title,uploader,dur){
   }catch(e){
     document.getElementById('sub'+deck).textContent='failed to load — try another track';
     showLoader(deck,false);
-    setCoach('👀','<span class="warn">couldn\'t load that one.</span> try a different track — some aren\'t available for streaming.');
   }
 }
 
@@ -468,8 +413,7 @@ function estimateBPM(deck){
 function generateWaveform(deck){
   const canvas=document.getElementById('wave'+deck);
   canvas.width=canvas.offsetWidth||300;canvas.height=54;
-  const bars=90;
-  state[deck].waveData=Array.from({length:bars},(_,i)=>Math.min(1,0.25+Math.random()*0.65+Math.sin(i/bars*Math.PI)*0.2));
+  state[deck].waveData=Array.from({length:90},(_,i)=>Math.min(1,0.25+Math.random()*0.65+Math.sin(i/90*Math.PI)*0.2));
   drawWaveform(deck,0);
 }
 
@@ -486,7 +430,7 @@ function drawWaveform(deck,progress){
     ctx.fillRect(x+1,(h-bh)/2,bw-2,bh);
   }
   if(state[deck].bpm){
-    const bps=state[deck].bpm/60,dur=state[deck].duration||1,beats=Math.floor(bps*dur);
+    const beats=Math.floor((state[deck].bpm/60)*(state[deck].duration||1));
     ctx.strokeStyle='rgba(255,255,255,0.05)';ctx.lineWidth=1;
     for(let b=0;b<beats;b++){const bx=(b/beats)*w;ctx.beginPath();ctx.moveTo(bx,0);ctx.lineTo(bx,h);ctx.stroke();}
   }
@@ -531,7 +475,7 @@ function setLoop(deck,bars){
   state[deck].loop=bars;
   state[deck].cuePoint=document.getElementById('audio'+deck).currentTime||0;
   document.getElementById('loopOff'+deck).classList.add('on');
-  setCoach('🔁',`${bars}-bar loop set on deck ${deck.toLowerCase()}. use this to hold the groove while you prep the other deck.`);
+  setCoach('🔁',`${bars}-bar loop set on deck ${deck.toLowerCase()}. hold the groove while you prep the other deck.`);
 }
 
 function clearLoop(deck){
@@ -549,7 +493,8 @@ function updatePitch(deck){
 
 function setVol(deck){
   const val=parseFloat(document.getElementById('vol'+deck).value);
-  state[deck].vol=val;document.getElementById('audio'+deck).volume=val;
+  state[deck].vol=val;
+  document.getElementById('audio'+deck).volume=val;
 }
 
 function setFaderVol(deck){
@@ -589,16 +534,16 @@ function updateCoach(){
   const hasA=!!aA.src,hasB=!!aB.src;
   const bA=getEffBPM('A'),bB=getEffBPM('B');
   if(!hasA&&!hasB){setCoach('🎧','search for any song on <span class="tip">deck a</span> to get started.');return;}
-  if(hasA&&!hasB){setCoach('✨','nice! now load something on <span class="tip">deck b</span> — that\'s your next track, ready to mix in.');return;}
+  if(hasA&&!hasB){setCoach('✨','nice! now load something on <span class="tip">deck b</span> — that\'s your next track to mix in.');return;}
   if(state.A.playing&&state.B.playing){
     const diff=bA&&bB?Math.abs(bA-bB):99;
-    if(diff>8){setCoach('👀',`<span class="warn">bpms are ${diff.toFixed(1)} apart</span> — drag the pitch fader on deck ${bA>bB?'a':'b'} toward center to close the gap.`);return;}
+    if(diff>8){setCoach('👀',`<span class="warn">bpms are ${diff.toFixed(1)} apart</span> — drag the pitch fader on deck ${bA>bB?'a':'b'} toward center.`);return;}
     if(diff>2){setCoach('✨',`getting closer! ${diff.toFixed(1)} bpm gap — nudge pitch on deck ${bA>bB?'a':'b'} a little more.`);return;}
-    if(diff<=0.3){setCoach('🔥','<span class="good">bpms locked!</span> now slowly move the crossfader right to blend deck b in. try cutting the lows on b first for a cleaner transition.');return;}
-    setCoach('🎶',`<span class="good">almost there</span> — ${diff.toFixed(1)} bpm off. use the nudge buttons to get beats in phase, then crossfade.`);
-  }else if(state.A.playing&&!state.B.playing){
-    setCoach('🎶','deck a is playing. <span class="tip">hit cue on deck b</span> to mark your start point, then press play when you\'re ready to bring it in.');
-  }else if(!state.A.playing&&state.B.playing){
+    if(diff<=0.3){setCoach('🔥','<span class="good">bpms locked!</span> now slowly move the crossfader right to blend deck b in. try cutting the lows on b first.');return;}
+    setCoach('🎶',`<span class="good">almost there</span> — ${diff.toFixed(1)} bpm off. use nudge to get the beats in phase, then crossfade.`);
+  }else if(state.A.playing){
+    setCoach('🎶','deck a is playing. <span class="tip">hit cue on deck b</span> to mark your start point, then press play when ready.');
+  }else if(state.B.playing){
     setCoach('🎶','deck b is playing. load a fresh track on a and bring the crossfader back left when ready.');
   }else{
     setCoach('🎧','both decks loaded — press <span class="tip">play on deck a</span> to start your set!');
