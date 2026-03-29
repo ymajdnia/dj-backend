@@ -16,8 +16,6 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 .deck-title{font-size:11px;font-weight:600;letter-spacing:3px;text-align:center;padding:4px 12px;border-radius:20px;width:fit-content;margin:0 auto}
 .deck-title.a{background:#2d1f4e;color:#c4b5fd}
 .deck-title.b{background:#1f3a2d;color:#6ee7b7}
-
-/* DROP ZONE */
 .drop-zone{border:1.5px dashed #3e3e60;border-radius:14px;padding:10px;text-align:center;cursor:pointer;transition:all 0.2s;background:#16162a}
 .drop-zone:hover,.drop-zone.drag-over{border-color:#a78bfa;background:#1e1a30}
 .drop-zone.b-zone:hover,.drop-zone.b-zone.drag-over{border-color:#34d399;background:#0f1e18}
@@ -25,12 +23,9 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 .drop-text{font-size:10px;color:#9999cc;line-height:1.4}
 .drop-text strong{color:#c4b5fd;font-weight:600}
 .drop-text.b-text strong{color:#6ee7b7}
-
-/* QUEUE */
 .queue{display:flex;flex-direction:column;gap:4px}
 .queue-label{font-size:9px;letter-spacing:2px;color:#9999cc;font-weight:600;padding:0 2px}
-.queue-item{background:#16162a;border:1.5px solid #3e3e60;border-radius:10px;padding:6px 10px;display:flex;align-items:center;gap:8px;cursor:grab;transition:all 0.15s;position:relative}
-.queue-item:active{cursor:grabbing}
+.queue-item{background:#16162a;border:1.5px solid #3e3e60;border-radius:10px;padding:6px 10px;display:flex;align-items:center;gap:8px;cursor:grab;transition:all 0.15s}
 .queue-item.active-track{border-color:#a78bfa;background:#1e1a30}
 .queue-item.active-track.b-active{border-color:#34d399;background:#0f1e18}
 .queue-item.dragging{opacity:0.4}
@@ -43,8 +38,6 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 .queue-remove:hover{color:#f472b6}
 .queue-now{font-size:8px;background:#a78bfa22;color:#c4b5fd;padding:2px 5px;border-radius:6px;letter-spacing:1px;font-weight:600}
 .queue-now.b-now{background:#34d39922;color:#6ee7b7}
-
-/* TRACK DISPLAY */
 .track-display{background:#16162a;border-radius:12px;padding:8px 12px;min-height:38px;border:1.5px solid #3e3e60;display:none}
 .track-display.visible{display:block}
 .track-name{font-size:12px;font-weight:500;color:#f0f0fa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -62,14 +55,12 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 .pitch-wrap label{font-size:9px;color:#9999cc;letter-spacing:1px}
 .pitch-wrap input[type=range]{width:100%;cursor:pointer;accent-color:#a78bfa}
 .pitch-pct{font-size:10px;color:#c4b5fd;font-family:'DM Mono',monospace}
-
-/* TRANSPORT */
 .transport{display:flex;align-items:center;gap:4px;justify-content:center}
 .btn{background:#22223a;border:1.5px solid #3e3e60;border-radius:12px;color:#c0c0e0;font-size:10px;font-weight:500;padding:6px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.2}
 .btn:hover{background:#2a2a45;color:#f0f0fa;border-color:#6666cc}
 .btn.on{background:#2d1f4e;border-color:#a78bfa;color:#ddd6fe}
 .btn-icon{font-size:14px;line-height:1}
-.btn-label{font-size:8px;color:#7777aa;letter-spacing:0.5px}
+.btn-label{font-size:8px;color:#9999cc;letter-spacing:0.5px}
 .play-btn{background:#2d1f4e;border-color:#a78bfa;color:#ddd6fe;border-radius:14px;padding:7px 14px}
 .play-btn:hover{background:#3d2a6e}
 .cue-btn{color:#fdba74;border-color:#fb923c44;background:#2a1e14}
@@ -82,14 +73,10 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 .loading-bar{height:3px;background:#16162a;border-radius:2px;overflow:hidden;display:none}
 .loading-bar.active{display:block}
 .loading-inner{height:100%;width:0%;background:linear-gradient(90deg,#a78bfa,#f472b6);border-radius:2px;transition:width 0.2s}
-
-/* KEYBOARD LEGEND */
 .kb-legend{background:#16162a;border:1.5px solid #2e2e50;border-radius:12px;padding:8px 10px;display:grid;grid-template-columns:1fr 1fr;gap:3px 10px}
 .kb-row{display:flex;align-items:center;gap:5px}
 .kb-key{background:#2a2a45;border:1px solid #3e3e60;border-radius:5px;padding:1px 5px;font-size:9px;font-family:'DM Mono',monospace;color:#c4b5fd;white-space:nowrap}
 .kb-desc{font-size:9px;color:#7777aa}
-
-/* MIXER */
 .mixer{background:#1e1e34;border:1.5px solid #2e2e50;border-radius:20px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:8px}
 .mx-label{font-size:9px;letter-spacing:2px;color:#9999cc;text-transform:uppercase;font-weight:600}
 .sync-pill{width:100%;text-align:center;padding:6px 4px;border-radius:14px;font-size:10px;font-weight:700;letter-spacing:2px;border:1.5px solid #3e3e60;color:#7777aa;background:#16162a;transition:all 0.4s}
@@ -106,8 +93,12 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 .xfader-wrap{width:100%}
 .xfader-wrap label{font-size:9px;color:#9999cc;display:block;text-align:center;margin-bottom:3px;letter-spacing:1px}
 .xfader-wrap input{width:100%;accent-color:#f472b6;cursor:pointer}
-
-/* COACH */
+.pad-btn{background:#16162a;border:1.5px solid #3e3e60;border-radius:16px;padding:14px 8px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all 0.08s;user-select:none;-webkit-user-select:none}
+.pad-btn:hover{border-color:#a78bfa;background:#1e1a30}
+.pad-btn.active{background:#2d1f4e;border-color:#c4b5fd;box-shadow:0 0 16px rgba(167,139,250,0.4);transform:scale(0.97)}
+.pad-icon{font-size:22px;line-height:1}
+.pad-name{font-size:10px;font-weight:600;color:#c0c0e0;letter-spacing:1px}
+.pad-key{font-size:9px;color:#7777aa;font-family:'DM Mono',monospace;background:#22223a;padding:2px 6px;border-radius:6px;border:1px solid #3e3e60}
 .coach{grid-column:1/-1;background:#1e1e34;border:1.5px solid #3e3e60;border-radius:20px;padding:12px 16px;min-height:52px;display:flex;gap:10px;align-items:flex-start}
 .coach-icon{font-size:22px;line-height:1;flex-shrink:0;margin-top:1px}
 .coach-inner{flex:1}
@@ -117,47 +108,78 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 .coach-text .good{color:#6ee7b7;font-weight:500}
 .coach-text .warn{color:#fdba74;font-weight:500}
 .status-bar{grid-column:1/-1;display:flex;justify-content:space-between;font-size:9px;color:#7777aa;padding:0 6px;font-family:'DM Mono',monospace}
+@keyframes recPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.3;transform:scale(0.7)}}
 
-/* ONBOARDING */
-.pad-btn{background:#16162a;border:1.5px solid #3e3e60;border-radius:16px;padding:14px 8px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all 0.08s;user-select:none;-webkit-user-select:none}
-.pad-btn:hover{border-color:#a78bfa;background:#1e1a30}
-.pad-btn.active{background:#2d1f4e;border-color:#c4b5fd;box-shadow:0 0 16px rgba(167,139,250,0.4);transform:scale(0.97)}
-.pad-icon{font-size:22px;line-height:1}
-.pad-name{font-size:10px;font-weight:600;color:#c0c0e0;letter-spacing:1px}
-.pad-key{font-size:9px;color:#7777aa;font-family:'DM Mono',monospace;background:#22223a;padding:2px 6px;border-radius:6px;border:1px solid #3e3e60}position:fixed;inset:0;background:rgba(10,10,20,0.82);z-index:100;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
-.ob-overlay.hidden{display:none}
-.ob-card{background:#22223a;border:1.5px solid #3e3e60;border-radius:24px;padding:28px 30px;max-width:420px;width:90%;box-shadow:0 0 60px rgba(167,139,250,0.15)}
-.ob-emoji{font-size:36px;margin-bottom:12px;display:block;text-align:center}
+/* ── ONBOARDING ── */
+.ob-overlay{
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  width:100vw;height:100vh;
+  background:rgba(10,10,20,0.88);
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.ob-overlay.hidden{display:none !important}
+.ob-card{
+  background:#22223a;
+  border:1.5px solid #3e3e60;
+  border-radius:24px;
+  padding:32px;
+  max-width:440px;
+  width:90%;
+  box-shadow:0 0 60px rgba(167,139,250,0.2);
+  position:relative;
+  z-index:10000;
+}
+.ob-emoji{font-size:40px;margin-bottom:14px;display:block;text-align:center}
 .ob-step-label{font-size:9px;letter-spacing:2px;color:#9999cc;text-align:center;margin-bottom:8px;font-weight:600}
-.ob-title{font-size:18px;font-weight:600;color:#f0f0fa;margin-bottom:10px;text-align:center;line-height:1.3}
-.ob-body{font-size:13px;color:#c0c0e0;line-height:1.7;margin-bottom:20px;text-align:center}
+.ob-title{font-size:20px;font-weight:600;color:#f0f0fa;margin-bottom:12px;text-align:center;line-height:1.3}
+.ob-body{font-size:13px;color:#c0c0e0;line-height:1.8;margin-bottom:22px;text-align:center}
 .ob-body strong{color:#c4b5fd;font-weight:600}
 .ob-body em{color:#6ee7b7;font-style:normal;font-weight:500}
-.ob-progress{display:flex;gap:5px;justify-content:center;margin-bottom:20px}
-.ob-dot{width:28px;height:4px;border-radius:2px;background:#2e2e50;transition:background 0.3s}
+.ob-progress{display:flex;gap:6px;justify-content:center;margin-bottom:22px}
+.ob-dot{width:32px;height:4px;border-radius:2px;background:#2e2e50;transition:background 0.3s}
 .ob-dot.active{background:linear-gradient(90deg,#a78bfa,#f472b6)}
 .ob-dot.done{background:#4a3a7a}
-.ob-actions{display:flex;gap:8px;justify-content:center}
-.ob-btn-main{background:linear-gradient(135deg,#a78bfa,#f472b6);border:none;border-radius:12px;padding:10px 28px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity 0.15s}
+.ob-actions{display:flex;gap:10px;justify-content:center}
+.ob-btn-main{
+  background:linear-gradient(135deg,#a78bfa,#f472b6);
+  border:none;border-radius:14px;
+  padding:12px 32px;
+  color:#fff;font-size:14px;font-weight:600;
+  cursor:pointer;font-family:'DM Sans',sans-serif;
+  transition:opacity 0.15s;
+}
 .ob-btn-main:hover{opacity:0.88}
-.ob-btn-skip{background:none;border:1.5px solid #3e3e60;border-radius:12px;padding:10px 18px;color:#7777aa;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s}
-.ob-btn-skip:hover{color:#c0c0e0;border-color:#6666aa}
+.ob-btn-skip{
+  background:none;
+  border:1.5px solid #3e3e60;
+  border-radius:14px;
+  padding:12px 20px;
+  color:#9999cc;font-size:12px;
+  cursor:pointer;font-family:'DM Sans',sans-serif;
+  transition:all 0.15s;
+}
+.ob-btn-skip:hover{color:#f0f0fa;border-color:#6666aa}
 .ob-highlight{box-shadow:0 0 0 3px #a78bfa,0 0 24px rgba(167,139,250,0.4)!important;border-color:#a78bfa!important}
 .ob-highlight-green{box-shadow:0 0 0 3px #34d399,0 0 24px rgba(52,211,153,0.35)!important;border-color:#34d399!important}
 </style>
 </head>
 <body>
 
+<!-- ONBOARDING -->
 <div class="ob-overlay" id="obOverlay">
   <div class="ob-card">
     <span class="ob-emoji" id="obEmoji">🎧</span>
     <div class="ob-step-label" id="obStepLabel">STEP 1 OF 5</div>
     <div class="ob-title" id="obTitle">welcome to YYYAS3</div>
-    <div class="ob-body" id="obBody">your personal dj playground — built for <strong>cutie girls learning to mix</strong>. in the next 5 steps you'll learn everything you need to play your first set. ready?</div>
+    <div class="ob-body" id="obBody">your personal dj playground — built for <strong>cutie girls learning to mix</strong>. in the next 5 steps you'll learn everything you need to play your first set.</div>
     <div class="ob-progress" id="obProgress"></div>
     <div class="ob-actions">
-      <button class="ob-btn-main" id="obNext" onclick="nextStep()">let's go ✦</button>
-      <button class="ob-btn-skip" onclick="skipOnboarding()">skip intro</button>
+      <button class="ob-btn-main" id="obNextBtn">let's go ✦</button>
+      <button class="ob-btn-skip" id="obSkipBtn">skip intro</button>
     </div>
   </div>
 </div>
@@ -171,33 +193,21 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
   <!-- DECK A -->
   <div class="deck" id="deckA">
     <div class="deck-title a">DECK A</div>
-
-    <div class="drop-zone" id="dropA"
-      ondragover="onDragOver(event,'A')"
-      ondragleave="onDragLeave('A')"
-      ondrop="onDrop(event,'A')"
-      onclick="document.getElementById('fileA').click()">
+    <div class="drop-zone" id="dropA" ondragover="onDragOver(event,'A')" ondragleave="onDragLeave('A')" ondrop="onDrop(event,'A')" onclick="document.getElementById('fileA').click()">
       <input type="file" id="fileA" accept="audio/*" multiple style="display:none" onchange="onFileInput(event,'A')">
       <div class="drop-icon">🎵</div>
       <div class="drop-text"><strong>drop MP3s here</strong><br>or click to browse (up to 3)</div>
     </div>
-
-    <div class="queue" id="queueA">
-      <div class="queue-label">QUEUE</div>
-    </div>
-
+    <div class="queue" id="queueA"><div class="queue-label">QUEUE</div></div>
     <div class="loading-bar" id="loadBarA"><div class="loading-inner" id="loadInnerA"></div></div>
-
     <div class="track-display" id="trackDisplayA">
       <div class="track-name" id="nameA">—</div>
       <div class="track-sub" id="subA">—</div>
     </div>
     <div class="waveform-area" id="waveAreaA" onclick="scrub('A',event)">
-      <canvas id="waveA"></canvas>
-      <div class="playhead-line"></div>
+      <canvas id="waveA"></canvas><div class="playhead-line"></div>
     </div>
     <div class="time-row"><span id="timeA">0:00</span><span id="durA">0:00</span></div>
-
     <div class="bpm-pitch-row" id="bpmRowA">
       <div class="bpm-box"><div class="bpm-val" id="bpmA">—</div><div class="bpm-lbl">BPM</div></div>
       <div class="pitch-wrap">
@@ -206,35 +216,20 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
         <div class="pitch-pct" id="pitchValA">0.0%</div>
       </div>
     </div>
-
     <div class="transport">
-      <button class="btn cue-btn" onclick="cue('A')" title="Mark start point [S]">
-        <span class="btn-icon">📍</span><span class="btn-label">CUE [S]</span>
-      </button>
-      <button class="btn play-btn" id="playBtnA" onclick="togglePlay('A')" title="Play / Pause [A]">
-        <span class="btn-icon" id="playIconA">▶</span><span class="btn-label">PLAY [A]</span>
-      </button>
-      <button class="btn" onclick="nudge('A',-0.1)" title="Nudge back [Z]">
-        <span class="btn-icon">⏪</span><span class="btn-label">BACK [Z]</span>
-      </button>
-      <button class="btn" onclick="nudge('A',0.1)" title="Nudge forward [X]">
-        <span class="btn-icon">⏩</span><span class="btn-label">FWD [X]</span>
-      </button>
+      <button class="btn cue-btn" onclick="cue('A')"><span class="btn-icon">📍</span><span class="btn-label">CUE [S]</span></button>
+      <button class="btn play-btn" id="playBtnA" onclick="togglePlay('A')"><span class="btn-icon" id="playIconA">▶</span><span class="btn-label">PLAY [A]</span></button>
+      <button class="btn" onclick="nudge('A',-0.1)"><span class="btn-icon">⏪</span><span class="btn-label">BACK [Z]</span></button>
+      <button class="btn" onclick="nudge('A',0.1)"><span class="btn-icon">⏩</span><span class="btn-label">FWD [X]</span></button>
     </div>
-
     <div class="loop-row">
-      <button class="btn loop-btn" onclick="setLoop('A',1)">🔁 1 bar</button>
+      <button class="btn loop-btn" onclick="setLoop('A',1)">🔁 1</button>
       <button class="btn loop-btn" onclick="setLoop('A',2)">🔁 2</button>
       <button class="btn loop-btn" onclick="setLoop('A',4)">🔁 4</button>
       <button class="btn loop-btn" onclick="setLoop('A',8)">🔁 8</button>
       <button class="btn loop-btn" id="loopOffA" onclick="clearLoop('A')">✕ loop</button>
     </div>
-
-    <div class="vol-row">
-      <label>VOL</label>
-      <input type="range" id="volA" min="0" max="1" step="0.01" value="0.8" oninput="setVol('A')">
-    </div>
-
+    <div class="vol-row"><label>VOL</label><input type="range" id="volA" min="0" max="1" step="0.01" value="0.8" oninput="setVol('A')"></div>
     <div class="kb-legend">
       <div class="kb-row"><span class="kb-key">A</span><span class="kb-desc">play / pause</span></div>
       <div class="kb-row"><span class="kb-key">S</span><span class="kb-desc">set cue point</span></div>
@@ -274,41 +269,27 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
       <label>crossfader [C] ← → [V]</label>
       <input type="range" id="xfader" min="0" max="1" step="0.01" value="0" oninput="updateXfader()">
     </div>
-    <div style="font-size:8px;color:#44445a;text-align:center;line-height:1.5">
-      [C] fade left &nbsp;·&nbsp; [V] fade right<br>[Space] play both decks
-    </div>
+    <div style="font-size:8px;color:#44445a;text-align:center;line-height:1.6">[C] fade left · [V] fade right<br>[Space] play both</div>
   </div>
 
   <!-- DECK B -->
   <div class="deck" id="deckB">
     <div class="deck-title b">DECK B</div>
-
-    <div class="drop-zone b-zone" id="dropB"
-      ondragover="onDragOver(event,'B')"
-      ondragleave="onDragLeave('B')"
-      ondrop="onDrop(event,'B')"
-      onclick="document.getElementById('fileB').click()">
+    <div class="drop-zone b-zone" id="dropB" ondragover="onDragOver(event,'B')" ondragleave="onDragLeave('B')" ondrop="onDrop(event,'B')" onclick="document.getElementById('fileB').click()">
       <input type="file" id="fileB" accept="audio/*" multiple style="display:none" onchange="onFileInput(event,'B')">
       <div class="drop-icon">🎵</div>
       <div class="drop-text b-text"><strong>drop MP3s here</strong><br>or click to browse (up to 3)</div>
     </div>
-
-    <div class="queue" id="queueB">
-      <div class="queue-label">QUEUE</div>
-    </div>
-
+    <div class="queue" id="queueB"><div class="queue-label">QUEUE</div></div>
     <div class="loading-bar" id="loadBarB"><div class="loading-inner" id="loadInnerB"></div></div>
-
     <div class="track-display" id="trackDisplayB">
       <div class="track-name" id="nameB">—</div>
       <div class="track-sub" id="subB">—</div>
     </div>
     <div class="waveform-area" id="waveAreaB" onclick="scrub('B',event)">
-      <canvas id="waveB"></canvas>
-      <div class="playhead-line"></div>
+      <canvas id="waveB"></canvas><div class="playhead-line"></div>
     </div>
     <div class="time-row"><span id="timeB">0:00</span><span id="durB">0:00</span></div>
-
     <div class="bpm-pitch-row" id="bpmRowB">
       <div class="bpm-box" style="border-color:#34d39944"><div class="bpm-val" id="bpmB" style="color:#6ee7b7">—</div><div class="bpm-lbl" style="color:#1a4a35">BPM</div></div>
       <div class="pitch-wrap">
@@ -317,35 +298,20 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
         <div class="pitch-pct" id="pitchValB" style="color:#6ee7b7">0.0%</div>
       </div>
     </div>
-
     <div class="transport">
-      <button class="btn cue-btn" onclick="cue('B')" title="Mark start point [L]">
-        <span class="btn-icon">📍</span><span class="btn-label">CUE [L]</span>
-      </button>
-      <button class="btn play-btn" id="playBtnB" onclick="togglePlay('B')" title="Play / Pause [K]" style="background:#1f3a2d;border-color:#34d399;color:#6ee7b7">
-        <span class="btn-icon" id="playIconB">▶</span><span class="btn-label">PLAY [K]</span>
-      </button>
-      <button class="btn" onclick="nudge('B',-0.1)" title="Nudge back [N]">
-        <span class="btn-icon">⏪</span><span class="btn-label">BACK [N]</span>
-      </button>
-      <button class="btn" onclick="nudge('B',0.1)" title="Nudge forward [M]">
-        <span class="btn-icon">⏩</span><span class="btn-label">FWD [M]</span>
-      </button>
+      <button class="btn cue-btn" onclick="cue('B')"><span class="btn-icon">📍</span><span class="btn-label">CUE [L]</span></button>
+      <button class="btn play-btn" id="playBtnB" onclick="togglePlay('B')" style="background:#1f3a2d;border-color:#34d399;color:#6ee7b7"><span class="btn-icon" id="playIconB">▶</span><span class="btn-label">PLAY [K]</span></button>
+      <button class="btn" onclick="nudge('B',-0.1)"><span class="btn-icon">⏪</span><span class="btn-label">BACK [N]</span></button>
+      <button class="btn" onclick="nudge('B',0.1)"><span class="btn-icon">⏩</span><span class="btn-label">FWD [M]</span></button>
     </div>
-
     <div class="loop-row">
-      <button class="btn loop-btn" onclick="setLoop('B',1)">🔁 1 bar</button>
+      <button class="btn loop-btn" onclick="setLoop('B',1)">🔁 1</button>
       <button class="btn loop-btn" onclick="setLoop('B',2)">🔁 2</button>
       <button class="btn loop-btn" onclick="setLoop('B',4)">🔁 4</button>
       <button class="btn loop-btn" onclick="setLoop('B',8)">🔁 8</button>
       <button class="btn loop-btn" id="loopOffB" onclick="clearLoop('B')">✕ loop</button>
     </div>
-
-    <div class="vol-row">
-      <label>VOL</label>
-      <input type="range" id="volB" min="0" max="1" step="0.01" value="0.8" oninput="setVol('B')" style="accent-color:#34d399">
-    </div>
-
+    <div class="vol-row"><label>VOL</label><input type="range" id="volB" min="0" max="1" step="0.01" value="0.8" oninput="setVol('B')" style="accent-color:#34d399"></div>
     <div class="kb-legend">
       <div class="kb-row"><span class="kb-key">K</span><span class="kb-desc">play / pause</span></div>
       <div class="kb-row"><span class="kb-key">L</span><span class="kb-desc">set cue point</span></div>
@@ -361,24 +327,16 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
     <div style="font-size:9px;letter-spacing:2px;color:#9999cc;font-weight:600;margin-bottom:10px">SAMPLER — hold to play, release to stop</div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
       <button class="pad-btn" id="pad1" onmousedown="padDown(1)" onmouseup="padUp(1)" onmouseleave="padUp(1)" ontouchstart="padDown(1)" ontouchend="padUp(1)">
-        <div class="pad-icon">💣</div>
-        <div class="pad-name">808 KICK</div>
-        <div class="pad-key">[1]</div>
+        <div class="pad-icon">💣</div><div class="pad-name">808 KICK</div><div class="pad-key">[1]</div>
       </button>
       <button class="pad-btn" id="pad2" onmousedown="padDown(2)" onmouseup="padUp(2)" onmouseleave="padUp(2)" ontouchstart="padDown(2)" ontouchend="padUp(2)">
-        <div class="pad-icon">🥁</div>
-        <div class="pad-name">SNARE</div>
-        <div class="pad-key">[2]</div>
+        <div class="pad-icon">🥁</div><div class="pad-name">SNARE</div><div class="pad-key">[2]</div>
       </button>
       <button class="pad-btn" id="pad3" onmousedown="padDown(3)" onmouseup="padUp(3)" onmouseleave="padUp(3)" ontouchstart="padDown(3)" ontouchend="padUp(3)">
-        <div class="pad-icon">🎩</div>
-        <div class="pad-name">HI-HAT</div>
-        <div class="pad-key">[3]</div>
+        <div class="pad-icon">🎩</div><div class="pad-name">HI-HAT</div><div class="pad-key">[3]</div>
       </button>
       <button class="pad-btn" id="pad4" onmousedown="padDown(4)" onmouseup="padUp(4)" onmouseleave="padUp(4)" ontouchstart="padDown(4)" ontouchend="padUp(4)">
-        <div class="pad-icon">🌊</div>
-        <div class="pad-name">CHORD STAB</div>
-        <div class="pad-key">[4]</div>
+        <div class="pad-icon">🌊</div><div class="pad-name">CHORD STAB</div><div class="pad-key">[4]</div>
       </button>
     </div>
   </div>
@@ -390,7 +348,7 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
       <span id="recLabel">record mix</span>
     </button>
     <div id="recTimer" style="font-size:12px;color:#7777aa;font-family:'DM Mono',monospace;display:none">00:00</div>
-    <div id="recStatus" style="font-size:11px;color:#7777aa;flex:1">ready to record — press to capture your mix as audio</div>
+    <div id="recStatus" style="font-size:11px;color:#7777aa;flex:1">ready to record — press to capture your mix</div>
     <a id="recDownload" style="display:none;background:linear-gradient(135deg,#a78bfa,#f472b6);border:none;border-radius:12px;padding:8px 16px;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none">⬇ download mix</a>
   </div>
 
@@ -410,8 +368,8 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 
 <script>
 const actx = new (window.AudioContext || window.webkitAudioContext)();
-const queues = { A:[], B:[] }; // [{name, buffer, duration}]
-const state = {
+const queues={A:[],B:[]};
+const state={
   A:{playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,duration:0,waveData:null,source:null,buffer:null,startTime:0,startOffset:0,playbackRate:1,gainNode:null,hiNode:null,midNode:null,loNode:null,queueIdx:0},
   B:{playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,duration:0,waveData:null,source:null,buffer:null,startTime:0,startOffset:0,playbackRate:1,gainNode:null,hiNode:null,midNode:null,loNode:null,queueIdx:0}
 };
@@ -419,21 +377,59 @@ let rafId=null;
 
 /* ── ONBOARDING ── */
 const steps=[
-  {emoji:'🎧',title:'welcome to YYYAS3',body:'your personal dj playground — built for <strong>cutie girls learning to mix</strong>. in the next 5 steps you\'ll learn everything you need to play your first set. ready?',highlight:null,btn:'let\'s go ✦'},
-  {emoji:'🎵',title:'meet the decks',body:'drop up to <strong>3 MP3s</strong> onto each deck to build a queue. tracks auto-play in order. drag them to reorder. click any queued track to load it immediately.',highlight:'deckA',btn:'got it →'},
+  {emoji:'🎧',title:'welcome to YYYAS3',body:'your personal dj playground — built for <strong>cutie girls learning to mix</strong>. in 5 steps you\'ll learn everything you need to play your first set.',highlight:null,btn:'let\'s go ✦'},
+  {emoji:'🎵',title:'meet the decks',body:'drop up to <strong>3 MP3s</strong> onto each deck to build a queue. tracks auto-play in order. drag to reorder. click any track to load it immediately.',highlight:'deckA',btn:'got it →'},
   {emoji:'🥁',title:'BPM + pitch',body:'<strong>BPM</strong> is detected automatically. use the <em>pitch fader</em> — or keys <em>Q/W</em> on deck A, <em>O/P</em> on deck B — to match speeds until the mixer shows <em>LOCKED</em>.',highlight:'bpmRowA',btn:'makes sense →'},
-  {emoji:'🎚️',title:'mixer + crossfader',body:'<em>EQ knobs</em> shape the sound. <em>channel faders</em> control volume. the <em>crossfader</em> blends between decks. use keys <em>C</em> and <em>V</em> to fade left and right.',highlight:'mixerEl',btn:'got it →'},
-  {emoji:'🔥',title:'your first mix',body:'<strong>1.</strong> drop a song on deck A, press play <em>[A]</em>. <strong>2.</strong> drop a song on deck B. <strong>3.</strong> match BPMs with pitch fader. <strong>4.</strong> press <em>[V]</em> repeatedly to crossfade in. let\'s go!',highlight:null,btn:'start mixing ✦'}
+  {emoji:'🎚️',title:'mixer + crossfader',body:'<em>EQ knobs</em> shape the sound — try cutting lows on deck B before blending in. <em>channel faders</em> control volume. press <em>C</em> and <em>V</em> to move the crossfader.',highlight:'mixerEl',btn:'got it →'},
+  {emoji:'🔥',title:'your first mix',body:'<strong>1.</strong> drop a song on deck A, press <em>A</em> to play. <strong>2.</strong> drop a song on deck B. <strong>3.</strong> match BPMs with pitch fader. <strong>4.</strong> press <em>V</em> to crossfade in. let\'s go!',highlight:null,btn:'start mixing ✦'}
 ];
 let currentStep=0,highlightedEl=null;
-function buildDots(){document.getElementById('obProgress').innerHTML=steps.map((_,i)=>`<div class="ob-dot" id="dot${i}"></div>`).join('');}
-function updateDots(){steps.forEach((_,i)=>{const d=document.getElementById('dot'+i);if(d)d.className='ob-dot'+(i<currentStep?' done':i===currentStep?' active':'');});}
-function clearHighlight(){if(highlightedEl){highlightedEl.classList.remove('ob-highlight','ob-highlight-green');highlightedEl=null;}}
-function applyHighlight(id){clearHighlight();if(!id)return;const el=document.getElementById(id);if(!el)return;highlightedEl=el;el.classList.add(id==='mixerEl'?'ob-highlight-green':'ob-highlight');el.scrollIntoView({behavior:'smooth',block:'nearest'});}
-function showStep(i){const s=steps[i];document.getElementById('obEmoji').textContent=s.emoji;document.getElementById('obStepLabel').textContent=`STEP ${i+1} OF ${steps.length}`;document.getElementById('obTitle').textContent=s.title;document.getElementById('obBody').innerHTML=s.body;document.getElementById('obNext').textContent=s.btn;updateDots();applyHighlight(s.highlight);}
-function nextStep(){if(currentStep<steps.length-1){currentStep++;showStep(currentStep);}else skipOnboarding();}
-function skipOnboarding(){document.getElementById('obOverlay').classList.add('hidden');clearHighlight();}
-buildDots();showStep(0);
+
+function buildDots(){
+  const p=document.getElementById('obProgress');
+  p.innerHTML=steps.map((_,i)=>`<div class="ob-dot" id="dot${i}"></div>`).join('');
+}
+function updateDots(){
+  steps.forEach((_,i)=>{
+    const d=document.getElementById('dot'+i);
+    if(d)d.className='ob-dot'+(i<currentStep?' done':i===currentStep?' active':'');
+  });
+}
+function clearHighlight(){
+  if(highlightedEl){highlightedEl.classList.remove('ob-highlight','ob-highlight-green');highlightedEl=null;}
+}
+function applyHighlight(id){
+  clearHighlight();
+  if(!id)return;
+  const el=document.getElementById(id);
+  if(!el)return;
+  highlightedEl=el;
+  el.classList.add(id==='mixerEl'?'ob-highlight-green':'ob-highlight');
+}
+function showStep(i){
+  const s=steps[i];
+  document.getElementById('obEmoji').textContent=s.emoji;
+  document.getElementById('obStepLabel').textContent=`STEP ${i+1} OF ${steps.length}`;
+  document.getElementById('obTitle').textContent=s.title;
+  document.getElementById('obBody').innerHTML=s.body;
+  document.getElementById('obNextBtn').textContent=s.btn;
+  updateDots();
+  applyHighlight(s.highlight);
+}
+function nextStep(){
+  if(currentStep<steps.length-1){currentStep++;showStep(currentStep);}
+  else skipOnboarding();
+}
+function skipOnboarding(){
+  document.getElementById('obOverlay').classList.add('hidden');
+  clearHighlight();
+}
+
+// Wire up buttons with JS not inline onclick to avoid any scope issues
+document.getElementById('obNextBtn').addEventListener('click',nextStep);
+document.getElementById('obSkipBtn').addEventListener('click',skipOnboarding);
+buildDots();
+showStep(0);
 
 /* ── HELPERS ── */
 function fmt(s){if(!s||isNaN(s))return'0:00';return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');}
@@ -451,24 +447,16 @@ function showLoader(deck,on){
 /* ── FILE HANDLING ── */
 function onDragOver(e,deck){e.preventDefault();e.stopPropagation();document.getElementById('drop'+deck).classList.add('drag-over');}
 function onDragLeave(deck){document.getElementById('drop'+deck).classList.remove('drag-over');}
-function onDrop(e,deck){
-  e.preventDefault();e.stopPropagation();onDragLeave(deck);
-  const files=Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('audio/'));
-  files.forEach(f=>addToQueue(deck,f));
-}
-function onFileInput(e,deck){
-  Array.from(e.target.files).forEach(f=>addToQueue(deck,f));
-  e.target.value='';
-}
+function onDrop(e,deck){e.preventDefault();e.stopPropagation();onDragLeave(deck);Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('audio/')).forEach(f=>addToQueue(deck,f));}
+function onFileInput(e,deck){Array.from(e.target.files).forEach(f=>addToQueue(deck,f));e.target.value='';}
 
 async function addToQueue(deck,file){
-  if(queues[deck].length>=3){setCoach('👀','<span class="warn">queue is full (3 tracks max).</span> remove a track first.');return;}
+  if(queues[deck].length>=3){setCoach('👀','<span class="warn">queue full (3 max).</span> remove a track first.');return;}
   showLoader(deck,true);
   try{
     const buf=await file.arrayBuffer();
     actx.decodeAudioData(buf,decoded=>{
-      const entry={name:file.name.replace(/\.[^.]+$/,''),buffer:decoded,duration:decoded.duration};
-      queues[deck].push(entry);
+      queues[deck].push({name:file.name.replace(/\.[^.]+$/,''),buffer:decoded,duration:decoded.duration});
       renderQueue(deck);
       showLoader(deck,false);
       if(queues[deck].length===1)loadFromQueue(deck,0);
@@ -479,12 +467,7 @@ async function addToQueue(deck,file){
 
 function removeFromQueue(deck,idx){
   const s=state[deck];
-  if(idx===s.queueIdx&&s.playing){
-    try{s.source.stop();}catch(e){}
-    s.source=null;s.playing=false;
-    document.getElementById('playBtn'+deck).innerHTML='▶';
-    document.getElementById('playIcon'+deck).textContent='▶';
-  }
+  if(idx===s.queueIdx&&s.playing){try{s.source.stop();}catch(e){}s.source=null;s.playing=false;document.getElementById('playIcon'+deck).textContent='▶';}
   queues[deck].splice(idx,1);
   if(s.queueIdx>idx)s.queueIdx=Math.max(0,s.queueIdx-1);
   else if(s.queueIdx>=queues[deck].length)s.queueIdx=Math.max(0,queues[deck].length-1);
@@ -495,64 +478,42 @@ function removeFromQueue(deck,idx){
 }
 
 function clearDeck(deck){
-  const s=state[deck];
-  s.buffer=null;s.waveData=null;
+  const s=state[deck];s.buffer=null;s.waveData=null;
   document.getElementById('trackDisplay'+deck).classList.remove('visible');
   document.getElementById('waveArea'+deck).classList.remove('visible');
-  document.getElementById('name'+deck).textContent='—';
-  document.getElementById('sub'+deck).textContent='—';
-  document.getElementById('bpm'+deck).textContent='—';
-  document.getElementById('time'+deck).textContent='0:00';
-  document.getElementById('dur'+deck).textContent='0:00';
+  document.getElementById('name'+deck).textContent='—';document.getElementById('sub'+deck).textContent='—';
+  document.getElementById('bpm'+deck).textContent='—';document.getElementById('time'+deck).textContent='0:00';document.getElementById('dur'+deck).textContent='0:00';
   document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: empty`;
 }
 
 function loadFromQueue(deck,idx){
-  const q=queues[deck];
-  if(!q[idx])return;
+  const q=queues[deck];if(!q[idx])return;
   state[deck].queueIdx=idx;
-  const entry=q[idx];
-  const s=state[deck];
+  const entry=q[idx],s=state[deck];
   if(s.source){try{s.source.stop();}catch(e){}}
-  s.source=null;s.playing=false;s.startOffset=0;s.playbackRate=1+(s.pitch/100);
-  s.buffer=entry.buffer;s.duration=entry.duration;
+  s.source=null;s.playing=false;s.startOffset=0;s.playbackRate=1+(s.pitch/100);s.buffer=entry.buffer;s.duration=entry.duration;
   document.getElementById('name'+deck).textContent=entry.name;
   document.getElementById('sub'+deck).textContent=fmt(entry.duration)+' · ready';
   document.getElementById('dur'+deck).textContent=fmt(entry.duration);
   document.getElementById('time'+deck).textContent='0:00';
-  document.getElementById('playBtn'+deck).innerHTML='▶';
   document.getElementById('playIcon'+deck).textContent='▶';
   document.getElementById('trackDisplay'+deck).classList.add('visible');
   document.getElementById('waveArea'+deck).classList.add('visible');
   document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: loaded`;
-  buildAudioGraph(deck);
-  drawWaveformFromBuffer(deck,entry.buffer);
-  detectBPM(deck,entry.buffer);
-  renderQueue(deck);
-  updateCoach();
+  buildAudioGraph(deck);drawWaveformFromBuffer(deck,entry.buffer);detectBPM(deck,entry.buffer);renderQueue(deck);updateCoach();
 }
 
-/* ── QUEUE UI ── */
 let dragSrc={deck:null,idx:null};
 function renderQueue(deck){
-  const q=queues[deck];
-  const container=document.getElementById('queue'+deck);
+  const q=queues[deck],container=document.getElementById('queue'+deck);
   const label=container.querySelector('.queue-label');
-  container.innerHTML='';
-  container.appendChild(label);
-  if(q.length===0){const empty=document.createElement('div');empty.style.cssText='font-size:10px;color:#44445a;padding:4px 2px';empty.textContent='no tracks queued';container.appendChild(empty);return;}
+  container.innerHTML='';container.appendChild(label);
+  if(q.length===0){const e=document.createElement('div');e.style.cssText='font-size:10px;color:#44445a;padding:4px 2px';e.textContent='no tracks queued';container.appendChild(e);return;}
   q.forEach((entry,i)=>{
     const el=document.createElement('div');
     el.className='queue-item'+(i===state[deck].queueIdx?' active-track'+(deck==='B'?' b-active':''):'');
     el.draggable=true;
-    el.innerHTML=`
-      <span class="queue-num">${i+1}</span>
-      <div class="queue-info">
-        <div class="queue-name">${escH(entry.name)}</div>
-        <div class="queue-dur">${fmt(entry.duration)}</div>
-      </div>
-      ${i===state[deck].queueIdx?`<span class="queue-now${deck==='B'?' b-now':''}">NOW</span>`:''}
-      <button class="queue-remove" onclick="removeFromQueue('${deck}',${i})" title="Remove">✕</button>`;
+    el.innerHTML=`<span class="queue-num">${i+1}</span><div class="queue-info"><div class="queue-name">${escH(entry.name)}</div><div class="queue-dur">${fmt(entry.duration)}</div></div>${i===state[deck].queueIdx?`<span class="queue-now${deck==='B'?' b-now':''}">NOW</span>`:''}<button class="queue-remove" onclick="removeFromQueue('${deck}',${i})">✕</button>`;
     el.addEventListener('click',e=>{if(!e.target.classList.contains('queue-remove'))loadFromQueue(deck,i);});
     el.addEventListener('dragstart',e=>{dragSrc={deck,idx:i};el.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
     el.addEventListener('dragend',()=>el.classList.remove('dragging'));
@@ -561,9 +522,7 @@ function renderQueue(deck){
     el.addEventListener('drop',e=>{
       e.preventDefault();e.stopPropagation();el.classList.remove('drag-target');
       if(dragSrc.deck===deck&&dragSrc.idx!==i){
-        const arr=queues[deck];
-        const [moved]=arr.splice(dragSrc.idx,1);
-        arr.splice(i,0,moved);
+        const arr=queues[deck],[moved]=arr.splice(dragSrc.idx,1);arr.splice(i,0,moved);
         if(state[deck].queueIdx===dragSrc.idx)state[deck].queueIdx=i;
         else if(state[deck].queueIdx>dragSrc.idx&&state[deck].queueIdx<=i)state[deck].queueIdx--;
         else if(state[deck].queueIdx<dragSrc.idx&&state[deck].queueIdx>=i)state[deck].queueIdx++;
@@ -583,30 +542,18 @@ function buildAudioGraph(deck){
   const lo=actx.createBiquadFilter();lo.type='lowshelf';lo.frequency.value=320;lo.gain.value=0;
   lo.connect(mid);mid.connect(hi);hi.connect(gain);gain.connect(actx.destination);
   s.gainNode=gain;s.hiNode=hi;s.midNode=mid;s.loNode=lo;
-  // patch into recorder if active
   if(mediaRecorder&&mediaRecorder.state==='recording')patchGainToRecorder(gain);
 }
 
 function createSource(deck){
   const s=state[deck];
-  const src=actx.createBufferSource();
-  src.buffer=s.buffer;
-  src.playbackRate.value=s.playbackRate;
-  src.connect(s.loNode);
+  const src=actx.createBufferSource();src.buffer=s.buffer;src.playbackRate.value=s.playbackRate;src.connect(s.loNode);
   src.onended=()=>{
     if(!s.playing)return;
-    s.playing=false;s.startOffset=0;
-    document.getElementById('playIcon'+deck).textContent='▶';
-    document.getElementById('playBtn'+deck).querySelector('.btn-label').textContent='PLAY ['+(deck==='A'?'A':'K')+']';
-    const nextIdx=s.queueIdx+1;
-    if(nextIdx<queues[deck].length){
-      loadFromQueue(deck,nextIdx);
-      setTimeout(()=>togglePlay(deck),100);
-      setCoach('🎵','auto-playing next track on deck '+deck.toLowerCase()+'!');
-    }else{
-      document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: finished`;
-      setCoach('🎧','queue finished on deck '+deck.toLowerCase()+'. drop new tracks to keep going!');
-    }
+    s.playing=false;s.startOffset=0;document.getElementById('playIcon'+deck).textContent='▶';
+    const next=s.queueIdx+1;
+    if(next<queues[deck].length){loadFromQueue(deck,next);setTimeout(()=>togglePlay(deck),100);setCoach('🎵','auto-playing next track on deck '+deck.toLowerCase()+'!');}
+    else{document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: finished`;setCoach('🎧','queue finished on deck '+deck.toLowerCase()+'.');}
   };
   return src;
 }
@@ -614,19 +561,14 @@ function createSource(deck){
 /* ── TRANSPORT ── */
 function togglePlay(deck){
   const s=state[deck];
-  if(!s.buffer){setCoach('👀','<span class="warn">no track loaded!</span> drop an MP3 onto the deck first.');return;}
+  if(!s.buffer){setCoach('👀','<span class="warn">no track loaded!</span> drop an MP3 first.');return;}
   if(actx.state==='suspended')actx.resume();
   if(s.playing){
-    s.startOffset=getPos(deck);
-    try{s.source.stop();}catch(e){}
-    s.source=null;s.playing=false;
+    s.startOffset=getPos(deck);try{s.source.stop();}catch(e){}s.source=null;s.playing=false;
     document.getElementById('playIcon'+deck).textContent='▶';
     document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: paused`;
   }else{
-    s.source=createSource(deck);
-    s.startTime=actx.currentTime;
-    s.source.start(0,Math.min(s.startOffset,s.duration-0.01));
-    s.playing=true;
+    s.source=createSource(deck);s.startTime=actx.currentTime;s.source.start(0,Math.min(s.startOffset,s.duration-0.01));s.playing=true;
     document.getElementById('playIcon'+deck).textContent='⏸';
     document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: playing`;
     if(!rafId)startRAF();
@@ -635,33 +577,26 @@ function togglePlay(deck){
 }
 
 function cue(deck){
-  const s=state[deck];
-  s.cuePoint=getPos(deck);
+  const s=state[deck];s.cuePoint=getPos(deck);
   if(s.playing){try{s.source.stop();}catch(e){}s.source=null;s.playing=false;}
-  s.startOffset=s.cuePoint;
-  document.getElementById('playIcon'+deck).textContent='▶';
-  setCoach('✨','cue set at '+fmt(s.cuePoint)+'. press play to jump back here anytime.');
+  s.startOffset=s.cuePoint;document.getElementById('playIcon'+deck).textContent='▶';
+  setCoach('✨','cue set at '+fmt(s.cuePoint)+'.');
 }
-
 function nudge(deck,sec){
   const s=state[deck];if(!s.buffer)return;
-  const newPos=Math.max(0,Math.min(s.duration-0.01,getPos(deck)+sec));
-  const was=s.playing;
+  const np=Math.max(0,Math.min(s.duration-0.01,getPos(deck)+sec)),was=s.playing;
   if(was){try{s.source.stop();}catch(e){}s.source=null;s.playing=false;}
-  s.startOffset=newPos;
-  if(was){s.source=createSource(deck);s.startTime=actx.currentTime;s.source.start(0,newPos);s.playing=true;}
+  s.startOffset=np;
+  if(was){s.source=createSource(deck);s.startTime=actx.currentTime;s.source.start(0,np);s.playing=true;}
 }
-
 function scrub(deck,e){
   const s=state[deck];if(!s.buffer)return;
   const rect=document.getElementById('waveArea'+deck).getBoundingClientRect();
-  const newPos=Math.max(0,Math.min(s.duration-0.01,((e.clientX-rect.left)/rect.width)*s.duration));
-  const was=s.playing;
+  const np=Math.max(0,Math.min(s.duration-0.01,((e.clientX-rect.left)/rect.width)*s.duration)),was=s.playing;
   if(was){try{s.source.stop();}catch(e2){}s.source=null;s.playing=false;}
-  s.startOffset=newPos;
-  if(was){s.source=createSource(deck);s.startTime=actx.currentTime;s.source.start(0,newPos);s.playing=true;}
+  s.startOffset=np;
+  if(was){s.source=createSource(deck);s.startTime=actx.currentTime;s.source.start(0,np);s.playing=true;}
 }
-
 function setLoop(deck,bars){state[deck].loop=bars;state[deck].cuePoint=getPos(deck);document.getElementById('loopOff'+deck).classList.add('on');setCoach('🔁',`${bars}-bar loop active.`);}
 function clearLoop(deck){state[deck].loop=null;document.getElementById('loopOff'+deck).classList.remove('on');}
 
@@ -672,16 +607,8 @@ function startRAF(){
     ['A','B'].forEach(deck=>{
       const s=state[deck];if(!s.playing)return;
       const pos=getPos(deck);
-      document.getElementById('time'+deck).textContent=fmt(pos);
-      drawWaveform(deck,pos/s.duration);
-      if(s.loop&&s.bpm){
-        const ld=(60/s.bpm)*4*s.loop;
-        if(pos>=s.cuePoint+ld){
-          try{s.source.stop();}catch(e){}
-          s.startOffset=s.cuePoint;s.source=createSource(deck);
-          s.startTime=actx.currentTime;s.source.start(0,s.cuePoint);
-        }
-      }
+      document.getElementById('time'+deck).textContent=fmt(pos);drawWaveform(deck,pos/s.duration);
+      if(s.loop&&s.bpm){const ld=(60/s.bpm)*4*s.loop;if(pos>=s.cuePoint+ld){try{s.source.stop();}catch(e){}s.startOffset=s.cuePoint;s.source=createSource(deck);s.startTime=actx.currentTime;s.source.start(0,s.cuePoint);}}
     });
     updateSyncIndicator();
   }
@@ -689,51 +616,24 @@ function startRAF(){
 }
 
 /* ── PITCH / VOL / EQ ── */
-function updatePitch(deck){
-  const val=parseFloat(document.getElementById('pitch'+deck).value);
-  state[deck].pitch=val;state[deck].playbackRate=1+(val/100);
-  document.getElementById('pitchVal'+deck).textContent=(val>=0?'+':'')+val.toFixed(1)+'%';
-  if(state[deck].source)state[deck].source.playbackRate.value=state[deck].playbackRate;
-  updateSyncIndicator();
-}
-function setPitch(deck,delta){
-  const el=document.getElementById('pitch'+deck);
-  el.value=Math.max(-8,Math.min(8,parseFloat(el.value)+delta));
-  updatePitch(deck);
-}
+function updatePitch(deck){const val=parseFloat(document.getElementById('pitch'+deck).value);state[deck].pitch=val;state[deck].playbackRate=1+(val/100);document.getElementById('pitchVal'+deck).textContent=(val>=0?'+':'')+val.toFixed(1)+'%';if(state[deck].source)state[deck].source.playbackRate.value=state[deck].playbackRate;updateSyncIndicator();}
+function setPitch(deck,delta){const el=document.getElementById('pitch'+deck);el.value=Math.max(-8,Math.min(8,parseFloat(el.value)+delta));updatePitch(deck);}
 function setVol(deck){const val=parseFloat(document.getElementById('vol'+deck).value);state[deck].vol=val;if(state[deck].gainNode)state[deck].gainNode.gain.value=val;}
 function setFaderVol(deck){const val=parseFloat(document.getElementById('fader'+deck).value);if(state[deck].gainNode)state[deck].gainNode.gain.value=val*state[deck].vol;}
-function updateXfader(){
-  const x=parseFloat(document.getElementById('xfader').value);
-  document.getElementById('faderA').value=(1-x).toFixed(2);
-  document.getElementById('faderB').value=x.toFixed(2);
-  setFaderVol('A');setFaderVol('B');
-}
-function shiftXfader(delta){
-  const el=document.getElementById('xfader');
-  el.value=Math.max(0,Math.min(1,parseFloat(el.value)+delta));
-  updateXfader();
-}
-function updateEQ(deck){
-  const s=state[deck];if(!s.hiNode)return;
-  s.hiNode.gain.value=(parseFloat(document.getElementById('eq'+deck+'hi').value)-1)*12;
-  s.midNode.gain.value=(parseFloat(document.getElementById('eq'+deck+'mid').value)-1)*12;
-  s.loNode.gain.value=(parseFloat(document.getElementById('eq'+deck+'lo').value)-1)*12;
-}
+function updateXfader(){const x=parseFloat(document.getElementById('xfader').value);document.getElementById('faderA').value=(1-x).toFixed(2);document.getElementById('faderB').value=x.toFixed(2);setFaderVol('A');setFaderVol('B');}
+function shiftXfader(delta){const el=document.getElementById('xfader');el.value=Math.max(0,Math.min(1,parseFloat(el.value)+delta));updateXfader();}
+function updateEQ(deck){const s=state[deck];if(!s.hiNode)return;s.hiNode.gain.value=(parseFloat(document.getElementById('eq'+deck+'hi').value)-1)*12;s.midNode.gain.value=(parseFloat(document.getElementById('eq'+deck+'mid').value)-1)*12;s.loNode.gain.value=(parseFloat(document.getElementById('eq'+deck+'lo').value)-1)*12;}
 
 /* ── WAVEFORM ── */
 function drawWaveformFromBuffer(deck,buffer){
-  const canvas=document.getElementById('wave'+deck);
-  canvas.width=canvas.offsetWidth||400;canvas.height=54;
+  const canvas=document.getElementById('wave'+deck);canvas.width=canvas.offsetWidth||400;canvas.height=54;
   const data=buffer.getChannelData(0),bars=120,step=Math.floor(data.length/bars);
   state[deck].waveData=Array.from({length:bars},(_,i)=>{let max=0;for(let j=0;j<step;j++){const v=Math.abs(data[i*step+j]||0);if(v>max)max=v;}return max;});
   drawWaveform(deck,0);
 }
 function drawWaveform(deck,progress){
-  const canvas=document.getElementById('wave'+deck);
-  const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
-  ctx.clearRect(0,0,w,h);
-  const data=state[deck].waveData;if(!data)return;
+  const canvas=document.getElementById('wave'+deck),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
+  ctx.clearRect(0,0,w,h);const data=state[deck].waveData;if(!data)return;
   const bars=data.length,bw=w/bars,center=Math.floor(progress*bars);
   const past=deck==='A'?'#5b3fa0':'#1a6b4a',future=deck==='A'?'#2d1f4e':'#1a2e24',head=deck==='A'?'#c4b5fd':'#6ee7b7';
   for(let i=0;i<bars;i++){const bh=Math.max(2,data[i]*h*0.9),x=i*bw;ctx.fillStyle=i<center?past:(i===center?head:future);ctx.fillRect(x+0.5,(h-bh)/2,bw-1,bh);}
@@ -743,19 +643,14 @@ function drawWaveform(deck,progress){
 function detectBPM(deck,buffer){
   try{
     const data=buffer.getChannelData(0),sr=buffer.sampleRate,step=Math.floor(sr*0.01);
-    const energy=[];
-    for(let i=0;i<data.length-step;i+=step){let e=0;for(let j=0;j<step;j++)e+=data[i+j]*data[i+j];energy.push(e/step);}
+    const energy=[];for(let i=0;i<data.length-step;i+=step){let e=0;for(let j=0;j<step;j++)e+=data[i+j]*data[i+j];energy.push(e/step);}
     const avg=energy.reduce((a,b)=>a+b,0)/energy.length;
-    const peaks=[];
-    for(let i=1;i<energy.length-1;i++)if(energy[i]>avg*1.5&&energy[i]>energy[i-1]&&energy[i]>energy[i+1])peaks.push(i);
+    const peaks=[];for(let i=1;i<energy.length-1;i++)if(energy[i]>avg*1.5&&energy[i]>energy[i-1]&&energy[i]>energy[i+1])peaks.push(i);
     if(peaks.length<4){fallbackBPM(deck);return;}
-    const intervals=[];
-    for(let i=1;i<Math.min(peaks.length,50);i++)intervals.push(peaks[i]-peaks[i-1]);
+    const intervals=[];for(let i=1;i<Math.min(peaks.length,50);i++)intervals.push(peaks[i]-peaks[i-1]);
     const med=intervals.slice().sort((a,b)=>a-b)[Math.floor(intervals.length/2)];
-    let bpm=60/(med*0.01);
-    while(bpm<80)bpm*=2;while(bpm>180)bpm/=2;
-    state[deck].bpm=Math.round(bpm*10)/10;
-    document.getElementById('bpm'+deck).textContent=state[deck].bpm.toFixed(1);
+    let bpm=60/(med*0.01);while(bpm<80)bpm*=2;while(bpm>180)bpm/=2;
+    state[deck].bpm=Math.round(bpm*10)/10;document.getElementById('bpm'+deck).textContent=state[deck].bpm.toFixed(1);
   }catch(e){fallbackBPM(deck);}
   updateSyncIndicator();
 }
@@ -764,8 +659,7 @@ function fallbackBPM(deck){const pool=[120,124,126,128,130,132,140];state[deck].
 /* ── SYNC ── */
 function getEffBPM(deck){const s=state[deck];if(!s.bpm)return null;return s.bpm*(1+(s.pitch/100));}
 function updateSyncIndicator(){
-  const bA=getEffBPM('A'),bB=getEffBPM('B');
-  const pill=document.getElementById('syncPill');
+  const bA=getEffBPM('A'),bB=getEffBPM('B'),pill=document.getElementById('syncPill');
   if(!bA||!bB){pill.className='sync-pill';pill.textContent='SYNC';return;}
   const diff=Math.abs(bA-bB);
   if(diff<0.3){pill.className='sync-pill locked';pill.textContent='🔒 LOCKED';}
@@ -776,237 +670,129 @@ function updateSyncIndicator(){
 /* ── COACH ── */
 function setCoach(icon,msg){document.getElementById('coachIcon').textContent=icon;document.getElementById('coachText').innerHTML=msg;}
 function updateCoach(){
-  const hasA=!!state.A.buffer,hasB=!!state.B.buffer;
-  const bA=getEffBPM('A'),bB=getEffBPM('B');
-  if(!hasA&&!hasB){setCoach('🎧','drop MP3s onto <span class="tip">deck a</span> to build your queue. you can add up to 3 tracks per deck.');return;}
-  if(hasA&&!hasB){setCoach('✨','nice queue on a! now drop tracks onto <span class="tip">deck b</span>.');return;}
+  const hasA=!!state.A.buffer,hasB=!!state.B.buffer,bA=getEffBPM('A'),bB=getEffBPM('B');
+  if(!hasA&&!hasB){setCoach('🎧','drop MP3s onto <span class="tip">deck a</span> to build your queue.');return;}
+  if(hasA&&!hasB){setCoach('✨','nice! now drop tracks onto <span class="tip">deck b</span>.');return;}
   if(state.A.playing&&state.B.playing){
     const diff=bA&&bB?Math.abs(bA-bB):99;
-    if(diff>8){setCoach('👀',`<span class="warn">bpms ${diff.toFixed(1)} apart</span> — use [Q/W] or [O/P] to match speeds.`);return;}
-    if(diff>2){setCoach('✨',`${diff.toFixed(1)} bpm gap — keep nudging the pitch.`);return;}
-    if(diff<=0.3){setCoach('🔥','<span class="good">locked!</span> press [V] to fade deck b in. try cutting the lows first for a clean mix.');return;}
-    setCoach('🎶',`<span class="good">almost</span> — ${diff.toFixed(1)} off. tap nudge or [Z]/[N] to phase-align.`);
-  }else if(state.A.playing){
-    setCoach('🎶','a is playing. <span class="tip">set cue on b [L]</span> then press play [K] when ready.');
-  }else if(state.B.playing){
-    setCoach('🎶','b is playing. get deck a ready and bring the crossfader left with [C].');
-  }else{
-    setCoach('🎧','both loaded — press <span class="tip">[A]</span> to start deck a!');
-  }
+    if(diff>8){setCoach('👀',`<span class="warn">bpms ${diff.toFixed(1)} apart</span> — use pitch fader to match.`);return;}
+    if(diff>2){setCoach('✨',`${diff.toFixed(1)} bpm gap — keep nudging.`);return;}
+    if(diff<=0.3){setCoach('🔥','<span class="good">locked!</span> move crossfader to blend deck b in.');return;}
+    setCoach('🎶',`<span class="good">almost</span> — ${diff.toFixed(1)} off. nudge to phase-align.`);
+  }else if(state.A.playing){setCoach('🎶','a is playing. <span class="tip">cue deck b [L]</span> then press play [K].');}
+  else if(state.B.playing){setCoach('🎶','b is playing. get deck a ready and press [C] to fade back.');}
+  else{setCoach('🎧','both loaded — press <span class="tip">[A]</span> to start!');}
 }
+
+/* ── SAMPLER ── */
+const padNodes={};
+function playPad(n){
+  if(actx.state==='suspended')actx.resume();
+  stopPad(n);
+  const gain=actx.createGain();gain.connect(actx.destination);
+  if(mediaRecorder&&mediaRecorder.state==='recording')patchGainToRecorder(gain);
+  let nodes=[];
+  if(n===1){
+    const osc=actx.createOscillator(),g=actx.createGain();
+    osc.type='sine';osc.frequency.setValueAtTime(160,actx.currentTime);osc.frequency.exponentialRampToValueAtTime(40,actx.currentTime+0.15);
+    g.gain.setValueAtTime(1.2,actx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+0.6);
+    osc.connect(g);g.connect(gain);gain.gain.value=1.4;osc.start();nodes=[osc,g];
+  }else if(n===2){
+    const bufSize=actx.sampleRate*0.3,buf=actx.createBuffer(1,bufSize,actx.sampleRate),d=buf.getChannelData(0);
+    for(let i=0;i<bufSize;i++)d[i]=(Math.random()*2-1);
+    const noise=actx.createBufferSource(),hp=actx.createBiquadFilter(),g=actx.createGain();
+    noise.buffer=buf;hp.type='highpass';hp.frequency.value=1800;
+    g.gain.setValueAtTime(1,actx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+0.18);
+    noise.connect(hp);hp.connect(g);g.connect(gain);gain.gain.value=1.2;noise.start();nodes=[noise,hp,g];
+  }else if(n===3){
+    const bufSize=actx.sampleRate*0.08,buf=actx.createBuffer(1,bufSize,actx.sampleRate),d=buf.getChannelData(0);
+    for(let i=0;i<bufSize;i++)d[i]=(Math.random()*2-1);
+    const noise=actx.createBufferSource(),hp=actx.createBiquadFilter(),g=actx.createGain();
+    noise.buffer=buf;hp.type='highpass';hp.frequency.value=8000;
+    g.gain.setValueAtTime(0.8,actx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+0.06);
+    noise.connect(hp);hp.connect(g);g.connect(gain);gain.gain.value=1;noise.start();nodes=[noise,hp,g];
+  }else if(n===4){
+    gain.gain.value=0;gain.gain.linearRampToValueAtTime(0.7,actx.currentTime+0.12);
+    const freqs=[130.81,164.81,196,246.94],detunes=[-8,5,-5,8];
+    freqs.forEach((f,i)=>{
+      const o=actx.createOscillator(),og=actx.createGain(),lp=actx.createBiquadFilter();
+      o.type=i%2===0?'sawtooth':'square';o.frequency.value=f;o.detune.value=detunes[i];og.gain.value=0.22;
+      lp.type='lowpass';lp.frequency.setValueAtTime(300,actx.currentTime);lp.frequency.linearRampToValueAtTime(2200,actx.currentTime+0.4);lp.Q.value=2;
+      o.connect(lp);lp.connect(og);og.connect(gain);o.start();nodes.push(o,lp,og);
+    });
+    const delay=actx.createDelay(0.5),dg=actx.createGain();delay.delayTime.value=0.08;dg.gain.value=0.3;
+    gain.connect(delay);delay.connect(dg);dg.connect(actx.destination);nodes.push(delay,dg);
+  }
+  padNodes[n]={nodes,gain};
+}
+function stopPad(n){
+  if(!padNodes[n])return;
+  const{gain,nodes}=padNodes[n];
+  try{gain.gain.setValueAtTime(gain.gain.value,actx.currentTime);gain.gain.linearRampToValueAtTime(0,actx.currentTime+0.06);setTimeout(()=>{nodes.forEach(nd=>{try{nd.stop&&nd.stop();nd.disconnect&&nd.disconnect();}catch(e){}});},120);}catch(e){}
+  delete padNodes[n];
+}
+function padDown(n){document.getElementById('pad'+n).classList.add('active');playPad(n);}
+function padUp(n){document.getElementById('pad'+n).classList.remove('active');stopPad(n);}
 
 /* ── RECORDER ── */
-let mediaRecorder=null, recChunks=[], recInterval=null, recStart=null;
-let recDest=null;
-
-function getRecordingDestination(){
-  if(!recDest)recDest=actx.createMediaStreamDestination();
-  return recDest;
-}
-
-function patchGainToRecorder(gainNode){
-  if(!gainNode)return;
-  try{gainNode.connect(getRecordingDestination());}catch(e){}
-}
-
-function toggleRecord(){
-  if(mediaRecorder&&mediaRecorder.state==='recording'){
-    stopRecord();
-  }else{
-    startRecord();
-  }
-}
-
+let mediaRecorder=null,recChunks=[],recInterval=null,recStart=null,recDest=null;
+function getRecordingDestination(){if(!recDest)recDest=actx.createMediaStreamDestination();return recDest;}
+function patchGainToRecorder(gainNode){if(!gainNode)return;try{gainNode.connect(getRecordingDestination());}catch(e){}}
+function toggleRecord(){if(mediaRecorder&&mediaRecorder.state==='recording')stopRecord();else startRecord();}
 function startRecord(){
   if(actx.state==='suspended')actx.resume();
-  recChunks=[];
-  const dest=getRecordingDestination();
-
-  // patch all current gain nodes into recorder
+  recChunks=[];const dest=getRecordingDestination();
   ['A','B'].forEach(deck=>{if(state[deck].gainNode)patchGainToRecorder(state[deck].gainNode);});
-
   const mimeType=MediaRecorder.isTypeSupported('audio/webm;codecs=opus')?'audio/webm;codecs=opus':'audio/webm';
   mediaRecorder=new MediaRecorder(dest.stream,{mimeType});
   mediaRecorder.ondataavailable=e=>{if(e.data.size>0)recChunks.push(e.data);};
   mediaRecorder.onstop=()=>saveRecording();
-  mediaRecorder.start(100);
-  recStart=Date.now();
-
-  // pulse animation on dot
+  mediaRecorder.start(100);recStart=Date.now();
   document.getElementById('recDot').style.animation='recPulse 0.8s ease-in-out infinite';
-  document.getElementById('recBtn').style.borderColor='#f87171';
-  document.getElementById('recBtn').style.background='#3a1414';
-  document.getElementById('recLabel').textContent='stop recording';
-  document.getElementById('recTimer').style.display='block';
-  document.getElementById('recStatus').textContent='recording your mix...';
-  document.getElementById('recDownload').style.display='none';
-
-  recInterval=setInterval(()=>{
-    const s=Math.floor((Date.now()-recStart)/1000);
-    const m=String(Math.floor(s/60)).padStart(2,'0'),sec=String(s%60).padStart(2,'0');
-    document.getElementById('recTimer').textContent=m+':'+sec;
-  },500);
+  document.getElementById('recBtn').style.borderColor='#f87171';document.getElementById('recBtn').style.background='#3a1414';
+  document.getElementById('recLabel').textContent='stop recording';document.getElementById('recTimer').style.display='block';
+  document.getElementById('recStatus').textContent='recording your mix...';document.getElementById('recDownload').style.display='none';
+  recInterval=setInterval(()=>{const s=Math.floor((Date.now()-recStart)/1000),m=String(Math.floor(s/60)).padStart(2,'0'),sec=String(s%60).padStart(2,'0');document.getElementById('recTimer').textContent=m+':'+sec;},500);
 }
-
 function stopRecord(){
   if(mediaRecorder&&mediaRecorder.state==='recording')mediaRecorder.stop();
   clearInterval(recInterval);
-  document.getElementById('recDot').style.animation='none';
-  document.getElementById('recBtn').style.borderColor='#cc444466';
-  document.getElementById('recBtn').style.background='#2a1414';
-  document.getElementById('recLabel').textContent='record mix';
-  document.getElementById('recTimer').style.display='none';
-  document.getElementById('recStatus').textContent='processing...';
+  document.getElementById('recDot').style.animation='none';document.getElementById('recBtn').style.borderColor='#cc444466';document.getElementById('recBtn').style.background='#2a1414';
+  document.getElementById('recLabel').textContent='record mix';document.getElementById('recTimer').style.display='none';document.getElementById('recStatus').textContent='processing...';
 }
-
 function saveRecording(){
-  const blob=new Blob(recChunks,{type:'audio/webm'});
-  const url=URL.createObjectURL(blob);
-  const dl=document.getElementById('recDownload');
-  dl.href=url;
-  const ts=new Date().toISOString().slice(0,16).replace('T','-').replace(':','-');
-  dl.download=`yyyas3-mix-${ts}.webm`;
-  dl.style.display='inline-block';
-  document.getElementById('recStatus').textContent='mix ready — click download to save it!';
-  setCoach('🎉','<span class="good">mix recorded!</span> click the download button to save your set as an audio file.');
+  const blob=new Blob(recChunks,{type:'audio/webm'}),url=URL.createObjectURL(blob),dl=document.getElementById('recDownload');
+  const ts=new Date().toISOString().slice(0,16).replace('T','-').replace(/:/g,'-');
+  dl.href=url;dl.download=`yyyas3-mix-${ts}.webm`;dl.style.display='inline-block';
+  document.getElementById('recStatus').textContent='mix ready — click download!';
+  setCoach('🎉','<span class="good">mix recorded!</span> click download to save your set.');
 }
 
-
-const padNodes={};
-
-function playPad(n){
-  if(actx.state==='suspended')actx.resume();
-  stopPad(n);
-  const gain=actx.createGain();
-  gain.connect(actx.destination);
-  let nodes=[];
-
-  if(n===1){
-    // 808 kick — sine sweep with sub punch
-    const osc=actx.createOscillator();
-    const g=actx.createGain();
-    osc.type='sine';
-    osc.frequency.setValueAtTime(160,actx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(40,actx.currentTime+0.15);
-    g.gain.setValueAtTime(1.2,actx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+0.6);
-    osc.connect(g);g.connect(gain);
-    gain.gain.value=1.4;
-    osc.start();
-    nodes=[osc,g];
-  }else if(n===2){
-    // snare — noise + pitched transient
-    const bufSize=actx.sampleRate*0.3;
-    const buf=actx.createBuffer(1,bufSize,actx.sampleRate);
-    const d=buf.getChannelData(0);
-    for(let i=0;i<bufSize;i++)d[i]=(Math.random()*2-1);
-    const noise=actx.createBufferSource();
-    noise.buffer=buf;
-    const hp=actx.createBiquadFilter();hp.type='highpass';hp.frequency.value=1800;
-    const g=actx.createGain();
-    g.gain.setValueAtTime(1,actx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+0.18);
-    noise.connect(hp);hp.connect(g);g.connect(gain);
-    gain.gain.value=1.2;
-    noise.start();
-    nodes=[noise,hp,g];
-  }else if(n===3){
-    // hi-hat — tight filtered noise
-    const bufSize=actx.sampleRate*0.08;
-    const buf=actx.createBuffer(1,bufSize,actx.sampleRate);
-    const d=buf.getChannelData(0);
-    for(let i=0;i<bufSize;i++)d[i]=(Math.random()*2-1);
-    const noise=actx.createBufferSource();
-    noise.buffer=buf;
-    const hp=actx.createBiquadFilter();hp.type='highpass';hp.frequency.value=8000;
-    const g=actx.createGain();
-    g.gain.setValueAtTime(0.8,actx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+0.06);
-    noise.connect(hp);hp.connect(g);g.connect(gain);
-    gain.gain.value=1;
-    noise.start();
-    nodes=[noise,hp,g];
-  }else if(n===4){
-    // Fred Again chord stab — detuned warm oscillators, slow filter open
-    gain.gain.value=0;
-    gain.gain.linearRampToValueAtTime(0.7,actx.currentTime+0.12);
-    const freqs=[130.81,164.81,196,246.94]; // Cm chord
-    const detunes=[-8,5,-5,8];
-    freqs.forEach((f,i)=>{
-      const o=actx.createOscillator();
-      const og=actx.createGain();
-      o.type=i%2===0?'sawtooth':'square';
-      o.frequency.value=f;
-      o.detune.value=detunes[i];
-      og.gain.value=0.22;
-      const lp=actx.createBiquadFilter();
-      lp.type='lowpass';
-      lp.frequency.setValueAtTime(300,actx.currentTime);
-      lp.frequency.linearRampToValueAtTime(2200,actx.currentTime+0.4);
-      lp.Q.value=2;
-      o.connect(lp);lp.connect(og);og.connect(gain);
-      o.start();
-      nodes.push(o,lp,og);
-    });
-    // add a little reverb wash via a delay
-    const delay=actx.createDelay(0.5);
-    delay.delayTime.value=0.08;
-    const delayGain=actx.createGain();delayGain.gain.value=0.3;
-    gain.connect(delay);delay.connect(delayGain);delayGain.connect(actx.destination);
-    nodes.push(delay,delayGain);
-  }
-
-  padNodes[n]={nodes,gain};
-}
-
-function stopPad(n){
-  if(!padNodes[n])return;
-  const{gain,nodes}=padNodes[n];
-  try{
-    gain.gain.setValueAtTime(gain.gain.value,actx.currentTime);
-    gain.gain.linearRampToValueAtTime(0,actx.currentTime+0.06);
-    setTimeout(()=>{nodes.forEach(nd=>{try{nd.stop&&nd.stop();nd.disconnect&&nd.disconnect();}catch(e){}});},120);
-  }catch(e){}
-  delete padNodes[n];
-}
-
-function padDown(n){
-  document.getElementById('pad'+n).classList.add('active');
-  playPad(n);
-}
-function padUp(n){
-  document.getElementById('pad'+n).classList.remove('active');
-  stopPad(n);
-}
-
-// add to keyboard handler — intercept 1-4 for pads
+/* ── KEYBOARD ── */
 document.addEventListener('keydown',e=>{
   const tag=document.activeElement.tagName;
   if(tag==='INPUT'||tag==='TEXTAREA')return;
   if(['1','2','3','4'].includes(e.key)&&!e.repeat){padDown(parseInt(e.key));return;}
-
   switch(e.key.toLowerCase()){
-    case 'a': e.preventDefault(); togglePlay('A'); break;
-    case 's': e.preventDefault(); cue('A'); break;
-    case 'z': e.preventDefault(); nudge('A',-0.1); break;
-    case 'x': e.preventDefault(); nudge('A',0.1); break;
-    case 'q': e.preventDefault(); setPitch('A',-0.2); break;
-    case 'w': e.preventDefault(); setPitch('A',0.2); break;
-    case 'k': e.preventDefault(); togglePlay('B'); break;
-    case 'l': e.preventDefault(); cue('B'); break;
-    case 'n': e.preventDefault(); nudge('B',-0.1); break;
-    case 'm': e.preventDefault(); nudge('B',0.1); break;
-    case 'o': e.preventDefault(); setPitch('B',-0.2); break;
-    case 'p': e.preventDefault(); setPitch('B',0.2); break;
-    case 'c': e.preventDefault(); shiftXfader(-0.05); break;
-    case 'v': e.preventDefault(); shiftXfader(0.05); break;
-    case ' ': e.preventDefault(); togglePlay('A'); togglePlay('B'); break;
+    case 'a':e.preventDefault();togglePlay('A');break;
+    case 's':e.preventDefault();cue('A');break;
+    case 'z':e.preventDefault();nudge('A',-0.1);break;
+    case 'x':e.preventDefault();nudge('A',0.1);break;
+    case 'q':e.preventDefault();setPitch('A',-0.2);break;
+    case 'w':e.preventDefault();setPitch('A',0.2);break;
+    case 'k':e.preventDefault();togglePlay('B');break;
+    case 'l':e.preventDefault();cue('B');break;
+    case 'n':e.preventDefault();nudge('B',-0.1);break;
+    case 'm':e.preventDefault();nudge('B',0.1);break;
+    case 'o':e.preventDefault();setPitch('B',-0.2);break;
+    case 'p':e.preventDefault();setPitch('B',0.2);break;
+    case 'c':e.preventDefault();shiftXfader(-0.05);break;
+    case 'v':e.preventDefault();shiftXfader(0.05);break;
+    case ' ':e.preventDefault();togglePlay('A');togglePlay('B');break;
   }
 });
-
-document.addEventListener('keyup',e=>{
-  if(['1','2','3','4'].includes(e.key))padUp(parseInt(e.key));
-});
+document.addEventListener('keyup',e=>{if(['1','2','3','4'].includes(e.key))padUp(parseInt(e.key));});
+document.addEventListener('dragover',e=>e.preventDefault());
 document.addEventListener('drop',e=>e.preventDefault());
 </script>
 </body>
