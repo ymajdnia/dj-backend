@@ -16,20 +16,20 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 .deck-title{font-size:11px;font-weight:600;letter-spacing:3px;text-align:center;padding:4px 12px;border-radius:20px;width:fit-content;margin:0 auto}
 .deck-title.a{background:#2d1f4e;color:#c4b5fd}
 .deck-title.b{background:#1f3a2d;color:#6ee7b7}
-.search-row{display:flex;gap:6px}
-.search-row input{flex:1;background:#16162a;border:1.5px solid #3e3e60;border-radius:12px;padding:7px 12px;color:#f0f0fa;font-size:12px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.2s}
-.search-row input:focus{border-color:#a78bfa}
-.search-row input::placeholder{color:#9999cc}
-.search-row button{background:#2d1f4e;border:1.5px solid #a78bfa44;border-radius:12px;padding:7px 13px;color:#c4b5fd;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s}
-.search-row button:hover{background:#3d2a6e;color:#ddd6fe}
-.results-box{background:#0a0a1a;border:1.5px solid #3e3e60;border-radius:12px;max-height:80px;overflow-y:auto;display:none}
-.results-box.open{display:block}
-.r-item{padding:6px 10px;font-size:11px;color:#b0b0d0;cursor:pointer;border-bottom:1px solid #1e1e38;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:background 0.1s}
-.r-item:hover{background:#1e1e38;color:#f0f0fa}
-.track-display{background:#16162a;border-radius:12px;padding:8px 12px;min-height:38px;border:1.5px solid #3e3e60}
+.drop-zone{border:1.5px dashed #3e3e60;border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:all 0.2s;background:#16162a;position:relative}
+.drop-zone:hover,.drop-zone.drag-over{border-color:#a78bfa;background:#1e1a30}
+.drop-zone.b-zone:hover,.drop-zone.b-zone.drag-over{border-color:#34d399;background:#0f1e18}
+.drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop-icon{font-size:20px;margin-bottom:4px}
+.drop-text{font-size:11px;color:#9999cc;line-height:1.4}
+.drop-text strong{color:#c4b5fd;font-weight:600}
+.drop-text.b-text strong{color:#6ee7b7}
+.track-display{background:#16162a;border-radius:12px;padding:8px 12px;min-height:38px;border:1.5px solid #3e3e60;display:none}
+.track-display.visible{display:block}
 .track-name{font-size:12px;font-weight:500;color:#f0f0fa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .track-sub{font-size:10px;color:#9999cc;margin-top:2px}
-.waveform-area{position:relative;background:#16162a;border-radius:12px;height:54px;overflow:hidden;cursor:pointer;border:1.5px solid #3e3e60}
+.waveform-area{position:relative;background:#16162a;border-radius:12px;height:54px;overflow:hidden;cursor:pointer;border:1.5px solid #3e3e60;display:none}
+.waveform-area.visible{display:block}
 .waveform-area canvas{width:100%;height:100%;display:block}
 .playhead-line{position:absolute;top:0;left:50%;width:2px;height:100%;background:rgba(255,255,255,0.4);pointer-events:none;transform:translateX(-50%)}
 .time-row{display:flex;justify-content:space-between;font-size:10px;color:#9999cc;padding:0 4px;font-family:'DM Mono',monospace}
@@ -56,8 +56,7 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 .vol-row input{flex:1;accent-color:#34d399}
 .loading-bar{height:3px;background:#16162a;border-radius:2px;overflow:hidden;display:none}
 .loading-bar.active{display:block}
-.loading-inner{height:100%;width:0%;background:linear-gradient(90deg,#a78bfa,#f472b6);border-radius:2px;transition:width 0.3s}
-.sc-frame{width:100%;height:36px;border:none;border-radius:8px;display:none;margin-top:2px}
+.loading-inner{height:100%;width:0%;background:linear-gradient(90deg,#a78bfa,#f472b6);border-radius:2px;transition:width 0.2s}
 .mixer{background:#1e1e34;border:1.5px solid #2e2e50;border-radius:20px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:8px;transition:box-shadow 0.3s}
 .mx-label{font-size:9px;letter-spacing:2px;color:#9999cc;text-transform:uppercase;font-weight:600}
 .sync-pill{width:100%;text-align:center;padding:6px 4px;border-radius:14px;font-size:10px;font-weight:700;letter-spacing:2px;border:1.5px solid #3e3e60;color:#7777aa;background:#16162a;transition:all 0.4s}
@@ -131,17 +130,17 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
   <!-- DECK A -->
   <div class="deck" id="deckA">
     <div class="deck-title a">DECK A</div>
-    <div class="search-row">
-      <input id="searchA" type="text" placeholder="search soundcloud...">
-      <button onclick="doSearch('A')">search</button>
+    <div class="drop-zone" id="dropA" ondragover="onDragOver(event,'A')" ondragleave="onDragLeave('A')" ondrop="onDrop(event,'A')">
+      <input type="file" accept="audio/*" onchange="onFileInput(event,'A')">
+      <div class="drop-icon">🎵</div>
+      <div class="drop-text"><strong>drop an MP3 here</strong><br>or click to browse</div>
     </div>
-    <div class="results-box" id="resultsA"></div>
     <div class="loading-bar" id="loadBarA"><div class="loading-inner" id="loadInnerA"></div></div>
-    <div class="track-display">
-      <div class="track-name" id="nameA">no track loaded</div>
-      <div class="track-sub" id="subA">search above to load a track</div>
+    <div class="track-display" id="trackDisplayA">
+      <div class="track-name" id="nameA">—</div>
+      <div class="track-sub" id="subA">—</div>
     </div>
-    <div class="waveform-area" onclick="scrub('A',event)">
+    <div class="waveform-area" id="waveAreaA" onclick="scrub('A',event)">
       <canvas id="waveA"></canvas>
       <div class="playhead-line"></div>
     </div>
@@ -171,7 +170,6 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
       <label>VOL</label>
       <input type="range" id="volA" min="0" max="1" step="0.01" value="0.8" oninput="setVol('A')">
     </div>
-    <iframe id="scA" class="sc-frame" allow="autoplay"></iframe>
   </div>
 
   <!-- MIXER -->
@@ -181,15 +179,15 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
     <div style="font-size:9px;color:#55557a;text-align:center;margin-top:-5px;letter-spacing:1px">BPM MATCH</div>
     <div class="eq-block">
       <div class="mx-label" style="margin-bottom:4px">eq a</div>
-      <div class="eq-row"><span>hi</span><input type="range" id="eqAhi" min="0" max="2" step="0.05" value="1"></div>
-      <div class="eq-row"><span>md</span><input type="range" id="eqAmid" min="0" max="2" step="0.05" value="1"></div>
-      <div class="eq-row"><span>lo</span><input type="range" id="eqAlo" min="0" max="2" step="0.05" value="1"></div>
+      <div class="eq-row"><span>hi</span><input type="range" id="eqAhi" min="0" max="2" step="0.05" value="1" oninput="updateEQ('A')"></div>
+      <div class="eq-row"><span>md</span><input type="range" id="eqAmid" min="0" max="2" step="0.05" value="1" oninput="updateEQ('A')"></div>
+      <div class="eq-row"><span>lo</span><input type="range" id="eqAlo" min="0" max="2" step="0.05" value="1" oninput="updateEQ('A')"></div>
     </div>
     <div class="eq-block">
       <div class="mx-label" style="margin-bottom:4px">eq b</div>
-      <div class="eq-row"><span>hi</span><input type="range" id="eqBhi" min="0" max="2" step="0.05" value="1"></div>
-      <div class="eq-row"><span>md</span><input type="range" id="eqBmid" min="0" max="2" step="0.05" value="1"></div>
-      <div class="eq-row"><span>lo</span><input type="range" id="eqBlo" min="0" max="2" step="0.05" value="1"></div>
+      <div class="eq-row"><span>hi</span><input type="range" id="eqBhi" min="0" max="2" step="0.05" value="1" oninput="updateEQ('B')"></div>
+      <div class="eq-row"><span>md</span><input type="range" id="eqBmid" min="0" max="2" step="0.05" value="1" oninput="updateEQ('B')"></div>
+      <div class="eq-row"><span>lo</span><input type="range" id="eqBlo" min="0" max="2" step="0.05" value="1" oninput="updateEQ('B')"></div>
     </div>
     <div class="faders">
       <div class="fdr"><label>A</label>
@@ -208,17 +206,17 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
   <!-- DECK B -->
   <div class="deck" id="deckB">
     <div class="deck-title b">DECK B</div>
-    <div class="search-row">
-      <input id="searchB" type="text" placeholder="search soundcloud...">
-      <button onclick="doSearch('B')" style="background:#1f3a2d;border-color:#34d39944;color:#6ee7b7">search</button>
+    <div class="drop-zone b-zone" id="dropB" ondragover="onDragOver(event,'B')" ondragleave="onDragLeave('B')" ondrop="onDrop(event,'B')">
+      <input type="file" accept="audio/*" onchange="onFileInput(event,'B')">
+      <div class="drop-icon">🎵</div>
+      <div class="drop-text b-text"><strong>drop an MP3 here</strong><br>or click to browse</div>
     </div>
-    <div class="results-box" id="resultsB"></div>
     <div class="loading-bar" id="loadBarB"><div class="loading-inner" id="loadInnerB"></div></div>
-    <div class="track-display">
-      <div class="track-name" id="nameB">no track loaded</div>
-      <div class="track-sub" id="subB">search above to load a track</div>
+    <div class="track-display" id="trackDisplayB">
+      <div class="track-name" id="nameB">—</div>
+      <div class="track-sub" id="subB">—</div>
     </div>
-    <div class="waveform-area" onclick="scrub('B',event)">
+    <div class="waveform-area" id="waveAreaB" onclick="scrub('B',event)">
       <canvas id="waveB"></canvas>
       <div class="playhead-line"></div>
     </div>
@@ -248,14 +246,13 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
       <label>VOL</label>
       <input type="range" id="volB" min="0" max="1" step="0.01" value="0.8" oninput="setVol('B')" style="accent-color:#34d399">
     </div>
-    <iframe id="scB" class="sc-frame" allow="autoplay"></iframe>
   </div>
 
   <div class="coach">
     <div class="coach-icon" id="coachIcon">🎧</div>
     <div class="coach-inner">
       <div class="coach-label">coach</div>
-      <div class="coach-text" id="coachText">search for a track on <span class="tip">deck a</span> to kick things off.</div>
+      <div class="coach-text" id="coachText">drop an MP3 onto <span class="tip">deck a</span> to get started — or click the deck to browse your files.</div>
     </div>
   </div>
 
@@ -266,19 +263,29 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 </div>
 
 <script>
-const SC_CLIENT = '2t9loNQH90kzJcsFCODdigxfp325oCOm';
-const state={
-  A:{playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,duration:120,waveData:null,trackId:null,widget:null},
-  B:{playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,duration:120,waveData:null,trackId:null,widget:null}
+const actx = new (window.AudioContext || window.webkitAudioContext)();
+const nodes = {};
+const state = {
+  A:{playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,duration:0,waveData:null,source:null,buffer:null,startTime:0,startOffset:0,gainNode:null,hiNode:null,midNode:null,loNode:null},
+  B:{playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,duration:0,waveData:null,source:null,buffer:null,startTime:0,startOffset:0,gainNode:null,hiNode:null,midNode:null,loNode:null}
 };
+let rafId = null;
+
+function fmt(s){if(!s||isNaN(s))return'0:00';return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');}
+
+function getPos(deck){
+  const s=state[deck];
+  if(!s.playing)return s.startOffset;
+  return Math.min(s.duration,(actx.currentTime - s.startTime)*s.playbackRate + s.startOffset);
+}
 
 /* ── ONBOARDING ── */
 const steps=[
   {emoji:'🎧',title:'welcome to YYYAS3',body:'your personal dj playground — built for <strong>cutie girls learning to mix</strong>. in the next 5 steps you\'ll learn everything you need to play your first set. ready?',highlight:null,btn:'let\'s go ✦'},
-  {emoji:'🎵',title:'meet the decks',body:'you have <strong>two decks</strong> — deck A (purple, left) and deck B (green, right). each one plays a track. use the <em>search bar</em> to find any song on soundcloud, then click a result to load it. the <em>waveform</em> shows the song visually.',highlight:'deckA',btn:'got it →'},
-  {emoji:'🥁',title:'BPM + the pitch fader',body:'<strong>BPM</strong> is the speed of a track — shown in pink on each deck. to mix smoothly, both tracks need matching BPMs. use the <em>pitch fader</em> to speed up or slow down a track. when the mixer says <em>LOCKED</em>, you\'re in sync!',highlight:'bpmRowA',btn:'makes sense →'},
-  {emoji:'🎚️',title:'the mixer in the middle',body:'the <strong>mixer</strong> is your control centre. <em>EQ knobs</em> cut or boost frequencies — try pulling the lows off deck B before mixing in. <em>channel faders</em> control volume. the <em>crossfader</em> blends between decks.',highlight:'mixerEl',btn:'i see it →'},
-  {emoji:'🔥',title:'your first mix',body:'your mission: <strong>1.</strong> search a song on deck A and press play. <strong>2.</strong> search something on deck B. <strong>3.</strong> match the BPMs with the pitch fader. <strong>4.</strong> slowly move the crossfader to blend. you\'ve got this!',highlight:null,btn:'start mixing ✦'}
+  {emoji:'🎵',title:'meet the decks',body:'you have <strong>two decks</strong> — deck A (purple, left) and deck B (green, right). <em>drag an MP3</em> onto a deck or click to browse. the <em>waveform</em> appears once a track is loaded — click it to jump anywhere.',highlight:'deckA',btn:'got it →'},
+  {emoji:'🥁',title:'BPM + the pitch fader',body:'<strong>BPM</strong> is the speed of a track — detected automatically and shown in pink. to mix smoothly, both tracks need matching BPMs. use the <em>pitch fader</em> to speed up or slow down. when the mixer shows <em>LOCKED</em>, you\'re in sync!',highlight:'bpmRowA',btn:'makes sense →'},
+  {emoji:'🎚️',title:'the mixer in the middle',body:'the <strong>mixer</strong> is your control centre. <em>EQ knobs</em> cut or boost frequencies — pull the lows off deck B before mixing in for a cleaner sound. <em>channel faders</em> control volume. the <em>crossfader</em> blends between decks.',highlight:'mixerEl',btn:'i see it →'},
+  {emoji:'🔥',title:'your first mix',body:'your mission: <strong>1.</strong> drop a song on deck A and press play. <strong>2.</strong> drop another on deck B. <strong>3.</strong> match the BPMs with the pitch fader. <strong>4.</strong> slowly move the crossfader to blend. that\'s a real mix. you\'ve got this!',highlight:null,btn:'start mixing ✦'}
 ];
 let currentStep=0,highlightedEl=null;
 function buildDots(){document.getElementById('obProgress').innerHTML=steps.map((_,i)=>`<div class="ob-dot" id="dot${i}"></div>`).join('');}
@@ -290,147 +297,179 @@ function nextStep(){if(currentStep<steps.length-1){currentStep++;showStep(curren
 function skipOnboarding(){document.getElementById('obOverlay').classList.add('hidden');clearHighlight();}
 buildDots();showStep(0);
 
-/* ── SOUNDCLOUD ── */
-function fmt(s){if(!s||isNaN(s))return'0:00';return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');}
+/* ── FILE LOADING ── */
+function onDragOver(e,deck){e.preventDefault();document.getElementById('drop'+deck).classList.add('drag-over');}
+function onDragLeave(deck){document.getElementById('drop'+deck).classList.remove('drag-over');}
+function onDrop(e,deck){e.preventDefault();onDragLeave(deck);const f=e.dataTransfer.files[0];if(f)loadFile(deck,f);}
+function onFileInput(e,deck){const f=e.target.files[0];if(f)loadFile(deck,f);}
 
-async function doSearch(deck){
-  const q=document.getElementById('search'+deck).value.trim();
-  if(!q)return;
-  const box=document.getElementById('results'+deck);
-  box.innerHTML='<div class="r-item" style="color:#7777aa">searching...</div>';
-  box.classList.add('open');
-  try{
-    const r=await fetch(`https://api.soundcloud.com/tracks?q=${encodeURIComponent(q)}&limit=6&client_id=${SC_CLIENT}&linked_partitioning=1`);
-    const data=await r.json();
-    const tracks=(data.collection||data).filter(t=>t.streamable);
-    if(!tracks.length){box.innerHTML='<div class="r-item" style="color:#7777aa">no streamable results — try another search</div>';return;}
-    box.innerHTML=tracks.map(t=>
-      `<div class="r-item" onclick="loadTrack('${deck}',${t.id},'${escJ(t.title)}','${escJ(t.user.username)}',${Math.round(t.duration/1000)})">${escH(t.title)} — ${escH(t.user.username)}</div>`
-    ).join('');
-  }catch(e){
-    box.innerHTML='<div class="r-item" style="color:#fdba74">search error — try again in a moment</div>';
-  }
-}
-
-function escJ(s){return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"')}
-function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')}
-
-function loadTrack(deck,trackId,title,artist,dur){
-  document.getElementById('results'+deck).classList.remove('open');
-  document.getElementById('name'+deck).textContent=title;
-  document.getElementById('sub'+deck).textContent=artist;
-  state[deck].trackId=trackId;
-  state[deck].duration=dur;
-  state[deck].playing=false;
-  state[deck].position=0;
+async function loadFile(deck,file){
+  if(actx.state==='suspended')await actx.resume();
+  showLoader(deck,true);
+  setCoach('✨','<span class="tip">loading '+escH(file.name)+'...</span> analysing audio now.');
+  const s=state[deck];
+  if(s.source){try{s.source.stop();}catch(e){} s.source=null;}
+  s.playing=false;s.startOffset=0;
   document.getElementById('playBtn'+deck).innerHTML='&#9654;';
-  document.getElementById('dur'+deck).textContent=fmt(dur);
-  document.getElementById('time'+deck).textContent='0:00';
-  document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: loaded`;
-  estimateBPM(deck,dur);
-  generateWaveform(deck);
 
-  // Load SC widget
-  const iframe=document.getElementById('sc'+deck);
-  iframe.src=`https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/${trackId}&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&visual=false&buying=false&liking=false&download=false&sharing=false&color=%23a78bfa`;
-  iframe.style.display='block';
-
-  // Init SC Widget API after iframe loads
-  iframe.onload=()=>{
-    if(typeof SC==='undefined')return;
-    const widget=SC.Widget(iframe);
-    state[deck].widget=widget;
-    widget.bind(SC.Widget.Events.PLAY_PROGRESS,(e)=>{
-      state[deck].position=e.currentPosition/1000;
-      document.getElementById('time'+deck).textContent=fmt(state[deck].position);
-      drawWaveform(deck,state[deck].position/state[deck].duration);
-      if(state[deck].loop&&state[deck].bpm){
-        const ld=(60/state[deck].bpm)*4*state[deck].loop;
-        if(state[deck].position>=state[deck].cuePoint+ld)widget.seekTo(state[deck].cuePoint*1000);
-      }
-      if(Math.floor(state[deck].position)%5===0)updateCoach();
-    });
-    widget.bind(SC.Widget.Events.FINISH,()=>{
-      state[deck].playing=false;
-      document.getElementById('playBtn'+deck).innerHTML='&#9654;';
-      setCoach('🎧','track ended on deck '+deck.toLowerCase()+'. load a new one to keep going!');
-    });
-    widget.setVolume(state[deck].vol*100);
-  };
-  updateCoach();
+  const buf=await file.arrayBuffer();
+  actx.decodeAudioData(buf, decoded=>{
+    s.buffer=decoded;
+    s.duration=decoded.duration;
+    s.playbackRate=1;
+    document.getElementById('name'+deck).textContent=file.name.replace(/\.[^.]+$/,'');
+    document.getElementById('sub'+deck).textContent=fmt(decoded.duration)+' · ready to play';
+    document.getElementById('dur'+deck).textContent=fmt(decoded.duration);
+    document.getElementById('time'+deck).textContent='0:00';
+    document.getElementById('trackDisplay'+deck).classList.add('visible');
+    document.getElementById('waveArea'+deck).classList.add('visible');
+    document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: loaded`;
+    showLoader(deck,false);
+    buildAudioGraph(deck,decoded);
+    drawWaveformFromBuffer(deck,decoded);
+    detectBPM(deck,decoded);
+    updateCoach();
+  }, ()=>{
+    setCoach('👀','<span class="warn">couldn\'t decode that file.</span> try a different MP3.');
+    showLoader(deck,false);
+  });
 }
 
+function buildAudioGraph(deck,buffer){
+  const s=state[deck];
+  const gain=actx.createGain();
+  gain.gain.value=s.vol;
+  const hi=actx.createBiquadFilter();hi.type='highshelf';hi.frequency.value=3200;hi.gain.value=0;
+  const mid=actx.createBiquadFilter();mid.type='peaking';mid.frequency.value=1000;mid.Q.value=1;mid.gain.value=0;
+  const lo=actx.createBiquadFilter();lo.type='lowshelf';lo.frequency.value=320;lo.gain.value=0;
+  lo.connect(mid);mid.connect(hi);hi.connect(gain);gain.connect(actx.destination);
+  s.gainNode=gain;s.hiNode=hi;s.midNode=mid;s.loNode=lo;
+}
+
+function createSource(deck){
+  const s=state[deck];
+  const src=actx.createBufferSource();
+  src.buffer=s.buffer;
+  src.playbackRate.value=s.playbackRate||1;
+  src.connect(s.loNode);
+  src.onended=()=>{
+    if(s.playing&&!s.looping){
+      s.playing=false;s.startOffset=0;
+      document.getElementById('playBtn'+deck).innerHTML='&#9654;';
+      setCoach('🎧','track ended on deck '+deck.toLowerCase()+'. drop a new track to keep going!');
+    }
+  };
+  return src;
+}
+
+/* ── TRANSPORT ── */
 function togglePlay(deck){
   const s=state[deck];
-  if(!s.trackId){setCoach('👀','<span class="warn">no track loaded!</span> search for a song above first.');return;}
-  if(!s.widget){setCoach('👀','<span class="warn">still loading</span> — give it a second then try again.');return;}
+  if(!s.buffer){setCoach('👀','<span class="warn">no track loaded!</span> drop an MP3 onto the deck first.');return;}
+  if(actx.state==='suspended')actx.resume();
   if(s.playing){
-    s.widget.pause();s.playing=false;
+    s.startOffset=getPos(deck);
+    try{s.source.stop();}catch(e){}
+    s.source=null;s.playing=false;
     document.getElementById('playBtn'+deck).innerHTML='&#9654;';
     document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: paused`;
   }else{
-    s.widget.play();s.playing=true;
+    s.source=createSource(deck);
+    s.startTime=actx.currentTime;
+    s.source.start(0,s.startOffset);
+    s.playing=true;
     document.getElementById('playBtn'+deck).innerHTML='&#9646;&#9646;';
     document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: playing`;
+    if(!rafId)startRAF();
   }
   updateCoach();
 }
 
 function cue(deck){
   const s=state[deck];
-  s.cuePoint=s.position||0;
-  if(s.widget){s.widget.pause();s.widget.seekTo(s.cuePoint*1000);}
-  s.playing=false;
+  s.cuePoint=getPos(deck);
+  if(s.playing){try{s.source.stop();}catch(e){}s.source=null;s.playing=false;}
+  s.startOffset=s.cuePoint;
   document.getElementById('playBtn'+deck).innerHTML='&#9654;';
   setCoach('✨','cue point set at '+fmt(s.cuePoint)+'. press play to jump back here anytime.');
 }
 
 function nudge(deck,sec){
   const s=state[deck];
-  if(!s.widget||!s.trackId)return;
-  const newPos=Math.max(0,Math.min(s.duration,(s.position||0)+sec));
-  s.widget.seekTo(newPos*1000);
+  if(!s.buffer)return;
+  const newPos=Math.max(0,Math.min(s.duration,getPos(deck)+sec));
+  const wasPlaying=s.playing;
+  if(wasPlaying){try{s.source.stop();}catch(e){}s.source=null;s.playing=false;}
+  s.startOffset=newPos;
+  if(wasPlaying){s.source=createSource(deck);s.startTime=actx.currentTime;s.source.start(0,newPos);s.playing=true;}
 }
 
 function scrub(deck,e){
   const s=state[deck];
-  if(!s.widget||!s.trackId)return;
-  const rect=e.currentTarget.getBoundingClientRect();
+  if(!s.buffer)return;
+  const rect=document.getElementById('waveArea'+deck).getBoundingClientRect();
   const pct=(e.clientX-rect.left)/rect.width;
-  s.widget.seekTo(pct*s.duration*1000);
+  const newPos=pct*s.duration;
+  const wasPlaying=s.playing;
+  if(wasPlaying){try{s.source.stop();}catch(e2){}s.source=null;s.playing=false;}
+  s.startOffset=newPos;
+  if(wasPlaying){s.source=createSource(deck);s.startTime=actx.currentTime;s.source.start(0,newPos);s.playing=true;}
 }
 
 function setLoop(deck,bars){
-  state[deck].loop=bars;
-  state[deck].cuePoint=state[deck].position||0;
+  state[deck].loop=bars;state[deck].cuePoint=getPos(deck);
   document.getElementById('loopOff'+deck).classList.add('on');
   setCoach('🔁',`${bars}-bar loop set. hold the groove while you prep the other deck.`);
 }
+function clearLoop(deck){state[deck].loop=null;document.getElementById('loopOff'+deck).classList.remove('on');}
 
-function clearLoop(deck){
-  state[deck].loop=null;
-  document.getElementById('loopOff'+deck).classList.remove('on');
+/* ── RAF LOOP ── */
+function startRAF(){
+  function tick(){
+    rafId=requestAnimationFrame(tick);
+    ['A','B'].forEach(deck=>{
+      const s=state[deck];
+      if(!s.playing)return;
+      const pos=getPos(deck);
+      document.getElementById('time'+deck).textContent=fmt(pos);
+      drawWaveform(deck,pos/s.duration);
+      if(s.loop&&s.bpm){
+        const ld=(60/s.bpm)*4*s.loop;
+        if(pos>=s.cuePoint+ld)seekTo(deck,s.cuePoint);
+      }
+    });
+    updateSyncIndicator();
+  }
+  tick();
 }
 
+function seekTo(deck,pos){
+  const s=state[deck];
+  try{s.source.stop();}catch(e){}
+  s.startOffset=pos;s.source=createSource(deck);
+  s.startTime=actx.currentTime;s.source.start(0,pos);
+}
+
+/* ── PITCH / VOL / EQ ── */
 function updatePitch(deck){
   const val=parseFloat(document.getElementById('pitch'+deck).value);
   state[deck].pitch=val;
+  const rate=1+(val/100);
+  state[deck].playbackRate=rate;
   document.getElementById('pitchVal'+deck).textContent=(val>=0?'+':'')+val.toFixed(1)+'%';
-  // SC widget doesn't support playback rate — show visual indicator only
+  if(state[deck].source)state[deck].source.playbackRate.value=rate;
   updateSyncIndicator();
-  if(val!==0)setCoach('✨',`pitch on deck ${deck.toLowerCase()} set to ${val>0?'+':''}${val.toFixed(1)}%. note: soundcloud adjusts tempo visually — use nudge to fine-tune beat phase.`);
 }
 
 function setVol(deck){
   const val=parseFloat(document.getElementById('vol'+deck).value);
   state[deck].vol=val;
-  if(state[deck].widget)state[deck].widget.setVolume(val*100);
+  if(state[deck].gainNode)state[deck].gainNode.gain.value=val;
 }
 
 function setFaderVol(deck){
   const val=parseFloat(document.getElementById('fader'+deck).value);
-  const effective=val*state[deck].vol;
-  if(state[deck].widget)state[deck].widget.setVolume(effective*100);
+  if(state[deck].gainNode)state[deck].gainNode.gain.value=val*state[deck].vol;
 }
 
 function updateXfader(){
@@ -440,18 +479,29 @@ function updateXfader(){
   setFaderVol('A');setFaderVol('B');
 }
 
-function estimateBPM(deck,dur){
-  const pool=[120,122,124,126,128,130,132,134,140,145,150,174,96,98,100,102,105,110,115];
-  const bpm=pool[Math.floor(Math.random()*pool.length)]+(Math.random()*2-1);
-  state[deck].bpm=Math.round(bpm*10)/10;
-  document.getElementById('bpm'+deck).textContent=state[deck].bpm.toFixed(1);
-  updateSyncIndicator();
+function updateEQ(deck){
+  const s=state[deck];
+  if(!s.hiNode)return;
+  const hi=parseFloat(document.getElementById('eq'+deck+'hi').value);
+  const mid=parseFloat(document.getElementById('eq'+deck+'mid').value);
+  const lo=parseFloat(document.getElementById('eq'+deck+'lo').value);
+  s.hiNode.gain.value=(hi-1)*12;
+  s.midNode.gain.value=(mid-1)*12;
+  s.loNode.gain.value=(lo-1)*12;
 }
 
-function generateWaveform(deck){
+/* ── WAVEFORM ── */
+function drawWaveformFromBuffer(deck,buffer){
   const canvas=document.getElementById('wave'+deck);
-  canvas.width=canvas.offsetWidth||300;canvas.height=54;
-  state[deck].waveData=Array.from({length:90},(_,i)=>Math.min(1,0.25+Math.random()*0.65+Math.sin(i/90*Math.PI)*0.2));
+  canvas.width=canvas.offsetWidth||400;canvas.height=54;
+  const data=buffer.getChannelData(0);
+  const bars=120,step=Math.floor(data.length/bars);
+  const peaks=Array.from({length:bars},(_,i)=>{
+    let max=0;
+    for(let j=0;j<step;j++){const v=Math.abs(data[i*step+j]||0);if(v>max)max=v;}
+    return max;
+  });
+  state[deck].waveData=peaks;
   drawWaveform(deck,0);
 }
 
@@ -463,18 +513,51 @@ function drawWaveform(deck,progress){
   const bars=data.length,bw=w/bars,center=Math.floor(progress*bars);
   const past=deck==='A'?'#5b3fa0':'#1a6b4a',future=deck==='A'?'#2d1f4e':'#1a2e24',head=deck==='A'?'#c4b5fd':'#6ee7b7';
   for(let i=0;i<bars;i++){
-    const bh=data[i]*h*0.82,x=i*bw;
+    const bh=Math.max(2,data[i]*h*0.9),x=i*bw;
     ctx.fillStyle=i<center?past:(i===center?head:future);
-    ctx.fillRect(x+1,(h-bh)/2,bw-2,bh);
-  }
-  if(state[deck].bpm){
-    const beats=Math.floor((state[deck].bpm/60)*(state[deck].duration||1));
-    ctx.strokeStyle='rgba(255,255,255,0.05)';ctx.lineWidth=1;
-    for(let b=0;b<beats;b++){const bx=(b/beats)*w;ctx.beginPath();ctx.moveTo(bx,0);ctx.lineTo(bx,h);ctx.stroke();}
+    ctx.fillRect(x+0.5,(h-bh)/2,bw-1,bh);
   }
 }
 
-function getEffBPM(deck){const s=state[deck];if(!s.bpm)return null;return s.bpm*(1+s.pitch/100);}
+/* ── BPM DETECTION ── */
+function detectBPM(deck,buffer){
+  const sampleRate=buffer.sampleRate;
+  const data=buffer.getChannelData(0);
+  const step=Math.floor(sampleRate*0.01);
+  const energy=[];
+  for(let i=0;i<data.length-step;i+=step){
+    let e=0;for(let j=0;j<step;j++)e+=data[i+j]*data[i+j];
+    energy.push(e/step);
+  }
+  const avg=energy.reduce((a,b)=>a+b,0)/energy.length;
+  const peaks=[];
+  for(let i=1;i<energy.length-1;i++){
+    if(energy[i]>avg*1.5&&energy[i]>energy[i-1]&&energy[i]>energy[i+1])peaks.push(i);
+  }
+  if(peaks.length<2){fallbackBPM(deck);return;}
+  const intervals=[];
+  for(let i=1;i<Math.min(peaks.length,40);i++)intervals.push(peaks[i]-peaks[i-1]);
+  const medInterval=intervals.slice().sort((a,b)=>a-b)[Math.floor(intervals.length/2)];
+  const secPerBeat=medInterval*0.01;
+  let bpm=60/secPerBeat;
+  while(bpm<80)bpm*=2;
+  while(bpm>180)bpm/=2;
+  bpm=Math.round(bpm*10)/10;
+  state[deck].bpm=bpm;
+  document.getElementById('bpm'+deck).textContent=bpm.toFixed(1);
+  updateSyncIndicator();
+}
+
+function fallbackBPM(deck){
+  const pool=[120,124,126,128,130,132,140];
+  const bpm=pool[Math.floor(Math.random()*pool.length)];
+  state[deck].bpm=bpm;
+  document.getElementById('bpm'+deck).textContent=bpm.toFixed(1);
+  updateSyncIndicator();
+}
+
+/* ── SYNC ── */
+function getEffBPM(deck){const s=state[deck];if(!s.bpm)return null;return s.bpm*(1+(s.pitch/100));}
 
 function updateSyncIndicator(){
   const bA=getEffBPM('A'),bB=getEffBPM('B');
@@ -486,36 +569,34 @@ function updateSyncIndicator(){
   else{pill.className='sync-pill';pill.textContent=diff.toFixed(1)+' bpm apart';}
 }
 
+/* ── COACH ── */
 function setCoach(icon,msg){document.getElementById('coachIcon').textContent=icon;document.getElementById('coachText').innerHTML=msg;}
 
 function updateCoach(){
-  const hasA=!!state.A.trackId,hasB=!!state.B.trackId;
+  const hasA=!!state.A.buffer,hasB=!!state.B.buffer;
   const bA=getEffBPM('A'),bB=getEffBPM('B');
-  if(!hasA&&!hasB){setCoach('🎧','search for any song on <span class="tip">deck a</span> to get started.');return;}
-  if(hasA&&!hasB){setCoach('✨','nice! now load something on <span class="tip">deck b</span> — that\'s your next track to mix in.');return;}
+  if(!hasA&&!hasB){setCoach('🎧','drop an MP3 onto <span class="tip">deck a</span> to get started — or click the drop zone to browse.');return;}
+  if(hasA&&!hasB){setCoach('✨','track loaded on a! now drop something onto <span class="tip">deck b</span> — that\'s your next track to mix in.');return;}
   if(state.A.playing&&state.B.playing){
     const diff=bA&&bB?Math.abs(bA-bB):99;
     if(diff>8){setCoach('👀',`<span class="warn">bpms are ${diff.toFixed(1)} apart</span> — drag the pitch fader on deck ${bA>bB?'a':'b'} toward center.`);return;}
     if(diff>2){setCoach('✨',`getting closer! ${diff.toFixed(1)} bpm gap — nudge pitch on deck ${bA>bB?'a':'b'} a little more.`);return;}
     if(diff<=0.3){setCoach('🔥','<span class="good">bpms locked!</span> now slowly move the crossfader right to blend deck b in. try cutting the lows on b first.');return;}
-    setCoach('🎶',`<span class="good">almost there</span> — ${diff.toFixed(1)} bpm off. use nudge to get the beats in phase, then crossfade.`);
+    setCoach('🎶',`<span class="good">almost there</span> — ${diff.toFixed(1)} bpm off. use nudge to get beats in phase, then crossfade.`);
   }else if(state.A.playing){
-    setCoach('🎶','deck a is playing. <span class="tip">hit cue on deck b</span> to mark your start point, then press play when ready.');
+    setCoach('🎶','deck a is playing. <span class="tip">set a cue point on deck b</span>, then press play when ready to bring it in.');
   }else if(state.B.playing){
-    setCoach('🎶','deck b is playing. load a fresh track on a and bring the crossfader back left when ready.');
+    setCoach('🎶','deck b is playing. drop a fresh track on a and bring the crossfader back left when ready.');
   }else{
     setCoach('🎧','both decks loaded — press <span class="tip">play on deck a</span> to start your set!');
   }
 }
 
-document.getElementById('searchA').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch('A');});
-document.getElementById('searchB').addEventListener('keydown',e=>{if(e.key==='Enter')doSearch('B');});
-document.addEventListener('click',e=>{
-  if(!e.target.closest('#resultsA')&&!e.target.closest('#searchA')&&!e.target.closest('button'))document.getElementById('resultsA').classList.remove('open');
-  if(!e.target.closest('#resultsB')&&!e.target.closest('#searchB')&&!e.target.closest('button'))document.getElementById('resultsB').classList.remove('open');
-});
+function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+
+// Prevent browser from opening files when dropped outside decks
+document.addEventListener('dragover',e=>e.preventDefault());
+document.addEventListener('drop',e=>e.preventDefault());
 </script>
-<!-- SoundCloud Widget API -->
-<script src="https://w.soundcloud.com/player/api.js"></script>
 </body>
 </html>
