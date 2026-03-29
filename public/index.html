@@ -383,6 +383,17 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
     </div>
   </div>
 
+  <!-- RECORD BAR -->
+  <div style="grid-column:1/-1;background:#1e1e34;border:1.5px solid #2e2e50;border-radius:20px;padding:12px 16px;display:flex;align-items:center;gap:14px">
+    <button id="recBtn" onclick="toggleRecord()" style="background:#2a1414;border:1.5px solid #cc444466;border-radius:14px;padding:9px 18px;color:#f87171;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:7px;transition:all 0.15s">
+      <span id="recDot" style="width:9px;height:9px;border-radius:50%;background:#f87171;display:inline-block"></span>
+      <span id="recLabel">record mix</span>
+    </button>
+    <div id="recTimer" style="font-size:12px;color:#7777aa;font-family:'DM Mono',monospace;display:none">00:00</div>
+    <div id="recStatus" style="font-size:11px;color:#7777aa;flex:1">ready to record — press to capture your mix as audio</div>
+    <a id="recDownload" style="display:none;background:linear-gradient(135deg,#a78bfa,#f472b6);border:none;border-radius:12px;padding:8px 16px;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none">⬇ download mix</a>
+  </div>
+
   <div class="coach">
     <div class="coach-icon" id="coachIcon">🎧</div>
     <div class="coach-inner">
@@ -572,6 +583,8 @@ function buildAudioGraph(deck){
   const lo=actx.createBiquadFilter();lo.type='lowshelf';lo.frequency.value=320;lo.gain.value=0;
   lo.connect(mid);mid.connect(hi);hi.connect(gain);gain.connect(actx.destination);
   s.gainNode=gain;s.hiNode=hi;s.midNode=mid;s.loNode=lo;
+  // patch into recorder if active
+  if(mediaRecorder&&mediaRecorder.state==='recording')patchGainToRecorder(gain);
 }
 
 function createSource(deck){
@@ -782,7 +795,83 @@ function updateCoach(){
   }
 }
 
-/* ── SAMPLER ── */
+/* ── RECORDER ── */
+let mediaRecorder=null, recChunks=[], recInterval=null, recStart=null;
+let recDest=null;
+
+function getRecordingDestination(){
+  if(!recDest)recDest=actx.createMediaStreamDestination();
+  return recDest;
+}
+
+function patchGainToRecorder(gainNode){
+  if(!gainNode)return;
+  try{gainNode.connect(getRecordingDestination());}catch(e){}
+}
+
+function toggleRecord(){
+  if(mediaRecorder&&mediaRecorder.state==='recording'){
+    stopRecord();
+  }else{
+    startRecord();
+  }
+}
+
+function startRecord(){
+  if(actx.state==='suspended')actx.resume();
+  recChunks=[];
+  const dest=getRecordingDestination();
+
+  // patch all current gain nodes into recorder
+  ['A','B'].forEach(deck=>{if(state[deck].gainNode)patchGainToRecorder(state[deck].gainNode);});
+
+  const mimeType=MediaRecorder.isTypeSupported('audio/webm;codecs=opus')?'audio/webm;codecs=opus':'audio/webm';
+  mediaRecorder=new MediaRecorder(dest.stream,{mimeType});
+  mediaRecorder.ondataavailable=e=>{if(e.data.size>0)recChunks.push(e.data);};
+  mediaRecorder.onstop=()=>saveRecording();
+  mediaRecorder.start(100);
+  recStart=Date.now();
+
+  // pulse animation on dot
+  document.getElementById('recDot').style.animation='recPulse 0.8s ease-in-out infinite';
+  document.getElementById('recBtn').style.borderColor='#f87171';
+  document.getElementById('recBtn').style.background='#3a1414';
+  document.getElementById('recLabel').textContent='stop recording';
+  document.getElementById('recTimer').style.display='block';
+  document.getElementById('recStatus').textContent='recording your mix...';
+  document.getElementById('recDownload').style.display='none';
+
+  recInterval=setInterval(()=>{
+    const s=Math.floor((Date.now()-recStart)/1000);
+    const m=String(Math.floor(s/60)).padStart(2,'0'),sec=String(s%60).padStart(2,'0');
+    document.getElementById('recTimer').textContent=m+':'+sec;
+  },500);
+}
+
+function stopRecord(){
+  if(mediaRecorder&&mediaRecorder.state==='recording')mediaRecorder.stop();
+  clearInterval(recInterval);
+  document.getElementById('recDot').style.animation='none';
+  document.getElementById('recBtn').style.borderColor='#cc444466';
+  document.getElementById('recBtn').style.background='#2a1414';
+  document.getElementById('recLabel').textContent='record mix';
+  document.getElementById('recTimer').style.display='none';
+  document.getElementById('recStatus').textContent='processing...';
+}
+
+function saveRecording(){
+  const blob=new Blob(recChunks,{type:'audio/webm'});
+  const url=URL.createObjectURL(blob);
+  const dl=document.getElementById('recDownload');
+  dl.href=url;
+  const ts=new Date().toISOString().slice(0,16).replace('T','-').replace(':','-');
+  dl.download=`yyyas3-mix-${ts}.webm`;
+  dl.style.display='inline-block';
+  document.getElementById('recStatus').textContent='mix ready — click download to save it!';
+  setCoach('🎉','<span class="good">mix recorded!</span> click the download button to save your set as an audio file.');
+}
+
+
 const padNodes={};
 
 function playPad(n){
