@@ -8,7 +8,7 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
-.app{display:grid;grid-template-columns:1fr 148px 1fr;gap:10px;padding:12px;max-width:1120px;margin:0 auto}
+.app{display:grid;grid-template-columns:1fr 160px 1fr;gap:10px;padding:12px;max-width:1140px;margin:0 auto}
 .header{grid-column:1/-1;text-align:center;padding:8px 0 4px}
 .header h1{font-size:18px;font-weight:600;background:linear-gradient(135deg,#a78bfa,#f472b6,#fb923c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:1px}
 .header p{font-size:11px;color:#9999cc;margin-top:2px}
@@ -16,13 +16,35 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 .deck-title{font-size:11px;font-weight:600;letter-spacing:3px;text-align:center;padding:4px 12px;border-radius:20px;width:fit-content;margin:0 auto}
 .deck-title.a{background:#2d1f4e;color:#c4b5fd}
 .deck-title.b{background:#1f3a2d;color:#6ee7b7}
-.drop-zone{border:1.5px dashed #3e3e60;border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:all 0.2s;background:#16162a}
+
+/* DROP ZONE */
+.drop-zone{border:1.5px dashed #3e3e60;border-radius:14px;padding:10px;text-align:center;cursor:pointer;transition:all 0.2s;background:#16162a}
 .drop-zone:hover,.drop-zone.drag-over{border-color:#a78bfa;background:#1e1a30}
 .drop-zone.b-zone:hover,.drop-zone.b-zone.drag-over{border-color:#34d399;background:#0f1e18}
-.drop-icon{font-size:20px;margin-bottom:4px}
-.drop-text{font-size:11px;color:#9999cc;line-height:1.4}
+.drop-icon{font-size:16px;margin-bottom:2px}
+.drop-text{font-size:10px;color:#9999cc;line-height:1.4}
 .drop-text strong{color:#c4b5fd;font-weight:600}
 .drop-text.b-text strong{color:#6ee7b7}
+
+/* QUEUE */
+.queue{display:flex;flex-direction:column;gap:4px}
+.queue-label{font-size:9px;letter-spacing:2px;color:#9999cc;font-weight:600;padding:0 2px}
+.queue-item{background:#16162a;border:1.5px solid #3e3e60;border-radius:10px;padding:6px 10px;display:flex;align-items:center;gap:8px;cursor:grab;transition:all 0.15s;position:relative}
+.queue-item:active{cursor:grabbing}
+.queue-item.active-track{border-color:#a78bfa;background:#1e1a30}
+.queue-item.active-track.b-active{border-color:#34d399;background:#0f1e18}
+.queue-item.dragging{opacity:0.4}
+.queue-item.drag-target{border-color:#f472b6}
+.queue-num{font-size:9px;color:#7777aa;font-family:'DM Mono',monospace;min-width:12px}
+.queue-info{flex:1;min-width:0}
+.queue-name{font-size:11px;color:#e0e0f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500}
+.queue-dur{font-size:9px;color:#7777aa;font-family:'DM Mono',monospace;margin-top:1px}
+.queue-remove{background:none;border:none;color:#44445a;font-size:13px;cursor:pointer;padding:0 2px;line-height:1;transition:color 0.1s;flex-shrink:0}
+.queue-remove:hover{color:#f472b6}
+.queue-now{font-size:8px;background:#a78bfa22;color:#c4b5fd;padding:2px 5px;border-radius:6px;letter-spacing:1px;font-weight:600}
+.queue-now.b-now{background:#34d39922;color:#6ee7b7}
+
+/* TRACK DISPLAY */
 .track-display{background:#16162a;border-radius:12px;padding:8px 12px;min-height:38px;border:1.5px solid #3e3e60;display:none}
 .track-display.visible{display:block}
 .track-name{font-size:12px;font-weight:500;color:#f0f0fa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -33,29 +55,41 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 .playhead-line{position:absolute;top:0;left:50%;width:2px;height:100%;background:rgba(255,255,255,0.4);pointer-events:none;transform:translateX(-50%)}
 .time-row{display:flex;justify-content:space-between;font-size:10px;color:#9999cc;padding:0 4px;font-family:'DM Mono',monospace}
 .bpm-pitch-row{display:flex;align-items:center;gap:8px}
-.bpm-box{background:#16162a;border:1.5px solid #f472b644;border-radius:14px;padding:6px 12px;text-align:center;min-width:86px}
-.bpm-val{font-size:18px;font-weight:600;color:#f9a8d4;font-family:'DM Mono',monospace;line-height:1}
+.bpm-box{background:#16162a;border:1.5px solid #f472b644;border-radius:14px;padding:6px 10px;text-align:center;min-width:80px}
+.bpm-val{font-size:16px;font-weight:600;color:#f9a8d4;font-family:'DM Mono',monospace;line-height:1}
 .bpm-lbl{font-size:9px;color:#994466;letter-spacing:2px;margin-top:2px}
 .pitch-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;flex:1}
 .pitch-wrap label{font-size:9px;color:#9999cc;letter-spacing:1px}
 .pitch-wrap input[type=range]{width:100%;cursor:pointer;accent-color:#a78bfa}
 .pitch-pct{font-size:10px;color:#c4b5fd;font-family:'DM Mono',monospace}
-.transport{display:flex;align-items:center;gap:5px;justify-content:center}
-.btn{background:#22223a;border:1.5px solid #3e3e60;border-radius:12px;color:#c0c0e0;font-size:11px;font-weight:500;padding:7px 13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s}
+
+/* TRANSPORT */
+.transport{display:flex;align-items:center;gap:4px;justify-content:center}
+.btn{background:#22223a;border:1.5px solid #3e3e60;border-radius:12px;color:#c0c0e0;font-size:10px;font-weight:500;padding:6px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s;display:flex;flex-direction:column;align-items:center;gap:1px;line-height:1.2}
 .btn:hover{background:#2a2a45;color:#f0f0fa;border-color:#6666cc}
 .btn.on{background:#2d1f4e;border-color:#a78bfa;color:#ddd6fe}
-.play-btn{font-size:18px;padding:7px 16px;background:#2d1f4e;border-color:#a78bfa;color:#ddd6fe;border-radius:14px}
+.btn-icon{font-size:14px;line-height:1}
+.btn-label{font-size:8px;color:#7777aa;letter-spacing:0.5px}
+.play-btn{background:#2d1f4e;border-color:#a78bfa;color:#ddd6fe;border-radius:14px;padding:7px 14px}
 .play-btn:hover{background:#3d2a6e}
 .cue-btn{color:#fdba74;border-color:#fb923c44;background:#2a1e14}
 .cue-btn:hover{background:#3a2a1a;border-color:#fb923c}
 .loop-row{display:flex;gap:3px}
-.loop-btn{font-size:9px;padding:5px 8px;border-radius:10px;letter-spacing:1px}
+.loop-btn{font-size:9px;padding:4px 7px;border-radius:10px;letter-spacing:1px;flex-direction:row;gap:3px}
 .vol-row{display:flex;align-items:center;gap:8px}
 .vol-row label{font-size:9px;color:#9999cc;letter-spacing:1px;width:22px}
 .vol-row input{flex:1;accent-color:#34d399}
 .loading-bar{height:3px;background:#16162a;border-radius:2px;overflow:hidden;display:none}
 .loading-bar.active{display:block}
 .loading-inner{height:100%;width:0%;background:linear-gradient(90deg,#a78bfa,#f472b6);border-radius:2px;transition:width 0.2s}
+
+/* KEYBOARD LEGEND */
+.kb-legend{background:#16162a;border:1.5px solid #2e2e50;border-radius:12px;padding:8px 10px;display:grid;grid-template-columns:1fr 1fr;gap:3px 10px}
+.kb-row{display:flex;align-items:center;gap:5px}
+.kb-key{background:#2a2a45;border:1px solid #3e3e60;border-radius:5px;padding:1px 5px;font-size:9px;font-family:'DM Mono',monospace;color:#c4b5fd;white-space:nowrap}
+.kb-desc{font-size:9px;color:#7777aa}
+
+/* MIXER */
 .mixer{background:#1e1e34;border:1.5px solid #2e2e50;border-radius:20px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:8px}
 .mx-label{font-size:9px;letter-spacing:2px;color:#9999cc;text-transform:uppercase;font-weight:600}
 .sync-pill{width:100%;text-align:center;padding:6px 4px;border-radius:14px;font-size:10px;font-weight:700;letter-spacing:2px;border:1.5px solid #3e3e60;color:#7777aa;background:#16162a;transition:all 0.4s}
@@ -72,6 +106,8 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 .xfader-wrap{width:100%}
 .xfader-wrap label{font-size:9px;color:#9999cc;display:block;text-align:center;margin-bottom:3px;letter-spacing:1px}
 .xfader-wrap input{width:100%;accent-color:#f472b6;cursor:pointer}
+
+/* COACH */
 .coach{grid-column:1/-1;background:#1e1e34;border:1.5px solid #3e3e60;border-radius:20px;padding:12px 16px;min-height:52px;display:flex;gap:10px;align-items:flex-start}
 .coach-icon{font-size:22px;line-height:1;flex-shrink:0;margin-top:1px}
 .coach-inner{flex:1}
@@ -81,7 +117,14 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 .coach-text .good{color:#6ee7b7;font-weight:500}
 .coach-text .warn{color:#fdba74;font-weight:500}
 .status-bar{grid-column:1/-1;display:flex;justify-content:space-between;font-size:9px;color:#7777aa;padding:0 6px;font-family:'DM Mono',monospace}
-.ob-overlay{position:fixed;inset:0;background:rgba(10,10,20,0.82);z-index:100;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+
+/* ONBOARDING */
+.pad-btn{background:#16162a;border:1.5px solid #3e3e60;border-radius:16px;padding:14px 8px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all 0.08s;user-select:none;-webkit-user-select:none}
+.pad-btn:hover{border-color:#a78bfa;background:#1e1a30}
+.pad-btn.active{background:#2d1f4e;border-color:#c4b5fd;box-shadow:0 0 16px rgba(167,139,250,0.4);transform:scale(0.97)}
+.pad-icon{font-size:22px;line-height:1}
+.pad-name{font-size:10px;font-weight:600;color:#c0c0e0;letter-spacing:1px}
+.pad-key{font-size:9px;color:#7777aa;font-family:'DM Mono',monospace;background:#22223a;padding:2px 6px;border-radius:6px;border:1px solid #3e3e60}position:fixed;inset:0;background:rgba(10,10,20,0.82);z-index:100;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
 .ob-overlay.hidden{display:none}
 .ob-card{background:#22223a;border:1.5px solid #3e3e60;border-radius:24px;padding:28px 30px;max-width:420px;width:90%;box-shadow:0 0 60px rgba(167,139,250,0.15)}
 .ob-emoji{font-size:36px;margin-bottom:12px;display:block;text-align:center}
@@ -125,18 +168,26 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
     <p>the cutie girl's dj guide</p>
   </div>
 
+  <!-- DECK A -->
   <div class="deck" id="deckA">
     <div class="deck-title a">DECK A</div>
+
     <div class="drop-zone" id="dropA"
       ondragover="onDragOver(event,'A')"
       ondragleave="onDragLeave('A')"
       ondrop="onDrop(event,'A')"
       onclick="document.getElementById('fileA').click()">
-      <input type="file" id="fileA" accept="audio/*" style="display:none" onchange="onFileInput(event,'A')">
+      <input type="file" id="fileA" accept="audio/*" multiple style="display:none" onchange="onFileInput(event,'A')">
       <div class="drop-icon">🎵</div>
-      <div class="drop-text"><strong>drop an MP3 here</strong><br>or click to browse</div>
+      <div class="drop-text"><strong>drop MP3s here</strong><br>or click to browse (up to 3)</div>
     </div>
+
+    <div class="queue" id="queueA">
+      <div class="queue-label">QUEUE</div>
+    </div>
+
     <div class="loading-bar" id="loadBarA"><div class="loading-inner" id="loadInnerA"></div></div>
+
     <div class="track-display" id="trackDisplayA">
       <div class="track-name" id="nameA">—</div>
       <div class="track-sub" id="subA">—</div>
@@ -146,33 +197,55 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
       <div class="playhead-line"></div>
     </div>
     <div class="time-row"><span id="timeA">0:00</span><span id="durA">0:00</span></div>
+
     <div class="bpm-pitch-row" id="bpmRowA">
       <div class="bpm-box"><div class="bpm-val" id="bpmA">—</div><div class="bpm-lbl">BPM</div></div>
       <div class="pitch-wrap">
-        <label>PITCH ±8%</label>
+        <label>PITCH SPEED ±8% &nbsp;[Q] slower &nbsp;[W] faster</label>
         <input type="range" id="pitchA" min="-8" max="8" step="0.1" value="0" oninput="updatePitch('A')">
         <div class="pitch-pct" id="pitchValA">0.0%</div>
       </div>
     </div>
+
     <div class="transport">
-      <button class="btn cue-btn" onclick="cue('A')">CUE</button>
-      <button class="btn play-btn" id="playBtnA" onclick="togglePlay('A')">&#9654;</button>
-      <button class="btn" onclick="nudge('A',-2)">&#9668;&#9668;</button>
-      <button class="btn" onclick="nudge('A',2)">&#9658;&#9658;</button>
+      <button class="btn cue-btn" onclick="cue('A')" title="Mark start point [S]">
+        <span class="btn-icon">📍</span><span class="btn-label">CUE [S]</span>
+      </button>
+      <button class="btn play-btn" id="playBtnA" onclick="togglePlay('A')" title="Play / Pause [A]">
+        <span class="btn-icon" id="playIconA">▶</span><span class="btn-label">PLAY [A]</span>
+      </button>
+      <button class="btn" onclick="nudge('A',-0.1)" title="Nudge back [Z]">
+        <span class="btn-icon">⏪</span><span class="btn-label">BACK [Z]</span>
+      </button>
+      <button class="btn" onclick="nudge('A',0.1)" title="Nudge forward [X]">
+        <span class="btn-icon">⏩</span><span class="btn-label">FWD [X]</span>
+      </button>
     </div>
+
     <div class="loop-row">
-      <button class="btn loop-btn" onclick="setLoop('A',1)">1</button>
-      <button class="btn loop-btn" onclick="setLoop('A',2)">2</button>
-      <button class="btn loop-btn" onclick="setLoop('A',4)">4</button>
-      <button class="btn loop-btn" onclick="setLoop('A',8)">8 bar</button>
-      <button class="btn loop-btn" id="loopOffA" onclick="clearLoop('A')">off</button>
+      <button class="btn loop-btn" onclick="setLoop('A',1)">🔁 1 bar</button>
+      <button class="btn loop-btn" onclick="setLoop('A',2)">🔁 2</button>
+      <button class="btn loop-btn" onclick="setLoop('A',4)">🔁 4</button>
+      <button class="btn loop-btn" onclick="setLoop('A',8)">🔁 8</button>
+      <button class="btn loop-btn" id="loopOffA" onclick="clearLoop('A')">✕ loop</button>
     </div>
+
     <div class="vol-row">
       <label>VOL</label>
       <input type="range" id="volA" min="0" max="1" step="0.01" value="0.8" oninput="setVol('A')">
     </div>
+
+    <div class="kb-legend">
+      <div class="kb-row"><span class="kb-key">A</span><span class="kb-desc">play / pause</span></div>
+      <div class="kb-row"><span class="kb-key">S</span><span class="kb-desc">set cue point</span></div>
+      <div class="kb-row"><span class="kb-key">Z</span><span class="kb-desc">nudge back</span></div>
+      <div class="kb-row"><span class="kb-key">X</span><span class="kb-desc">nudge forward</span></div>
+      <div class="kb-row"><span class="kb-key">Q</span><span class="kb-desc">pitch slower</span></div>
+      <div class="kb-row"><span class="kb-key">W</span><span class="kb-desc">pitch faster</span></div>
+    </div>
   </div>
 
+  <!-- MIXER -->
   <div class="mixer" id="mixerEl">
     <div class="mx-label">mixer</div>
     <div class="sync-pill" id="syncPill">SYNC</div>
@@ -198,23 +271,34 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
       </div>
     </div>
     <div class="xfader-wrap">
-      <label>crossfader</label>
+      <label>crossfader [C] ← → [V]</label>
       <input type="range" id="xfader" min="0" max="1" step="0.01" value="0" oninput="updateXfader()">
+    </div>
+    <div style="font-size:8px;color:#44445a;text-align:center;line-height:1.5">
+      [C] fade left &nbsp;·&nbsp; [V] fade right<br>[Space] play both decks
     </div>
   </div>
 
+  <!-- DECK B -->
   <div class="deck" id="deckB">
     <div class="deck-title b">DECK B</div>
+
     <div class="drop-zone b-zone" id="dropB"
       ondragover="onDragOver(event,'B')"
       ondragleave="onDragLeave('B')"
       ondrop="onDrop(event,'B')"
       onclick="document.getElementById('fileB').click()">
-      <input type="file" id="fileB" accept="audio/*" style="display:none" onchange="onFileInput(event,'B')">
+      <input type="file" id="fileB" accept="audio/*" multiple style="display:none" onchange="onFileInput(event,'B')">
       <div class="drop-icon">🎵</div>
-      <div class="drop-text b-text"><strong>drop an MP3 here</strong><br>or click to browse</div>
+      <div class="drop-text b-text"><strong>drop MP3s here</strong><br>or click to browse (up to 3)</div>
     </div>
+
+    <div class="queue" id="queueB">
+      <div class="queue-label">QUEUE</div>
+    </div>
+
     <div class="loading-bar" id="loadBarB"><div class="loading-inner" id="loadInnerB"></div></div>
+
     <div class="track-display" id="trackDisplayB">
       <div class="track-name" id="nameB">—</div>
       <div class="track-sub" id="subB">—</div>
@@ -224,30 +308,78 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
       <div class="playhead-line"></div>
     </div>
     <div class="time-row"><span id="timeB">0:00</span><span id="durB">0:00</span></div>
+
     <div class="bpm-pitch-row" id="bpmRowB">
       <div class="bpm-box" style="border-color:#34d39944"><div class="bpm-val" id="bpmB" style="color:#6ee7b7">—</div><div class="bpm-lbl" style="color:#1a4a35">BPM</div></div>
       <div class="pitch-wrap">
-        <label>PITCH ±8%</label>
+        <label>PITCH SPEED ±8% &nbsp;[O] slower &nbsp;[P] faster</label>
         <input type="range" id="pitchB" min="-8" max="8" step="0.1" value="0" oninput="updatePitch('B')" style="accent-color:#34d399">
         <div class="pitch-pct" id="pitchValB" style="color:#6ee7b7">0.0%</div>
       </div>
     </div>
+
     <div class="transport">
-      <button class="btn cue-btn" onclick="cue('B')">CUE</button>
-      <button class="btn play-btn" id="playBtnB" onclick="togglePlay('B')" style="background:#1f3a2d;border-color:#34d399;color:#6ee7b7">&#9654;</button>
-      <button class="btn" onclick="nudge('B',-2)">&#9668;&#9668;</button>
-      <button class="btn" onclick="nudge('B',2)">&#9658;&#9658;</button>
+      <button class="btn cue-btn" onclick="cue('B')" title="Mark start point [L]">
+        <span class="btn-icon">📍</span><span class="btn-label">CUE [L]</span>
+      </button>
+      <button class="btn play-btn" id="playBtnB" onclick="togglePlay('B')" title="Play / Pause [K]" style="background:#1f3a2d;border-color:#34d399;color:#6ee7b7">
+        <span class="btn-icon" id="playIconB">▶</span><span class="btn-label">PLAY [K]</span>
+      </button>
+      <button class="btn" onclick="nudge('B',-0.1)" title="Nudge back [N]">
+        <span class="btn-icon">⏪</span><span class="btn-label">BACK [N]</span>
+      </button>
+      <button class="btn" onclick="nudge('B',0.1)" title="Nudge forward [M]">
+        <span class="btn-icon">⏩</span><span class="btn-label">FWD [M]</span>
+      </button>
     </div>
+
     <div class="loop-row">
-      <button class="btn loop-btn" onclick="setLoop('B',1)">1</button>
-      <button class="btn loop-btn" onclick="setLoop('B',2)">2</button>
-      <button class="btn loop-btn" onclick="setLoop('B',4)">4</button>
-      <button class="btn loop-btn" onclick="setLoop('B',8)">8 bar</button>
-      <button class="btn loop-btn" id="loopOffB" onclick="clearLoop('B')">off</button>
+      <button class="btn loop-btn" onclick="setLoop('B',1)">🔁 1 bar</button>
+      <button class="btn loop-btn" onclick="setLoop('B',2)">🔁 2</button>
+      <button class="btn loop-btn" onclick="setLoop('B',4)">🔁 4</button>
+      <button class="btn loop-btn" onclick="setLoop('B',8)">🔁 8</button>
+      <button class="btn loop-btn" id="loopOffB" onclick="clearLoop('B')">✕ loop</button>
     </div>
+
     <div class="vol-row">
       <label>VOL</label>
       <input type="range" id="volB" min="0" max="1" step="0.01" value="0.8" oninput="setVol('B')" style="accent-color:#34d399">
+    </div>
+
+    <div class="kb-legend">
+      <div class="kb-row"><span class="kb-key">K</span><span class="kb-desc">play / pause</span></div>
+      <div class="kb-row"><span class="kb-key">L</span><span class="kb-desc">set cue point</span></div>
+      <div class="kb-row"><span class="kb-key">N</span><span class="kb-desc">nudge back</span></div>
+      <div class="kb-row"><span class="kb-key">M</span><span class="kb-desc">nudge forward</span></div>
+      <div class="kb-row"><span class="kb-key">O</span><span class="kb-desc">pitch slower</span></div>
+      <div class="kb-row"><span class="kb-key">P</span><span class="kb-desc">pitch faster</span></div>
+    </div>
+  </div>
+
+  <!-- SAMPLER -->
+  <div style="grid-column:1/-1;background:#1e1e34;border:1.5px solid #2e2e50;border-radius:20px;padding:14px 16px">
+    <div style="font-size:9px;letter-spacing:2px;color:#9999cc;font-weight:600;margin-bottom:10px">SAMPLER — hold to play, release to stop</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+      <button class="pad-btn" id="pad1" onmousedown="padDown(1)" onmouseup="padUp(1)" onmouseleave="padUp(1)" ontouchstart="padDown(1)" ontouchend="padUp(1)">
+        <div class="pad-icon">💣</div>
+        <div class="pad-name">808 KICK</div>
+        <div class="pad-key">[1]</div>
+      </button>
+      <button class="pad-btn" id="pad2" onmousedown="padDown(2)" onmouseup="padUp(2)" onmouseleave="padUp(2)" ontouchstart="padDown(2)" ontouchend="padUp(2)">
+        <div class="pad-icon">🥁</div>
+        <div class="pad-name">SNARE</div>
+        <div class="pad-key">[2]</div>
+      </button>
+      <button class="pad-btn" id="pad3" onmousedown="padDown(3)" onmouseup="padUp(3)" onmouseleave="padUp(3)" ontouchstart="padDown(3)" ontouchend="padUp(3)">
+        <div class="pad-icon">🎩</div>
+        <div class="pad-name">HI-HAT</div>
+        <div class="pad-key">[3]</div>
+      </button>
+      <button class="pad-btn" id="pad4" onmousedown="padDown(4)" onmouseup="padUp(4)" onmouseleave="padUp(4)" ontouchstart="padDown(4)" ontouchend="padUp(4)">
+        <div class="pad-icon">🌊</div>
+        <div class="pad-name">CHORD STAB</div>
+        <div class="pad-key">[4]</div>
+      </button>
     </div>
   </div>
 
@@ -255,7 +387,7 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
     <div class="coach-icon" id="coachIcon">🎧</div>
     <div class="coach-inner">
       <div class="coach-label">coach</div>
-      <div class="coach-text" id="coachText">drop an MP3 onto <span class="tip">deck a</span> to get started — or click the drop zone to browse your files.</div>
+      <div class="coach-text" id="coachText">drop up to 3 MP3s onto <span class="tip">deck a</span> to build your queue — or click the drop zone to browse.</div>
     </div>
   </div>
 
@@ -267,19 +399,20 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
 
 <script>
 const actx = new (window.AudioContext || window.webkitAudioContext)();
+const queues = { A:[], B:[] }; // [{name, buffer, duration}]
 const state = {
-  A:{playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,duration:0,waveData:null,source:null,buffer:null,startTime:0,startOffset:0,playbackRate:1,gainNode:null,hiNode:null,midNode:null,loNode:null},
-  B:{playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,duration:0,waveData:null,source:null,buffer:null,startTime:0,startOffset:0,playbackRate:1,gainNode:null,hiNode:null,midNode:null,loNode:null}
+  A:{playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,duration:0,waveData:null,source:null,buffer:null,startTime:0,startOffset:0,playbackRate:1,gainNode:null,hiNode:null,midNode:null,loNode:null,queueIdx:0},
+  B:{playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,duration:0,waveData:null,source:null,buffer:null,startTime:0,startOffset:0,playbackRate:1,gainNode:null,hiNode:null,midNode:null,loNode:null,queueIdx:0}
 };
 let rafId=null;
 
 /* ── ONBOARDING ── */
 const steps=[
   {emoji:'🎧',title:'welcome to YYYAS3',body:'your personal dj playground — built for <strong>cutie girls learning to mix</strong>. in the next 5 steps you\'ll learn everything you need to play your first set. ready?',highlight:null,btn:'let\'s go ✦'},
-  {emoji:'🎵',title:'meet the decks',body:'you have <strong>two decks</strong> — deck A (purple) and deck B (green). <em>drag an MP3</em> onto a deck or click to browse your files. the waveform appears once loaded.',highlight:'deckA',btn:'got it →'},
-  {emoji:'🥁',title:'BPM + pitch fader',body:'<strong>BPM</strong> is the speed of a track — detected automatically in pink. use the <em>pitch fader</em> to speed up or slow down a track until the mixer shows <em>LOCKED</em>.',highlight:'bpmRowA',btn:'makes sense →'},
-  {emoji:'🎚️',title:'the mixer',body:'<em>EQ knobs</em> cut or boost hi/mid/lo frequencies. <em>channel faders</em> control each deck\'s volume. the <em>crossfader</em> at the bottom blends between decks.',highlight:'mixerEl',btn:'got it →'},
-  {emoji:'🔥',title:'your first mix',body:'<strong>1.</strong> drop a song on deck A, press play. <strong>2.</strong> drop a song on deck B. <strong>3.</strong> match BPMs with pitch fader. <strong>4.</strong> move crossfader to blend. you\'ve got this!',highlight:null,btn:'start mixing ✦'}
+  {emoji:'🎵',title:'meet the decks',body:'drop up to <strong>3 MP3s</strong> onto each deck to build a queue. tracks auto-play in order. drag them to reorder. click any queued track to load it immediately.',highlight:'deckA',btn:'got it →'},
+  {emoji:'🥁',title:'BPM + pitch',body:'<strong>BPM</strong> is detected automatically. use the <em>pitch fader</em> — or keys <em>Q/W</em> on deck A, <em>O/P</em> on deck B — to match speeds until the mixer shows <em>LOCKED</em>.',highlight:'bpmRowA',btn:'makes sense →'},
+  {emoji:'🎚️',title:'mixer + crossfader',body:'<em>EQ knobs</em> shape the sound. <em>channel faders</em> control volume. the <em>crossfader</em> blends between decks. use keys <em>C</em> and <em>V</em> to fade left and right.',highlight:'mixerEl',btn:'got it →'},
+  {emoji:'🔥',title:'your first mix',body:'<strong>1.</strong> drop a song on deck A, press play <em>[A]</em>. <strong>2.</strong> drop a song on deck B. <strong>3.</strong> match BPMs with pitch fader. <strong>4.</strong> press <em>[V]</em> repeatedly to crossfade in. let\'s go!',highlight:null,btn:'start mixing ✦'}
 ];
 let currentStep=0,highlightedEl=null;
 function buildDots(){document.getElementById('obProgress').innerHTML=steps.map((_,i)=>`<div class="ob-dot" id="dot${i}"></div>`).join('');}
@@ -294,82 +427,151 @@ buildDots();showStep(0);
 /* ── HELPERS ── */
 function fmt(s){if(!s||isNaN(s))return'0:00';return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');}
 function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
-function getPos(deck){
-  const s=state[deck];
-  if(!s.playing)return s.startOffset;
-  return Math.min(s.duration,(actx.currentTime-s.startTime)*s.playbackRate+s.startOffset);
-}
+function getPos(deck){const s=state[deck];if(!s.playing)return s.startOffset;return Math.min(s.duration,(actx.currentTime-s.startTime)*s.playbackRate+s.startOffset);}
 
-/* ── LOADER BAR ── */
+/* ── LOADER ── */
 let loaderIvs={};
 function showLoader(deck,on){
-  const bar=document.getElementById('loadBar'+deck);
-  const inner=document.getElementById('loadInner'+deck);
-  if(on){
-    bar.style.display='block';
-    let w=0;
-    clearInterval(loaderIvs[deck]);
-    loaderIvs[deck]=setInterval(()=>{w=Math.min(w+3,88);inner.style.width=w+'%';},150);
-  }else{
-    clearInterval(loaderIvs[deck]);
-    inner.style.width='100%';
-    setTimeout(()=>{bar.style.display='none';inner.style.width='0%';},400);
-  }
+  const bar=document.getElementById('loadBar'+deck),inner=document.getElementById('loadInner'+deck);
+  if(on){bar.style.display='block';let w=0;clearInterval(loaderIvs[deck]);loaderIvs[deck]=setInterval(()=>{w=Math.min(w+3,88);inner.style.width=w+'%';},150);}
+  else{clearInterval(loaderIvs[deck]);inner.style.width='100%';setTimeout(()=>{bar.style.display='none';inner.style.width='0%';},400);}
 }
 
 /* ── FILE HANDLING ── */
 function onDragOver(e,deck){e.preventDefault();e.stopPropagation();document.getElementById('drop'+deck).classList.add('drag-over');}
 function onDragLeave(deck){document.getElementById('drop'+deck).classList.remove('drag-over');}
-function onDrop(e,deck){e.preventDefault();e.stopPropagation();onDragLeave(deck);const f=e.dataTransfer.files[0];if(f)loadFile(deck,f);}
-function onFileInput(e,deck){const f=e.target.files[0];if(f)loadFile(deck,f);}
+function onDrop(e,deck){
+  e.preventDefault();e.stopPropagation();onDragLeave(deck);
+  const files=Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('audio/'));
+  files.forEach(f=>addToQueue(deck,f));
+}
+function onFileInput(e,deck){
+  Array.from(e.target.files).forEach(f=>addToQueue(deck,f));
+  e.target.value='';
+}
 
-async function loadFile(deck,file){
-  if(actx.state==='suspended')await actx.resume();
+async function addToQueue(deck,file){
+  if(queues[deck].length>=3){setCoach('👀','<span class="warn">queue is full (3 tracks max).</span> remove a track first.');return;}
   showLoader(deck,true);
-  setCoach('✨','<span class="tip">loading '+escH(file.name)+'...</span> analysing audio now.');
-  const s=state[deck];
-  if(s.source){try{s.source.stop();}catch(e){}}
-  s.source=null;s.playing=false;s.startOffset=0;s.playbackRate=1;
-  document.getElementById('playBtn'+deck).innerHTML='&#9654;';
-  document.getElementById('pitch'+deck).value=0;
-  document.getElementById('pitchVal'+deck).textContent='0.0%';
-
   try{
     const buf=await file.arrayBuffer();
     actx.decodeAudioData(buf,decoded=>{
-      s.buffer=decoded;
-      s.duration=decoded.duration;
-      document.getElementById('name'+deck).textContent=file.name.replace(/\.[^.]+$/,'');
-      document.getElementById('sub'+deck).textContent=fmt(decoded.duration)+' · ready to play';
-      document.getElementById('dur'+deck).textContent=fmt(decoded.duration);
-      document.getElementById('time'+deck).textContent='0:00';
-      document.getElementById('trackDisplay'+deck).classList.add('visible');
-      document.getElementById('waveArea'+deck).classList.add('visible');
-      document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: loaded`;
+      const entry={name:file.name.replace(/\.[^.]+$/,''),buffer:decoded,duration:decoded.duration};
+      queues[deck].push(entry);
+      renderQueue(deck);
       showLoader(deck,false);
-      buildAudioGraph(deck);
-      drawWaveformFromBuffer(deck,decoded);
-      detectBPM(deck,decoded);
+      if(queues[deck].length===1)loadFromQueue(deck,0);
       updateCoach();
-    },err=>{
-      setCoach('👀','<span class="warn">couldn\'t decode that file.</span> make sure it\'s an MP3 or WAV.');
-      showLoader(deck,false);
-    });
-  }catch(err){
-    setCoach('👀','<span class="warn">file read error.</span> try again.');
-    showLoader(deck,false);
+    },()=>{setCoach('👀','<span class="warn">couldn\'t decode that file.</span> try an MP3 or WAV.');showLoader(deck,false);});
+  }catch(e){showLoader(deck,false);}
+}
+
+function removeFromQueue(deck,idx){
+  const s=state[deck];
+  if(idx===s.queueIdx&&s.playing){
+    try{s.source.stop();}catch(e){}
+    s.source=null;s.playing=false;
+    document.getElementById('playBtn'+deck).innerHTML='▶';
+    document.getElementById('playIcon'+deck).textContent='▶';
   }
+  queues[deck].splice(idx,1);
+  if(s.queueIdx>idx)s.queueIdx=Math.max(0,s.queueIdx-1);
+  else if(s.queueIdx>=queues[deck].length)s.queueIdx=Math.max(0,queues[deck].length-1);
+  renderQueue(deck);
+  if(queues[deck].length>0)loadFromQueue(deck,s.queueIdx);
+  else clearDeck(deck);
+  updateCoach();
+}
+
+function clearDeck(deck){
+  const s=state[deck];
+  s.buffer=null;s.waveData=null;
+  document.getElementById('trackDisplay'+deck).classList.remove('visible');
+  document.getElementById('waveArea'+deck).classList.remove('visible');
+  document.getElementById('name'+deck).textContent='—';
+  document.getElementById('sub'+deck).textContent='—';
+  document.getElementById('bpm'+deck).textContent='—';
+  document.getElementById('time'+deck).textContent='0:00';
+  document.getElementById('dur'+deck).textContent='0:00';
+  document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: empty`;
+}
+
+function loadFromQueue(deck,idx){
+  const q=queues[deck];
+  if(!q[idx])return;
+  state[deck].queueIdx=idx;
+  const entry=q[idx];
+  const s=state[deck];
+  if(s.source){try{s.source.stop();}catch(e){}}
+  s.source=null;s.playing=false;s.startOffset=0;s.playbackRate=1+(s.pitch/100);
+  s.buffer=entry.buffer;s.duration=entry.duration;
+  document.getElementById('name'+deck).textContent=entry.name;
+  document.getElementById('sub'+deck).textContent=fmt(entry.duration)+' · ready';
+  document.getElementById('dur'+deck).textContent=fmt(entry.duration);
+  document.getElementById('time'+deck).textContent='0:00';
+  document.getElementById('playBtn'+deck).innerHTML='▶';
+  document.getElementById('playIcon'+deck).textContent='▶';
+  document.getElementById('trackDisplay'+deck).classList.add('visible');
+  document.getElementById('waveArea'+deck).classList.add('visible');
+  document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: loaded`;
+  buildAudioGraph(deck);
+  drawWaveformFromBuffer(deck,entry.buffer);
+  detectBPM(deck,entry.buffer);
+  renderQueue(deck);
+  updateCoach();
+}
+
+/* ── QUEUE UI ── */
+let dragSrc={deck:null,idx:null};
+function renderQueue(deck){
+  const q=queues[deck];
+  const container=document.getElementById('queue'+deck);
+  const label=container.querySelector('.queue-label');
+  container.innerHTML='';
+  container.appendChild(label);
+  if(q.length===0){const empty=document.createElement('div');empty.style.cssText='font-size:10px;color:#44445a;padding:4px 2px';empty.textContent='no tracks queued';container.appendChild(empty);return;}
+  q.forEach((entry,i)=>{
+    const el=document.createElement('div');
+    el.className='queue-item'+(i===state[deck].queueIdx?' active-track'+(deck==='B'?' b-active':''):'');
+    el.draggable=true;
+    el.innerHTML=`
+      <span class="queue-num">${i+1}</span>
+      <div class="queue-info">
+        <div class="queue-name">${escH(entry.name)}</div>
+        <div class="queue-dur">${fmt(entry.duration)}</div>
+      </div>
+      ${i===state[deck].queueIdx?`<span class="queue-now${deck==='B'?' b-now':''}">NOW</span>`:''}
+      <button class="queue-remove" onclick="removeFromQueue('${deck}',${i})" title="Remove">✕</button>`;
+    el.addEventListener('click',e=>{if(!e.target.classList.contains('queue-remove'))loadFromQueue(deck,i);});
+    el.addEventListener('dragstart',e=>{dragSrc={deck,idx:i};el.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
+    el.addEventListener('dragend',()=>el.classList.remove('dragging'));
+    el.addEventListener('dragover',e=>{e.preventDefault();el.classList.add('drag-target');});
+    el.addEventListener('dragleave',()=>el.classList.remove('drag-target'));
+    el.addEventListener('drop',e=>{
+      e.preventDefault();e.stopPropagation();el.classList.remove('drag-target');
+      if(dragSrc.deck===deck&&dragSrc.idx!==i){
+        const arr=queues[deck];
+        const [moved]=arr.splice(dragSrc.idx,1);
+        arr.splice(i,0,moved);
+        if(state[deck].queueIdx===dragSrc.idx)state[deck].queueIdx=i;
+        else if(state[deck].queueIdx>dragSrc.idx&&state[deck].queueIdx<=i)state[deck].queueIdx--;
+        else if(state[deck].queueIdx<dragSrc.idx&&state[deck].queueIdx>=i)state[deck].queueIdx++;
+        renderQueue(deck);
+      }
+    });
+    container.appendChild(el);
+  });
 }
 
 /* ── AUDIO GRAPH ── */
 function buildAudioGraph(deck){
   const s=state[deck];
-  const gain=actx.createGain(); gain.gain.value=s.vol;
-  const hi=actx.createBiquadFilter(); hi.type='highshelf'; hi.frequency.value=3200; hi.gain.value=0;
-  const mid=actx.createBiquadFilter(); mid.type='peaking'; mid.frequency.value=1000; mid.Q.value=1; mid.gain.value=0;
-  const lo=actx.createBiquadFilter(); lo.type='lowshelf'; lo.frequency.value=320; lo.gain.value=0;
-  lo.connect(mid); mid.connect(hi); hi.connect(gain); gain.connect(actx.destination);
-  s.gainNode=gain; s.hiNode=hi; s.midNode=mid; s.loNode=lo;
+  const gain=actx.createGain();gain.gain.value=s.vol;
+  const hi=actx.createBiquadFilter();hi.type='highshelf';hi.frequency.value=3200;hi.gain.value=0;
+  const mid=actx.createBiquadFilter();mid.type='peaking';mid.frequency.value=1000;mid.Q.value=1;mid.gain.value=0;
+  const lo=actx.createBiquadFilter();lo.type='lowshelf';lo.frequency.value=320;lo.gain.value=0;
+  lo.connect(mid);mid.connect(hi);hi.connect(gain);gain.connect(actx.destination);
+  s.gainNode=gain;s.hiNode=hi;s.midNode=mid;s.loNode=lo;
 }
 
 function createSource(deck){
@@ -379,11 +581,18 @@ function createSource(deck){
   src.playbackRate.value=s.playbackRate;
   src.connect(s.loNode);
   src.onended=()=>{
-    if(s.playing){
-      s.playing=false; s.startOffset=0;
-      document.getElementById('playBtn'+deck).innerHTML='&#9654;';
-      document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: ended`;
-      setCoach('🎧','track ended on deck '+deck.toLowerCase()+'. drop a new one to keep going!');
+    if(!s.playing)return;
+    s.playing=false;s.startOffset=0;
+    document.getElementById('playIcon'+deck).textContent='▶';
+    document.getElementById('playBtn'+deck).querySelector('.btn-label').textContent='PLAY ['+(deck==='A'?'A':'K')+']';
+    const nextIdx=s.queueIdx+1;
+    if(nextIdx<queues[deck].length){
+      loadFromQueue(deck,nextIdx);
+      setTimeout(()=>togglePlay(deck),100);
+      setCoach('🎵','auto-playing next track on deck '+deck.toLowerCase()+'!');
+    }else{
+      document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: finished`;
+      setCoach('🎧','queue finished on deck '+deck.toLowerCase()+'. drop new tracks to keep going!');
     }
   };
   return src;
@@ -397,15 +606,15 @@ function togglePlay(deck){
   if(s.playing){
     s.startOffset=getPos(deck);
     try{s.source.stop();}catch(e){}
-    s.source=null; s.playing=false;
-    document.getElementById('playBtn'+deck).innerHTML='&#9654;';
+    s.source=null;s.playing=false;
+    document.getElementById('playIcon'+deck).textContent='▶';
     document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: paused`;
   }else{
     s.source=createSource(deck);
     s.startTime=actx.currentTime;
     s.source.start(0,Math.min(s.startOffset,s.duration-0.01));
     s.playing=true;
-    document.getElementById('playBtn'+deck).innerHTML='&#9646;&#9646;';
+    document.getElementById('playIcon'+deck).textContent='⏸';
     document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: playing`;
     if(!rafId)startRAF();
   }
@@ -415,38 +624,32 @@ function togglePlay(deck){
 function cue(deck){
   const s=state[deck];
   s.cuePoint=getPos(deck);
-  if(s.playing){try{s.source.stop();}catch(e){} s.source=null; s.playing=false;}
+  if(s.playing){try{s.source.stop();}catch(e){}s.source=null;s.playing=false;}
   s.startOffset=s.cuePoint;
-  document.getElementById('playBtn'+deck).innerHTML='&#9654;';
+  document.getElementById('playIcon'+deck).textContent='▶';
   setCoach('✨','cue set at '+fmt(s.cuePoint)+'. press play to jump back here anytime.');
 }
 
 function nudge(deck,sec){
-  const s=state[deck];
-  if(!s.buffer)return;
+  const s=state[deck];if(!s.buffer)return;
   const newPos=Math.max(0,Math.min(s.duration-0.01,getPos(deck)+sec));
   const was=s.playing;
-  if(was){try{s.source.stop();}catch(e){} s.source=null; s.playing=false;}
+  if(was){try{s.source.stop();}catch(e){}s.source=null;s.playing=false;}
   s.startOffset=newPos;
   if(was){s.source=createSource(deck);s.startTime=actx.currentTime;s.source.start(0,newPos);s.playing=true;}
 }
 
 function scrub(deck,e){
-  const s=state[deck];
-  if(!s.buffer)return;
+  const s=state[deck];if(!s.buffer)return;
   const rect=document.getElementById('waveArea'+deck).getBoundingClientRect();
   const newPos=Math.max(0,Math.min(s.duration-0.01,((e.clientX-rect.left)/rect.width)*s.duration));
   const was=s.playing;
-  if(was){try{s.source.stop();}catch(e2){} s.source=null; s.playing=false;}
+  if(was){try{s.source.stop();}catch(e2){}s.source=null;s.playing=false;}
   s.startOffset=newPos;
   if(was){s.source=createSource(deck);s.startTime=actx.currentTime;s.source.start(0,newPos);s.playing=true;}
 }
 
-function setLoop(deck,bars){
-  state[deck].loop=bars; state[deck].cuePoint=getPos(deck);
-  document.getElementById('loopOff'+deck).classList.add('on');
-  setCoach('🔁',`${bars}-bar loop active on deck ${deck.toLowerCase()}.`);
-}
+function setLoop(deck,bars){state[deck].loop=bars;state[deck].cuePoint=getPos(deck);document.getElementById('loopOff'+deck).classList.add('on');setCoach('🔁',`${bars}-bar loop active.`);}
 function clearLoop(deck){state[deck].loop=null;document.getElementById('loopOff'+deck).classList.remove('on');}
 
 /* ── RAF ── */
@@ -454,8 +657,7 @@ function startRAF(){
   function tick(){
     rafId=requestAnimationFrame(tick);
     ['A','B'].forEach(deck=>{
-      const s=state[deck];
-      if(!s.playing)return;
+      const s=state[deck];if(!s.playing)return;
       const pos=getPos(deck);
       document.getElementById('time'+deck).textContent=fmt(pos);
       drawWaveform(deck,pos/s.duration);
@@ -463,10 +665,8 @@ function startRAF(){
         const ld=(60/s.bpm)*4*s.loop;
         if(pos>=s.cuePoint+ld){
           try{s.source.stop();}catch(e){}
-          s.startOffset=s.cuePoint;
-          s.source=createSource(deck);
-          s.startTime=actx.currentTime;
-          s.source.start(0,s.cuePoint);
+          s.startOffset=s.cuePoint;s.source=createSource(deck);
+          s.startTime=actx.currentTime;s.source.start(0,s.cuePoint);
         }
       }
     });
@@ -478,30 +678,31 @@ function startRAF(){
 /* ── PITCH / VOL / EQ ── */
 function updatePitch(deck){
   const val=parseFloat(document.getElementById('pitch'+deck).value);
-  state[deck].pitch=val;
-  state[deck].playbackRate=1+(val/100);
+  state[deck].pitch=val;state[deck].playbackRate=1+(val/100);
   document.getElementById('pitchVal'+deck).textContent=(val>=0?'+':'')+val.toFixed(1)+'%';
   if(state[deck].source)state[deck].source.playbackRate.value=state[deck].playbackRate;
   updateSyncIndicator();
 }
-function setVol(deck){
-  const val=parseFloat(document.getElementById('vol'+deck).value);
-  state[deck].vol=val;
-  if(state[deck].gainNode)state[deck].gainNode.gain.value=val;
+function setPitch(deck,delta){
+  const el=document.getElementById('pitch'+deck);
+  el.value=Math.max(-8,Math.min(8,parseFloat(el.value)+delta));
+  updatePitch(deck);
 }
-function setFaderVol(deck){
-  const val=parseFloat(document.getElementById('fader'+deck).value);
-  if(state[deck].gainNode)state[deck].gainNode.gain.value=val*state[deck].vol;
-}
+function setVol(deck){const val=parseFloat(document.getElementById('vol'+deck).value);state[deck].vol=val;if(state[deck].gainNode)state[deck].gainNode.gain.value=val;}
+function setFaderVol(deck){const val=parseFloat(document.getElementById('fader'+deck).value);if(state[deck].gainNode)state[deck].gainNode.gain.value=val*state[deck].vol;}
 function updateXfader(){
   const x=parseFloat(document.getElementById('xfader').value);
   document.getElementById('faderA').value=(1-x).toFixed(2);
   document.getElementById('faderB').value=x.toFixed(2);
-  setFaderVol('A'); setFaderVol('B');
+  setFaderVol('A');setFaderVol('B');
+}
+function shiftXfader(delta){
+  const el=document.getElementById('xfader');
+  el.value=Math.max(0,Math.min(1,parseFloat(el.value)+delta));
+  updateXfader();
 }
 function updateEQ(deck){
-  const s=state[deck];
-  if(!s.hiNode)return;
+  const s=state[deck];if(!s.hiNode)return;
   s.hiNode.gain.value=(parseFloat(document.getElementById('eq'+deck+'hi').value)-1)*12;
   s.midNode.gain.value=(parseFloat(document.getElementById('eq'+deck+'mid').value)-1)*12;
   s.loNode.gain.value=(parseFloat(document.getElementById('eq'+deck+'lo').value)-1)*12;
@@ -510,62 +711,42 @@ function updateEQ(deck){
 /* ── WAVEFORM ── */
 function drawWaveformFromBuffer(deck,buffer){
   const canvas=document.getElementById('wave'+deck);
-  canvas.width=canvas.offsetWidth||400; canvas.height=54;
-  const data=buffer.getChannelData(0);
-  const bars=120, step=Math.floor(data.length/bars);
-  state[deck].waveData=Array.from({length:bars},(_,i)=>{
-    let max=0;
-    for(let j=0;j<step;j++){const v=Math.abs(data[i*step+j]||0);if(v>max)max=v;}
-    return max;
-  });
+  canvas.width=canvas.offsetWidth||400;canvas.height=54;
+  const data=buffer.getChannelData(0),bars=120,step=Math.floor(data.length/bars);
+  state[deck].waveData=Array.from({length:bars},(_,i)=>{let max=0;for(let j=0;j<step;j++){const v=Math.abs(data[i*step+j]||0);if(v>max)max=v;}return max;});
   drawWaveform(deck,0);
 }
 function drawWaveform(deck,progress){
   const canvas=document.getElementById('wave'+deck);
   const ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
   ctx.clearRect(0,0,w,h);
-  const data=state[deck].waveData; if(!data)return;
+  const data=state[deck].waveData;if(!data)return;
   const bars=data.length,bw=w/bars,center=Math.floor(progress*bars);
-  const past=deck==='A'?'#5b3fa0':'#1a6b4a';
-  const future=deck==='A'?'#2d1f4e':'#1a2e24';
-  const head=deck==='A'?'#c4b5fd':'#6ee7b7';
-  for(let i=0;i<bars;i++){
-    const bh=Math.max(2,data[i]*h*0.9),x=i*bw;
-    ctx.fillStyle=i<center?past:(i===center?head:future);
-    ctx.fillRect(x+0.5,(h-bh)/2,bw-1,bh);
-  }
+  const past=deck==='A'?'#5b3fa0':'#1a6b4a',future=deck==='A'?'#2d1f4e':'#1a2e24',head=deck==='A'?'#c4b5fd':'#6ee7b7';
+  for(let i=0;i<bars;i++){const bh=Math.max(2,data[i]*h*0.9),x=i*bw;ctx.fillStyle=i<center?past:(i===center?head:future);ctx.fillRect(x+0.5,(h-bh)/2,bw-1,bh);}
 }
 
 /* ── BPM ── */
 function detectBPM(deck,buffer){
   try{
-    const data=buffer.getChannelData(0);
-    const sr=buffer.sampleRate, step=Math.floor(sr*0.01);
+    const data=buffer.getChannelData(0),sr=buffer.sampleRate,step=Math.floor(sr*0.01);
     const energy=[];
-    for(let i=0;i<data.length-step;i+=step){
-      let e=0; for(let j=0;j<step;j++)e+=data[i+j]*data[i+j];
-      energy.push(e/step);
-    }
+    for(let i=0;i<data.length-step;i+=step){let e=0;for(let j=0;j<step;j++)e+=data[i+j]*data[i+j];energy.push(e/step);}
     const avg=energy.reduce((a,b)=>a+b,0)/energy.length;
     const peaks=[];
-    for(let i=1;i<energy.length-1;i++)
-      if(energy[i]>avg*1.5&&energy[i]>energy[i-1]&&energy[i]>energy[i+1])peaks.push(i);
+    for(let i=1;i<energy.length-1;i++)if(energy[i]>avg*1.5&&energy[i]>energy[i-1]&&energy[i]>energy[i+1])peaks.push(i);
     if(peaks.length<4){fallbackBPM(deck);return;}
     const intervals=[];
     for(let i=1;i<Math.min(peaks.length,50);i++)intervals.push(peaks[i]-peaks[i-1]);
     const med=intervals.slice().sort((a,b)=>a-b)[Math.floor(intervals.length/2)];
     let bpm=60/(med*0.01);
-    while(bpm<80)bpm*=2; while(bpm>180)bpm/=2;
+    while(bpm<80)bpm*=2;while(bpm>180)bpm/=2;
     state[deck].bpm=Math.round(bpm*10)/10;
     document.getElementById('bpm'+deck).textContent=state[deck].bpm.toFixed(1);
   }catch(e){fallbackBPM(deck);}
   updateSyncIndicator();
 }
-function fallbackBPM(deck){
-  const pool=[120,124,126,128,130,132,140];
-  state[deck].bpm=pool[Math.floor(Math.random()*pool.length)];
-  document.getElementById('bpm'+deck).textContent=state[deck].bpm.toFixed(1);
-}
+function fallbackBPM(deck){const pool=[120,124,126,128,130,132,140];state[deck].bpm=pool[Math.floor(Math.random()*pool.length)];document.getElementById('bpm'+deck).textContent=state[deck].bpm.toFixed(1);}
 
 /* ── SYNC ── */
 function getEffBPM(deck){const s=state[deck];if(!s.bpm)return null;return s.bpm*(1+(s.pitch/100));}
@@ -584,24 +765,159 @@ function setCoach(icon,msg){document.getElementById('coachIcon').textContent=ico
 function updateCoach(){
   const hasA=!!state.A.buffer,hasB=!!state.B.buffer;
   const bA=getEffBPM('A'),bB=getEffBPM('B');
-  if(!hasA&&!hasB){setCoach('🎧','drop an MP3 onto <span class="tip">deck a</span> to get started.');return;}
-  if(hasA&&!hasB){setCoach('✨','nice! now drop a track onto <span class="tip">deck b</span> — that\'s your next song to mix in.');return;}
+  if(!hasA&&!hasB){setCoach('🎧','drop MP3s onto <span class="tip">deck a</span> to build your queue. you can add up to 3 tracks per deck.');return;}
+  if(hasA&&!hasB){setCoach('✨','nice queue on a! now drop tracks onto <span class="tip">deck b</span>.');return;}
   if(state.A.playing&&state.B.playing){
     const diff=bA&&bB?Math.abs(bA-bB):99;
-    if(diff>8){setCoach('👀',`<span class="warn">bpms are ${diff.toFixed(1)} apart</span> — drag the pitch fader on deck ${bA>bB?'a':'b'} toward center.`);return;}
-    if(diff>2){setCoach('✨',`getting closer — ${diff.toFixed(1)} bpm gap. keep nudging the pitch fader.`);return;}
-    if(diff<=0.3){setCoach('🔥','<span class="good">bpms locked!</span> move the crossfader slowly to blend deck b in. try cutting the lows first.');return;}
-    setCoach('🎶',`<span class="good">almost synced</span> — ${diff.toFixed(1)} off. use nudge buttons to phase-align the beats.`);
+    if(diff>8){setCoach('👀',`<span class="warn">bpms ${diff.toFixed(1)} apart</span> — use [Q/W] or [O/P] to match speeds.`);return;}
+    if(diff>2){setCoach('✨',`${diff.toFixed(1)} bpm gap — keep nudging the pitch.`);return;}
+    if(diff<=0.3){setCoach('🔥','<span class="good">locked!</span> press [V] to fade deck b in. try cutting the lows first for a clean mix.');return;}
+    setCoach('🎶',`<span class="good">almost</span> — ${diff.toFixed(1)} off. tap nudge or [Z]/[N] to phase-align.`);
   }else if(state.A.playing){
-    setCoach('🎶','deck a is playing. <span class="tip">set a cue point on deck b</span> then press play to bring it in.');
+    setCoach('🎶','a is playing. <span class="tip">set cue on b [L]</span> then press play [K] when ready.');
   }else if(state.B.playing){
-    setCoach('🎶','deck b is playing. drop a fresh track on a and bring the crossfader back left.');
+    setCoach('🎶','b is playing. get deck a ready and bring the crossfader left with [C].');
   }else{
-    setCoach('🎧','both tracks loaded — press <span class="tip">play on deck a</span> to start your set!');
+    setCoach('🎧','both loaded — press <span class="tip">[A]</span> to start deck a!');
   }
 }
 
-document.addEventListener('dragover',e=>e.preventDefault());
+/* ── SAMPLER ── */
+const padNodes={};
+
+function playPad(n){
+  if(actx.state==='suspended')actx.resume();
+  stopPad(n);
+  const gain=actx.createGain();
+  gain.connect(actx.destination);
+  let nodes=[];
+
+  if(n===1){
+    // 808 kick — sine sweep with sub punch
+    const osc=actx.createOscillator();
+    const g=actx.createGain();
+    osc.type='sine';
+    osc.frequency.setValueAtTime(160,actx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(40,actx.currentTime+0.15);
+    g.gain.setValueAtTime(1.2,actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+0.6);
+    osc.connect(g);g.connect(gain);
+    gain.gain.value=1.4;
+    osc.start();
+    nodes=[osc,g];
+  }else if(n===2){
+    // snare — noise + pitched transient
+    const bufSize=actx.sampleRate*0.3;
+    const buf=actx.createBuffer(1,bufSize,actx.sampleRate);
+    const d=buf.getChannelData(0);
+    for(let i=0;i<bufSize;i++)d[i]=(Math.random()*2-1);
+    const noise=actx.createBufferSource();
+    noise.buffer=buf;
+    const hp=actx.createBiquadFilter();hp.type='highpass';hp.frequency.value=1800;
+    const g=actx.createGain();
+    g.gain.setValueAtTime(1,actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+0.18);
+    noise.connect(hp);hp.connect(g);g.connect(gain);
+    gain.gain.value=1.2;
+    noise.start();
+    nodes=[noise,hp,g];
+  }else if(n===3){
+    // hi-hat — tight filtered noise
+    const bufSize=actx.sampleRate*0.08;
+    const buf=actx.createBuffer(1,bufSize,actx.sampleRate);
+    const d=buf.getChannelData(0);
+    for(let i=0;i<bufSize;i++)d[i]=(Math.random()*2-1);
+    const noise=actx.createBufferSource();
+    noise.buffer=buf;
+    const hp=actx.createBiquadFilter();hp.type='highpass';hp.frequency.value=8000;
+    const g=actx.createGain();
+    g.gain.setValueAtTime(0.8,actx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,actx.currentTime+0.06);
+    noise.connect(hp);hp.connect(g);g.connect(gain);
+    gain.gain.value=1;
+    noise.start();
+    nodes=[noise,hp,g];
+  }else if(n===4){
+    // Fred Again chord stab — detuned warm oscillators, slow filter open
+    gain.gain.value=0;
+    gain.gain.linearRampToValueAtTime(0.7,actx.currentTime+0.12);
+    const freqs=[130.81,164.81,196,246.94]; // Cm chord
+    const detunes=[-8,5,-5,8];
+    freqs.forEach((f,i)=>{
+      const o=actx.createOscillator();
+      const og=actx.createGain();
+      o.type=i%2===0?'sawtooth':'square';
+      o.frequency.value=f;
+      o.detune.value=detunes[i];
+      og.gain.value=0.22;
+      const lp=actx.createBiquadFilter();
+      lp.type='lowpass';
+      lp.frequency.setValueAtTime(300,actx.currentTime);
+      lp.frequency.linearRampToValueAtTime(2200,actx.currentTime+0.4);
+      lp.Q.value=2;
+      o.connect(lp);lp.connect(og);og.connect(gain);
+      o.start();
+      nodes.push(o,lp,og);
+    });
+    // add a little reverb wash via a delay
+    const delay=actx.createDelay(0.5);
+    delay.delayTime.value=0.08;
+    const delayGain=actx.createGain();delayGain.gain.value=0.3;
+    gain.connect(delay);delay.connect(delayGain);delayGain.connect(actx.destination);
+    nodes.push(delay,delayGain);
+  }
+
+  padNodes[n]={nodes,gain};
+}
+
+function stopPad(n){
+  if(!padNodes[n])return;
+  const{gain,nodes}=padNodes[n];
+  try{
+    gain.gain.setValueAtTime(gain.gain.value,actx.currentTime);
+    gain.gain.linearRampToValueAtTime(0,actx.currentTime+0.06);
+    setTimeout(()=>{nodes.forEach(nd=>{try{nd.stop&&nd.stop();nd.disconnect&&nd.disconnect();}catch(e){}});},120);
+  }catch(e){}
+  delete padNodes[n];
+}
+
+function padDown(n){
+  document.getElementById('pad'+n).classList.add('active');
+  playPad(n);
+}
+function padUp(n){
+  document.getElementById('pad'+n).classList.remove('active');
+  stopPad(n);
+}
+
+// add to keyboard handler — intercept 1-4 for pads
+document.addEventListener('keydown',e=>{
+  const tag=document.activeElement.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA')return;
+  if(['1','2','3','4'].includes(e.key)&&!e.repeat){padDown(parseInt(e.key));return;}
+
+  switch(e.key.toLowerCase()){
+    case 'a': e.preventDefault(); togglePlay('A'); break;
+    case 's': e.preventDefault(); cue('A'); break;
+    case 'z': e.preventDefault(); nudge('A',-0.1); break;
+    case 'x': e.preventDefault(); nudge('A',0.1); break;
+    case 'q': e.preventDefault(); setPitch('A',-0.2); break;
+    case 'w': e.preventDefault(); setPitch('A',0.2); break;
+    case 'k': e.preventDefault(); togglePlay('B'); break;
+    case 'l': e.preventDefault(); cue('B'); break;
+    case 'n': e.preventDefault(); nudge('B',-0.1); break;
+    case 'm': e.preventDefault(); nudge('B',0.1); break;
+    case 'o': e.preventDefault(); setPitch('B',-0.2); break;
+    case 'p': e.preventDefault(); setPitch('B',0.2); break;
+    case 'c': e.preventDefault(); shiftXfader(-0.05); break;
+    case 'v': e.preventDefault(); shiftXfader(0.05); break;
+    case ' ': e.preventDefault(); togglePlay('A'); togglePlay('B'); break;
+  }
+});
+
+document.addEventListener('keyup',e=>{
+  if(['1','2','3','4'].includes(e.key))padUp(parseInt(e.key));
+});
 document.addEventListener('drop',e=>e.preventDefault());
 </script>
 </body>
