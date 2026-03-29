@@ -130,8 +130,8 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
   <!-- DECK A -->
   <div class="deck" id="deckA">
     <div class="deck-title a">DECK A</div>
-    <div class="drop-zone" id="dropA" ondragover="onDragOver(event,'A')" ondragleave="onDragLeave('A')" ondrop="onDrop(event,'A')">
-      <input type="file" accept="audio/*" onchange="onFileInput(event,'A')">
+    <div class="drop-zone" id="dropA" ondragover="onDragOver(event,'A')" ondragleave="onDragLeave('A')" ondrop="onDrop(event,'A')" onclick="document.getElementById('fileA').click()">
+      <input type="file" id="fileA" accept="audio/*" style="display:none" onchange="onFileInput(event,'A')">
       <div class="drop-icon">🎵</div>
       <div class="drop-text"><strong>drop an MP3 here</strong><br>or click to browse</div>
     </div>
@@ -206,8 +206,8 @@ body{background:#1a1a2e;color:#f0f0fa;font-family:'DM Sans',sans-serif;min-heigh
   <!-- DECK B -->
   <div class="deck" id="deckB">
     <div class="deck-title b">DECK B</div>
-    <div class="drop-zone b-zone" id="dropB" ondragover="onDragOver(event,'B')" ondragleave="onDragLeave('B')" ondrop="onDrop(event,'B')">
-      <input type="file" accept="audio/*" onchange="onFileInput(event,'B')">
+    <div class="drop-zone b-zone" id="dropB" ondragover="onDragOver(event,'B')" ondragleave="onDragLeave('B')" ondrop="onDrop(event,'B')" onclick="document.getElementById('fileB').click()">
+      <input type="file" id="fileB" accept="audio/*" style="display:none" onchange="onFileInput(event,'B')">
       <div class="drop-icon">🎵</div>
       <div class="drop-text b-text"><strong>drop an MP3 here</strong><br>or click to browse</div>
     </div>
