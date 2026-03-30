@@ -131,6 +131,32 @@ body::before{
 .pitch-pct{font-size:10px;color:var(--lavender);font-family:'DM Mono',monospace;font-weight:500}
 .pitch-pct.b-pct{color:var(--mint)}
 
+/* ── QUANTIZE ── */
+function toggleQuantize(deck){
+  state[deck].quantize=!state[deck].quantize;
+  const on=state[deck].quantize;
+  document.getElementById('quantBtn'+deck).classList.toggle('on',on);
+  document.getElementById('quantLabel'+deck).textContent=on?'QUANTIZE ON':'QUANTIZE OFF';
+  setCoach('🎯',`quantize ${on?'<span class="good">on</span> — play will snap to the beat 🎀':'<span class="warn">off</span> — free play mode'}`);
+}
+
+function getNextBeatTime(referenceDeck){
+  const ref=state[referenceDeck];
+  if(!ref.playing||!ref.bpm)return 0;
+  const secPerBeat=60/(ref.bpm*(ref.playbackRate||1));
+  const elapsed=actx.currentTime-ref.startTime;
+  const beatsElapsed=elapsed/secPerBeat;
+  const nextBeat=Math.ceil(beatsElapsed+0.05)*secPerBeat;
+  return Math.max(0,nextBeat-elapsed);
+}
+
+function snapToBeat(pos,deck){
+  const s=state[deck];
+  if(!s.bpm)return pos;
+  const secPerBeat=60/(s.bpm*(s.playbackRate||1));
+  return Math.round(pos/secPerBeat)*secPerBeat;
+}
+
 /* ── TRANSPORT ── */
 .transport{display:flex;align-items:center;gap:5px;justify-content:center}
 .btn{
@@ -437,8 +463,13 @@ body::before{
           <div class="pitch-pct" id="pitchValA">0.0%</div>
         </div>
       </div>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:-2px">
+        <button class="btn on" id="quantBtnA" onclick="toggleQuantize('A')" style="flex:1;flex-direction:row;gap:5px;padding:5px 10px;border-radius:10px">
+          <span style="font-size:11px">🎯</span>
+          <span style="font-size:8px;letter-spacing:1px" id="quantLabelA">QUANTIZE ON</span>
+        </button>
+      </div>
       <div class="transport">
-        <button class="btn cue-btn" onclick="cue('A')"><span class="btn-icon">📍</span><span class="btn-label">Cue [S]</span></button>
         <button class="btn play-btn" id="playBtnA" onclick="togglePlay('A')"><span class="btn-icon" id="playIconA">▶</span><span class="btn-label">Play [A]</span></button>
         <button class="btn" onclick="nudge('A',-0.1)"><span class="btn-icon">⏪</span><span class="btn-label">Back [Z]</span></button>
         <button class="btn" onclick="nudge('A',0.1)"><span class="btn-icon">⏩</span><span class="btn-label">Fwd [X]</span></button>
@@ -524,6 +555,12 @@ body::before{
           <div class="pitch-pct b-pct" id="pitchValB">0.0%</div>
         </div>
       </div>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:-2px">
+        <button class="btn on" id="quantBtnB" onclick="toggleQuantize('B')" style="flex:1;flex-direction:row;gap:5px;padding:5px 10px;border-radius:10px">
+          <span style="font-size:11px">🎯</span>
+          <span style="font-size:8px;letter-spacing:1px" id="quantLabelB">QUANTIZE ON</span>
+        </button>
+      </div>
       <div class="transport">
         <button class="btn cue-btn" onclick="cue('B')"><span class="btn-icon">📍</span><span class="btn-label">Cue [L]</span></button>
         <button class="btn play-btn b-play" id="playBtnB" onclick="togglePlay('B')"><span class="btn-icon" id="playIconB">▶</span><span class="btn-label">Play [K]</span></button>
@@ -601,8 +638,8 @@ body::before{
 const actx=new(window.AudioContext||window.webkitAudioContext)();
 const queues={A:[],B:[]};
 const state={
-  A:{playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,duration:0,waveData:null,source:null,buffer:null,startTime:0,startOffset:0,playbackRate:1,gainNode:null,hiNode:null,midNode:null,loNode:null,queueIdx:0},
-  B:{playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,duration:0,waveData:null,source:null,buffer:null,startTime:0,startOffset:0,playbackRate:1,gainNode:null,hiNode:null,midNode:null,loNode:null,queueIdx:0}
+  A:{playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,duration:0,waveData:null,source:null,buffer:null,startTime:0,startOffset:0,playbackRate:1,gainNode:null,hiNode:null,midNode:null,loNode:null,queueIdx:0,quantize:true},
+  B:{playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,duration:0,waveData:null,source:null,buffer:null,startTime:0,startOffset:0,playbackRate:1,gainNode:null,hiNode:null,midNode:null,loNode:null,queueIdx:0,quantize:true}
 };
 let rafId=null;
 
@@ -769,19 +806,36 @@ function togglePlay(deck){
     s.startOffset=getPos(deck);try{s.source.stop();}catch(e){}s.source=null;s.playing=false;
     document.getElementById('playIcon'+deck).textContent='▶';
     document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: paused ${deck==='A'?'💜':'🩵'}`;
+    updateDeckStyle(deck);updateCoach();
   }else{
-    s.source=createSource(deck);s.startTime=actx.currentTime;s.source.start(0,Math.min(s.startOffset,s.duration-0.01));s.playing=true;
-    document.getElementById('playIcon'+deck).textContent='⏸';
-    document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: playing ${deck==='A'?'💜':'🩵'}`;
+    const otherDeck=deck==='A'?'B':'A';
+    const delay=(s.quantize&&state[otherDeck].playing)?getNextBeatTime(otherDeck):0;
+    s.source=createSource(deck);
+    s.startTime=actx.currentTime+delay;
+    s.source.start(delay,Math.min(s.startOffset,s.duration-0.01));
+    s.playing=true;
+    document.getElementById('playIcon'+deck).textContent=delay>0?'⏳':'⏸';
+    document.getElementById('status'+deck).textContent=delay>0?`deck ${deck.toLowerCase()}: waiting for beat 🎯`:`deck ${deck.toLowerCase()}: playing ${deck==='A'?'💜':'🩵'}`;
+    if(delay>0){
+      setTimeout(()=>{
+        if(s.playing)document.getElementById('playIcon'+deck).textContent='⏸';
+        document.getElementById('status'+deck).textContent=`deck ${deck.toLowerCase()}: playing ${deck==='A'?'💜':'🩵'}`;
+        updateDeckStyle(deck);
+      },delay*1000);
+      setCoach('🎯',`snapping to beat in ${(delay*1000).toFixed(0)}ms 🎀 quantize is doing its thing!`);
+    }
     if(!rafId)startRAF();
+    updateDeckStyle(deck);updateCoach();
   }
-  updateDeckStyle(deck);updateCoach();
 }
 function cue(deck){
-  const s=state[deck];s.cuePoint=getPos(deck);
+  const s=state[deck];
+  const rawPos=getPos(deck);
+  s.cuePoint=s.quantize?snapToBeat(rawPos,deck):rawPos;
   if(s.playing){try{s.source.stop();}catch(e){}s.source=null;s.playing=false;}
   s.startOffset=s.cuePoint;document.getElementById('playIcon'+deck).textContent='▶';
-  updateDeckStyle(deck);setCoach('📍','cue set at '+fmt(s.cuePoint)+' — press play to jump back here anytime ✨');
+  updateDeckStyle(deck);
+  setCoach('📍',`cue ${s.quantize?'snapped to beat at':'set at'} ${fmt(s.cuePoint)} ✨`);
 }
 function nudge(deck,sec){
   const s=state[deck];if(!s.buffer)return;
