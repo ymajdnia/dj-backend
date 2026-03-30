@@ -681,7 +681,7 @@ buildDots();showStep(0);
 
 /* ── HELPERS ── */
 function fmt(s){if(!s||isNaN(s))return'0:00';return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0');}
-function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function escJ(s){return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"');}
 function getPos(deck){const s=state[deck];if(!s.playing)return s.startOffset;return Math.min(s.duration,(actx.currentTime-s.startTime)*s.playbackRate+s.startOffset);}
 
 /* ── LOADER ── */
