@@ -1165,6 +1165,17 @@ async function spSearch(){
   box.style.display='block';
   try{
     const r=await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(q)}&type=track&limit=6`,{headers:{Authorization:'Bearer '+spToken}});
+    if(r.status===401){
+      // Token expired — force re-login
+      spToken=null;sessionStorage.removeItem('sp_token');
+      updateSpotifyUI('login');
+      box.innerHTML='<div style="font-size:10px;color:var(--text4);padding:6px">session expired — reconnect Spotify 🌸</div>';
+      return;
+    }
+    if(!r.ok){
+      box.innerHTML=`<div style="font-size:10px;color:var(--text4);padding:6px">spotify error ${r.status} — try again 🌸</div>`;
+      return;
+    }
     const data=await r.json();
     if(!data.tracks?.items?.length){box.innerHTML='<div style="font-size:10px;color:var(--text4);padding:6px">no results 🌸</div>';return;}
     box.innerHTML=data.tracks.items.map(t=>`
@@ -1177,7 +1188,9 @@ async function spSearch(){
         <button onclick="loadSpotifyTrack('A','${t.uri}','${escJ(t.name)}','${escJ(t.artists.map(a=>a.name).join(', '))}',${Math.round(t.duration_ms/1000)})" style="background:var(--lav-dim);border:1px solid var(--lavender);border-radius:7px;padding:3px 7px;color:var(--lavender);font-size:8px;font-weight:700;cursor:pointer;white-space:nowrap">A 💜</button>
         <button onclick="loadSpotifyTrack('B','${t.uri}','${escJ(t.name)}','${escJ(t.artists.map(a=>a.name).join(', '))}',${Math.round(t.duration_ms/1000)})" style="background:var(--mint-dim);border:1px solid var(--mint);border-radius:7px;padding:3px 7px;color:var(--mint);font-size:8px;font-weight:700;cursor:pointer;white-space:nowrap">B 🩵</button>
       </div>`).join('');
-  }catch(e){box.innerHTML='<div style="font-size:10px;color:var(--text4);padding:6px">search error — try again 🌸</div>';}
+  }catch(e){
+    box.innerHTML=`<div style="font-size:10px;color:var(--text4);padding:6px">error: ${e.message} 🌸</div>`;
+  }
 }
 
 const spState={A:{playing:false,uri:null},B:{playing:false,uri:null}};
