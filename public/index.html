@@ -529,9 +529,11 @@ function obShow(i){
 }
 function obNext(){if(obStep<OB_STEPS.length-1){obStep++;obShow(obStep);}else obSkip();}
 function obSkip(){document.getElementById('ob').classList.add('hidden');obClearHl();}
-document.getElementById('obNext').addEventListener('click',obNext);
-document.getElementById('obSkip').addEventListener('click',obSkip);
-obBuildDots();obShow(0);
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('obNext').addEventListener('click',obNext);
+  document.getElementById('obSkip').addEventListener('click',obSkip);
+  obBuildDots();obShow(0);
+});
 
 /* ════════════════════════════════════
    LOADER BAR
