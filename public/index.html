@@ -477,11 +477,11 @@ const DS = {
   A:{mode:null,playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,
      dur:0,waveData:null,src:null,buf:null,startTime:0,startOffset:0,rate:1,
      gainNode:null,hiNode:null,midNode:null,loNode:null,quantize:true,
-     spUri:null},
+     spUri:null,spOffset:0},
   B:{mode:null,playing:false,bpm:null,pitch:0,vol:0.8,cuePoint:0,loop:null,
      dur:0,waveData:null,src:null,buf:null,startTime:0,startOffset:0,rate:1,
      gainNode:null,hiNode:null,midNode:null,loNode:null,quantize:true,
-     spUri:null}
+     spUri:null,spOffset:0}
 };
 let rafId=null;
 let recDest=null, mediaRec=null, recChunks=[], recIv=null, recStart=null;
@@ -908,12 +908,207 @@ function updateCoach(){
 }
 
 /* ════════════════════════════════════
-   SPOTIFY
+   SPOTIFY — dual iframe hack 🌸
+   Two hidden iframes, each runs its own
+   SDK instance = two independent players
 ════════════════════════════════════ */
 const SP_ID='4ca34507221b4bfaade3b1a3aa89a007';
 const SP_URI='https://yyyas3.onrender.com/callback';
 const SP_SCOPES='streaming user-read-email user-read-private user-modify-playback-state user-read-playback-state';
-let spToken=null,spPlayer=null,spDeviceId=null,spReady=false,spActiveDeck=null;
+let spToken=null;
+const spFrames={A:null,B:null};
+const spDevices={A:null,B:null};
+const spReady={A:false,B:false};
+let spActiveDeck=null;
+let spTimers={A:null,B:null};
+
+// Create two hidden iframes on load
+function spCreateFrames(){
+  ['A','B'].forEach(d=>{
+    const fr=document.createElement('iframe');
+    fr.src='/spotify-player.html';
+    fr.style.cssText='display:none;width:0;height:0;border:none;position:absolute';
+    fr.allow='autoplay';
+    document.body.appendChild(fr);
+    spFrames[d]=fr;
+    fr.onload=()=>{
+      // Wait for iframe to be ready then init
+      fr.contentWindow.postMessage({type:'init',token:spToken,deck:d},'*');
+    };
+  });
+}
+
+// Listen for messages from both iframes
+window.addEventListener('message',e=>{
+  const msg=e.data;
+  if(!msg||!msg.type||!msg.deck) return;
+  const d=msg.deck;
+  if(msg.type==='ready'){
+    spDevices[d]=msg.deviceId;
+    spReady[d]=true;
+    // Both ready?
+    if(spReady.A&&spReady.B){
+      spSetUI('ready');
+      coach('🎵','<span class="good">Spotify connected on both decks! 🎉</span> search any song and add to A or B 🌸');
+    }else{
+      spSetUI('connecting');
+    }
+  }else if(msg.type==='not_ready'){
+    spReady[d]=false;
+  }else if(msg.type==='auth_error'){
+    spToken=null;sessionStorage.removeItem('spt');spSetUI('login');
+  }else if(msg.type==='account_error'){
+    coach('😬','<span class="warn">Spotify Premium required</span> for playback 🌸');
+  }else if(msg.type==='state'){
+    onSpState(d,msg);
+  }
+});
+
+function onSpState(d,msg){
+  const s=DS[d];
+  if(!s||s.mode!=='spotify') return;
+  if(msg.track){
+    document.getElementById('tname'+d).textContent=msg.track.name;
+    document.getElementById('tsub'+d).textContent=msg.track.artists.map(a=>a.name).join(', ')+' · Spotify 🎵';
+    const dur=msg.track.duration_ms/1000;
+    if(dur>0){s.dur=dur;document.getElementById('dur'+d).textContent=fmt(dur);}
+  }
+  const wasPlaying=s.playing;
+  s.playing=!msg.paused;
+  if(s.playing!==wasPlaying){
+    document.getElementById('pi'+d).textContent=msg.paused?'▶':'⏸';
+    deckStyle(d);
+    updateCoach();
+  }
+  const pos=msg.position/1000;
+  document.getElementById('time'+d).textContent=fmt(pos);
+  drawWave(d,pos/Math.max(s.dur,1));
+}
+
+function spGenVerifier(){const a=new Uint8Array(64);crypto.getRandomValues(a);return btoa(String.fromCharCode(...a)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');}
+async function spGenChallenge(v){const d=new TextEncoder().encode(v);const h=await crypto.subtle.digest('SHA-256',d);return btoa(String.fromCharCode(...new Uint8Array(h))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');}
+
+async function spLogin(){
+  const v=spGenVerifier();const c=await spGenChallenge(v);
+  sessionStorage.setItem('spv',v);
+  const p=new URLSearchParams({client_id:SP_ID,response_type:'code',redirect_uri:SP_URI,code_challenge_method:'S256',code_challenge:c,scope:SP_SCOPES});
+  window.location.href='https://accounts.spotify.com/authorize?'+p;
+}
+
+async function spExchange(code){
+  const v=sessionStorage.getItem('spv');
+  const r=await fetch('https://accounts.spotify.com/api/token',{
+    method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:new URLSearchParams({client_id:SP_ID,grant_type:'authorization_code',code,redirect_uri:SP_URI,code_verifier:v})
+  });
+  const data=await r.json();
+  if(data.access_token){
+    spToken=data.access_token;
+    sessionStorage.setItem('spt',spToken);
+    sessionStorage.removeItem('spv');
+    window.history.replaceState({},'','/');
+    spSetUI('connecting');
+    spCreateFrames();
+  }else{
+    console.error('Spotify token error',data);
+    spSetUI('login');
+  }
+}
+
+function spMsg(deck,msg){
+  if(spFrames[deck]&&spFrames[deck].contentWindow){
+    spFrames[deck].contentWindow.postMessage(msg,'*');
+  }
+}
+
+function spSetUI(status){
+  const btn=document.getElementById('spBtn');
+  const row=document.getElementById('spSearchRow');
+  if(status==='login'){btn.textContent='🎵 Connect Spotify';btn.onclick=spLogin;btn.style.opacity='1';row.classList.remove('show');}
+  else if(status==='connecting'){btn.textContent='⏳ Connecting both decks...';btn.style.opacity='0.7';btn.onclick=null;}
+  else if(status==='ready'){btn.textContent='✅ Spotify Ready (A+B)';btn.style.opacity='1';btn.onclick=null;row.classList.add('show');}
+  else if(status==='error'){btn.textContent='⚠️ Retry';btn.onclick=()=>spCreateFrames();btn.style.opacity='1';}
+}
+
+async function spSearch(){
+  const q=document.getElementById('spQ').value.trim();
+  if(!q||!spToken) return;
+  const box=document.getElementById('spResults');
+  box.innerHTML='<div style="font-size:10px;color:var(--t4);padding:8px">searching... 🌸</div>';
+  box.classList.add('show');
+  try{
+    const r=await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(q)}&type=track&limit=6`,{headers:{Authorization:'Bearer '+spToken}});
+    if(r.status===401){spToken=null;sessionStorage.removeItem('spt');spSetUI('login');box.innerHTML='<div style="font-size:10px;color:var(--t4);padding:8px">session expired — reconnect 🌸</div>';return;}
+    if(!r.ok){box.innerHTML=`<div style="font-size:10px;color:var(--t4);padding:8px">error ${r.status}</div>`;return;}
+    const data=await r.json();
+    if(!data.tracks?.items?.length){box.innerHTML='<div style="font-size:10px;color:var(--t4);padding:8px">no results 🌸</div>';return;}
+    box.innerHTML=data.tracks.items.map(t=>`
+      <div class="sp-item">
+        <img class="sp-art" src="${t.album.images[2]?.url||''}" onerror="this.style.display='none'">
+        <div class="sp-info">
+          <div class="sp-title">${escH(t.name)}</div>
+          <div class="sp-artist">${escH(t.artists.map(a=>a.name).join(', '))} · ${fmt(t.duration_ms/1000)}</div>
+        </div>
+        <button class="sp-add a" onclick="spLoad('A','${escJ(t.uri)}','${escJ(t.name)}','${escJ(t.artists.map(a=>a.name).join(', '))}',${Math.round(t.duration_ms/1000)})">A 💜</button>
+        <button class="sp-add b" onclick="spLoad('B','${escJ(t.uri)}','${escJ(t.name)}','${escJ(t.artists.map(a=>a.name).join(', '))}',${Math.round(t.duration_ms/1000)})">B 🩵</button>
+      </div>`).join('');
+  }catch(e){
+    box.innerHTML=`<div style="font-size:10px;color:var(--t4);padding:8px">error: ${escH(e.message)}</div>`;
+  }
+}
+
+async function spLoad(deck,uri,title,artist,dur){
+  if(!spReady[deck]){coach('😬',`<span class="warn">Spotify deck ${deck} not ready yet</span> — give it a moment 🌸`);return;}
+  const s=DS[deck];
+  if(s.mode==='mp3') stopDeck(deck);
+  s.mode='spotify';s.spUri=uri;s.dur=dur;s.playing=false;
+  document.getElementById('tname'+deck).textContent=title;
+  document.getElementById('tsub'+deck).textContent=artist+' · Spotify 🎵';
+  document.getElementById('tdispA'.replace('A',deck)).classList.add('show');
+  document.getElementById('wave'+deck).classList.add('show');
+  document.getElementById('dur'+deck).textContent=fmt(dur);
+  document.getElementById('time'+deck).textContent='0:00';
+  document.getElementById('pi'+deck).textContent='▶';
+  document.getElementById('st'+deck).textContent=`deck ${deck.toLowerCase()}: spotify ready ${deck==='A'?'💜':'🩵'}`;
+  document.getElementById('spResults').classList.remove('show');
+  document.getElementById('spQ').value='';
+  fallbackBPM(deck);
+  drawWaveFake(deck,dur);
+  buildGraph(deck);
+  deckStyle(deck);
+  updateCoach();
+  coach('🎵',`<span class="good">${escH(title)}</span> on deck ${deck.toLowerCase()} 🌸 press play!`);
+}
+
+async function spTogglePlay(deck){
+  if(!spReady[deck]) return;
+  const s=DS[deck];
+  if(s.playing){
+    spMsg(deck,{type:'pause'});
+    s.playing=false;
+    document.getElementById('pi'+deck).textContent='▶';
+    document.getElementById('st'+deck).textContent=`deck ${deck.toLowerCase()}: paused ${deck==='A'?'💜':'🩵'}`;
+  }else{
+    spMsg(deck,{type:'play',uri:s.spUri,offset:0});
+    s.playing=true;
+    document.getElementById('pi'+deck).textContent='⏸';
+    document.getElementById('st'+deck).textContent=`deck ${deck.toLowerCase()}: playing ${deck==='A'?'💜':'🩵'}`;
+  }
+  deckStyle(deck);
+  updateCoach();
+}
+
+// Init on page load
+(async()=>{
+  const params=new URLSearchParams(window.location.search);
+  const code=params.get('code');
+  if(code){await spExchange(code);return;}
+  const saved=sessionStorage.getItem('spt');
+  if(saved){spToken=saved;spSetUI('connecting');spCreateFrames();}
+  else{spSetUI('login');}
+})();
+
+document.getElementById('spQ').addEventListener('keydown',e=>{if(e.key==='Enter')spSearch();});
 
 function spGenVerifier(){const a=new Uint8Array(64);crypto.getRandomValues(a);return btoa(String.fromCharCode(...a)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');}
 async function spGenChallenge(v){const d=new TextEncoder().encode(v);const h=await crypto.subtle.digest('SHA-256',d);return btoa(String.fromCharCode(...new Uint8Array(h))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');}
@@ -1035,55 +1230,90 @@ async function spSearch(){
 
 async function spLoad(deck,uri,title,artist,dur){
   if(!spReady||!spDeviceId){coach('😬','<span class="warn">Spotify not ready yet</span> — wait a moment and try again 🌸');return;}
-  spActiveDeck=deck;
   const s=DS[deck];
-  // Stop MP3 if playing
+  // Stop MP3 on this deck if playing
   if(s.mode==='mp3') stopDeck(deck);
-  s.mode='spotify'; s.spUri=uri; s.dur=dur; s.playing=false;
+  s.mode='spotify'; s.spUri=uri; s.dur=dur; s.playing=false; s.spOffset=0;
   document.getElementById('tname'+deck).textContent=title;
   document.getElementById('tsub'+deck).textContent=artist+' · Spotify 🎵';
   document.getElementById('tdispA'.replace('A',deck)).classList.add('show');
   document.getElementById('wave'+deck).classList.add('show');
   document.getElementById('dur'+deck).textContent=fmt(dur);
   document.getElementById('time'+deck).textContent='0:00';
+  document.getElementById('pi'+deck).textContent='▶';
   document.getElementById('st'+deck).textContent=`deck ${deck.toLowerCase()}: spotify loaded ${deck==='A'?'💜':'🩵'}`;
   document.getElementById('spResults').classList.remove('show');
   document.getElementById('spQ').value='';
-  // Transfer playback to our SDK player and immediately pause
-  try{
-    await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${spDeviceId}`,{
-      method:'PUT',headers:{Authorization:'Bearer '+spToken,'Content-Type':'application/json'},
-      body:JSON.stringify({uris:[uri],position_ms:0})
-    });
-    await new Promise(r=>setTimeout(r,300));
-    await fetch(`https://api.spotify.com/v1/me/player/pause?device_id=${spDeviceId}`,{
-      method:'PUT',headers:{Authorization:'Bearer '+spToken}
-    });
-  }catch(e){console.error('Spotify load error',e);}
-  // Give Spotify a moment then update BPM
   fallbackBPM(deck);
   drawWaveFake(deck,dur);
-  // Build a gain node so EQ/faders work
   buildGraph(deck);
   deckStyle(deck);
   updateCoach();
-  coach('🎵',`<span class="good">${escH(title)}</span> loaded on deck ${deck.toLowerCase()} 🌸 press play!`);
+  coach('🎵',`<span class="good">${escH(title)}</span> queued on deck ${deck.toLowerCase()} 🌸 press play when ready!`);
 }
 
 async function spTogglePlay(deck){
   if(!spReady||!spDeviceId) return;
-  spActiveDeck=deck;
   const s=DS[deck];
+  const other=deck==='A'?'B':'A';
   try{
     if(s.playing){
-      await fetch(`https://api.spotify.com/v1/me/player/pause?device_id=${spDeviceId}`,{method:'PUT',headers:{Authorization:'Bearer '+spToken}});
+      // Pause this deck
+      await fetch(`https://api.spotify.com/v1/me/player/pause?device_id=${spDeviceId}`,{
+        method:'PUT',headers:{Authorization:'Bearer '+spToken}
+      });
+      s.playing=false;
+      document.getElementById('pi'+deck).textContent='▶';
+      document.getElementById('st'+deck).textContent=`deck ${deck.toLowerCase()}: paused ${deck==='A'?'💜':'🩵'}`;
     }else{
+      // If other deck is also Spotify and playing, pause it first
+      if(DS[other].mode==='spotify'&&DS[other].playing){
+        DS[other].playing=false;
+        document.getElementById('pi'+other).textContent='▶';
+        document.getElementById('st'+other).textContent=`deck ${other.toLowerCase()}: paused (spotify can only play one at a time) ${other==='A'?'💜':'🩵'}`;
+        coach('👀','<span class="warn">heads up:</span> Spotify can only stream one deck at a time. use MP3s on both decks for simultaneous playback 🌸');
+      }
+      // Start this deck's track
+      spActiveDeck=deck;
       await fetch(`https://api.spotify.com/v1/me/player/play?device_id=${spDeviceId}`,{
         method:'PUT',headers:{Authorization:'Bearer '+spToken,'Content-Type':'application/json'},
-        body:JSON.stringify({uris:[s.spUri],position_ms:0})
+        body:JSON.stringify({uris:[s.spUri],position_ms:Math.round((s.spOffset||0)*1000)})
       });
+      s.playing=true;
+      document.getElementById('pi'+deck).textContent='⏸';
+      document.getElementById('st'+deck).textContent=`deck ${deck.toLowerCase()}: playing ${deck==='A'?'💜':'🩵'}`;
+      // Start a timer to track position
+      spStartTimer(deck);
     }
-  }catch(e){coach('😬',`<span class="warn">Spotify error:</span> ${escH(e.message)}`);}
+  }catch(e){
+    coach('😬',`<span class="warn">Spotify error:</span> ${escH(e.message)}`);
+  }
+  deckStyle(deck);
+  updateCoach();
+}
+
+// Spotify position tracker (since we can't use Web Audio timeline)
+let spTimers={A:null,B:null};
+function spStartTimer(deck){
+  clearInterval(spTimers[deck]);
+  const s=DS[deck];
+  const started=Date.now();
+  const offsetAtStart=s.spOffset||0;
+  spTimers[deck]=setInterval(()=>{
+    if(!s.playing){clearInterval(spTimers[deck]);return;}
+    const pos=offsetAtStart+(Date.now()-started)/1000;
+    s.spOffset=pos;
+    if(pos>=s.dur){
+      s.playing=false;s.spOffset=0;
+      clearInterval(spTimers[deck]);
+      document.getElementById('pi'+deck).textContent='▶';
+      deckStyle(deck);
+      coach('🎧',`spotify track ended on deck ${deck.toLowerCase()} 🌸`);
+      return;
+    }
+    document.getElementById('time'+deck).textContent=fmt(pos);
+    drawWave(deck,pos/Math.max(s.dur,1));
+  },250);
 }
 
 // Check for Spotify callback or saved token on page load
