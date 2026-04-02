@@ -895,7 +895,10 @@ async function doSearch() {
 
   try {
     const r = await fetch('/search?q=' + encodeURIComponent(q));
-    if (!r.ok) throw new Error('search failed');
+    if (!r.ok) {
+      const err = await r.json().catch(() => ({}));
+      throw new Error(err.error || 'HTTP ' + r.status);
+    }
     const items = await r.json();
     if (!items.length) { res.innerHTML = '<div class="search-status">no results — try different keywords 🌸</div>'; return; }
 
@@ -912,7 +915,8 @@ async function doSearch() {
       </div>
     `).join('');
   } catch (e) {
-    res.innerHTML = '<div class="search-status">search error — server might be waking up, try again in 30s 🌙</div>';
+    console.error('Search error:', e);
+    res.innerHTML = '<div class="search-status">' + escH(e.message) + ' — try again in a sec 🌙<br><button class="search-btn" style="margin-top:6px;font-size:11px" onclick="doSearch()">retry 🔄</button></div>';
   }
 }
 
@@ -948,7 +952,7 @@ async function loadFromYT(deck, id, title) {
   } catch (e) {
     console.error('Load error:', e);
     document.getElementById('track' + deck).textContent = '—';
-    setCoach('😢', `couldn't load that track — try another one or drop an mp3 directly`);
+    setCoach('😢', `couldn't load that track (${e.message}) — try another result, or drop an mp3 directly 🌸`);
   }
 }
 
