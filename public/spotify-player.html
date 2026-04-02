@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body>
+<script>
+// Tiny Spotify SDK iframe — one per deck
+// Communicates with parent via postMessage
+let player=null,deviceId=null,token=null,deck=null;
+
+window.addEventListener('message',e=>{
+  const d=e.data;
+  if(!d||!d.type) return;
+  if(d.type==='init'){token=d.token;deck=d.deck;initPlayer();}
+  else if(d.type==='play'&&player) player.activateElement().then(()=>{
+    fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,{
+      method:'PUT',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},
+      body:JSON.stringify({uris:[d.uri],position_ms:(d.offset||0)*1000})
+    });
+  });
+  else if(d.type==='pause'&&player) fetch(`https://api.spotify.com/v1/me/player/pause?device_id=${deviceId}`,{method:'PUT',headers:{Authorization:'Bearer '+token}});
+  else if(d.type==='volume'&&player) player.setVolume(d.value);
+  else if(d.type==='token') token=d.token;
+});
+
+function initPlayer(){
+  window.onSpotifyWebPlaybackSDKReady=()=>{
+    player=new Spotify.Player({
+      name:'YYYAS3 Deck '+deck+' 🌸',
+      getOAuthToken:cb=>cb(token),
+      volume:0.8
+    });
+    player.addListener('ready',({device_id})=>{
+      deviceId=device_id;
+      window.parent.postMessage({type:'ready',deck,deviceId},'*');
+    });
+    player.addListener('not_ready',()=>window.parent.postMessage({type:'not_ready',deck},'*'));
+    player.addListener('player_state_changed',state=>{
+      if(!state) return;
+      window.parent.postMessage({type:'state',deck,
+        paused:state.paused,
+        position:state.position,
+        duration:state.duration,
+        track:state.track_window?.current_track?{
+          name:state.track_window.current_track.name,
+          artists:state.track_window.current_track.artists,
+          duration_ms:state.track_window.current_track.duration_ms
+        }:null
+      },'*');
+    });
+    player.addListener('authentication_error',()=>window.parent.postMessage({type:'auth_error',deck},'*'));
+    player.addListener('account_error',()=>window.parent.postMessage({type:'account_error',deck},'*'));
+    player.connect();
+  };
+  const s=document.createElement('script');
+  s.src='https://sdk.scdn.co/spotify-player.js';
+  document.body.appendChild(s);
+}
+</script>
+</body>
+</html>
